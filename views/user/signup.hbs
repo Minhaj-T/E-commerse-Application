@@ -1,0 +1,52 @@
+
+    <div class="account-login section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1 col-12">
+                    <div class="register-form">
+                        <div class="title">
+                            <h3>No Account? Register</h3>
+                            <p>Registration takes less than a minute but gives you full control over your orders.</p>
+                        </div>
+                        {{#if usererr}}
+                                <div class="alert alert-danger" role="alert">
+                                    Your Emaile ID or Phone Number is Already Exisist
+                                </div>
+                                {{/if}}
+                        <form class="row" action="/signup" method="post" id="user-signup">
+                            <div class="col-12">
+                              <div class="form-group input-group">
+                                <label for="reg-fn">User Name</label>
+                                <input class="form-control" type="text"  name="name" id="reg-name" >
+                            </div>
+                            </div>
+                            
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="reg-email">E-mail Address</label>
+                                    <input class="form-control" type="email"  name="email" id="reg-email">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="reg-phone">Phone Number</label>
+                                    <input class="form-control" type="text" name="phone" id="reg-phone" >
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="reg-pass">Password</label>
+                                    <input class="form-control" type="password" name="password" id="reg-pass">
+                                </div>
+                            </div>
+                            <div class="button">
+                                <button class="btn" type="submit">Register</button>
+                            </div>
+                            <p class="outer-link">Already have an account? <a href="/login">Login Now</a>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

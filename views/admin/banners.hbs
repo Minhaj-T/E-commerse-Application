@@ -1,0 +1,115 @@
+<div class="container mt-4">
+    <section style="padding-bottom: 100px;">
+        <table class="table" id="adminTable">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <a href="#add" class="btn btn-info ml-auto" style="margin-top: 20px;">Add New
+                        Banner</a>
+                </div>
+            </div>
+            <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Banner Name</th>
+                    <th scope="col">Banner</th>
+                    <th scope="col">Offer</th>
+                    <th scope="col">Offer Price</th>
+                    <th scope="col">Link</th>
+                    <th scope="col">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each banners}}
+                <tr>
+                    <td >{{inc @index}}</td>
+                    <td >{{this.bannerName}}</td>
+                    <td>
+                        <img style="height: 50px;width:100px" src="/banners/{{this._id}}.jpg">             
+                    </td>
+                    <td   width="30%">{{this.offer}}</td>
+                    <td>{{this.offerPrice}}</td>
+                    <td>{{this.link}}</td>
+                    <td><a href="/admin/edit-banner/{{this._id}}" class="btn btn-primary"><i
+                                class="fas fa-edit"></i></a>
+
+                        <a class="btn btn-danger" href="/admin/delete-banner/{{this._id}}" name="{{this.bannerName}}"
+                            onclick="deleteBanner(event)"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+                {{/each}}
+
+            </tbody>
+        </table>
+    </section>
+</div>
+<hr>
+
+<section id="add">
+    <div class="container mt-4">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center">Add<strong> Banner</strong> </h2>
+                <form action="/admin/banners" method="post" enctype="multipart/form-data"
+                    id="">
+                   
+                    <label for="inputName">Banner Name</label>
+                    <input type="text" class="form-control" id="inputName" name="bannerName">
+                     <label for="inputOffer">Offer details</label>
+                    <input type="text" class="form-control" id="inputOffer" name="offer">
+                    <div class="form-row mt-2">
+                        <div class="form-group col-md-6">
+                            <label for="inputName">Description 01</label>
+                            <input type="text" class="form-control" id="inputDescription1" name="description1">
+                        </div>
+
+
+                        <div class="form-group col-md-6">
+                            <label for="inputDescription">Description 02</label>
+                            <input type="text" class="form-control" id="inputDescription2" name="description2">
+                        </div>
+                    </div>
+
+                    
+
+                    <label for="offPrice">Offer price</label>
+                    <input type="text" class="form-control" id="offPrice" name="offerPrice">
+
+                    <label for="category">Button link</label>
+                    <select name="link" id="category" class="custom-select p-2">
+                        <option value="" selected>Choose a Link</option>
+                        {{#each categories}}
+                        <option value="{{this.category}}">{{this.category}}</option>
+                        {{/each}}
+                    </select>
+                    <label for="exampleFormControlFile3">Banner Image</label>
+                    <img src="" style="width:auto;height:50px;display:none" id="imgView3"><br><br>
+                    <input type="file" class="form-control" name="Image3" id="exampleFormControlFile3"
+                        style="width: 250px;" accept="image/*" required onchange="viewImage3(event)">
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-info mt-3" value="Add Banner" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<script>
+    function viewImage3(event) {
+        document.getElementById('imgView3').src = URL.createObjectURL(event.target.files[0])
+        let file = event.target.files[0].name
+        let extension = file.split('.').pop()
+        if (extension == 'jpeg' || extension == 'png' || extension == 'jpg') {
+            $('#imgView3').show()
+            $('#sub').show()
+            $('#errMsg').hide()
+        }
+        else {
+            $('#sub').hide()
+            $('#errMsg').show()
+        }
+    }
+</script>

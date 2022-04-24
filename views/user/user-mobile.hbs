@@ -1,0 +1,35 @@
+
+<div class="account-login section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1 col-12">
+                    <form class="card login-form" action="/loginOtp" method="post" id="loginOtp">
+                        <div class="card-body">
+                            <div class="title">
+                                {{#if blockErr}}
+                                <div class="alert alert-danger" role="alert">
+                                       You are temporarily blocked by admin !
+                                </div>
+                                {{/if}}
+                                {{#if noUser}}
+                                <div class="alert alert-danger" role="alert">
+                                    Invalid mobile number !
+                                </div>
+                                {{/if}}
+                            </div>
+                            <div class="form-group input-group">
+                                <label for="reg-fn">Enter Your Phone Number</label>
+                                 <input class="form-control" type="tel" name="mobileNo" id="CustomerNo"   placeholder="Enter your number"
+                        autocorrect="off" autocapitalize="off"  maxlength="10" autofocus>
+                            </div>
+                            <div class="button">
+                                <button class="btn" type="submit">Send OTP</button>
+                            </div>
+                            <p class="outer-link"> <a href="/login">Back to Login </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

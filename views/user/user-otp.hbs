@@ -1,0 +1,38 @@
+
+     <div class="account-login section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1 col-12">
+                    <form class="card login-form" action="/login/otp" method="post" id="otpFeald">
+                        <div class="card-body">
+                            <div class="title">
+                                <h3>Please Enter the One Time Password to Verify Your Account</h3>
+                                {{#if invalidOtp}}
+                                <div class="alert alert-danger" role="alert">
+                                       Invalid OTP
+                                       </div>
+                                {{/if}}
+                            </div>
+                          <div class="form-group input-group">
+                                <label for="reg-fn">Enter Your otp </label>
+                                 <input class="form-control" type="text" name="otp" id="CustomerNo"   placeholder="Enter your otp" maxlength="4" minlength="4">
+                            </div>
+                               <div class="text-center mt-3">
+                                   <span class="d-block mobile-text" id="countdown"></span>
+                                </div>
+                              <div class="text-center mt-3">
+                                 <a href="/login/resend-otp">
+                                   <span class="d-block mobile-text" id="resend"></span>
+                                 </a>
+                            </div>
+                            <div class="button">
+                                <button class="btn" type="submit">Verify</button>
+                            </div>
+                            <p class="outer-link"> <a href="/login">Back to Login </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

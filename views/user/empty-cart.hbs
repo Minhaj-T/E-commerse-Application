@@ -1,0 +1,39 @@
+ <style>
+   .error-area .error-content p {
+    font-weight: 400;
+    margin-bottom: 19px;
+    color: #888;
+} 
+ </style>
+ 
+ <!-- Start Error Area -->
+  <div class="error-area">
+    <div class="d-table">
+      <div class="d-table-cell">
+        <div class="container">
+          <div class="error-content">
+            <div>
+              <img src="\images\Cart Logo.svg" style="height: 105px; padding-bottom: 15px;" alt="">
+            </div>
+            <h2>Cart is Empty!!</h2>
+            <p>You have no items in your Shopping Bag</p>
+            <div class="button">
+              <a href="/" class="btn">Back to Home</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Error Area -->
+
+    <script>
+    window.onload = function () {
+      window.setTimeout(fadeout, 500);
+    }
+
+    function fadeout() {
+      document.querySelector('.preloader').style.opacity = '0';
+      document.querySelector('.preloader').style.display = 'none';
+    }
+  </script>

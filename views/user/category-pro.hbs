@@ -1,0 +1,52 @@
+
+    
+<section class="trending-product section" style="margin-top: 12px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-title">
+                        <h2>{{category}} Collections
+                        </h2>
+                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have
+                            suffered alteration in some form.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+              {{#each product}}
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Start Single Product -->
+                    <div class="single-product">
+                        <div class="product-image">
+                            <img src="/product-images/{{this._id}}a.jpg" class="card-img-top" alt="Product image">
+                            <div class="button">
+                                <a onclick="addToCart('{{this._id}}')" class="btn"><i class="lni lni-cart"></i> Add to Cart</a>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <span class="category">{{this.category}}</span>
+                            <h4 class="title">
+                                <a href="/view-singleProduct/{{this._id}}">{{this.name}}</a>
+                            </h4>
+                            {{!-- star rating section --}}
+                            {{!-- <ul class="review">
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star-filled"></i></li>
+                                <li><i class="lni lni-star"></i></li>
+                                <li><span>4.0 Review(s)</span></li>
+                            </ul> --}}
+                            <div class="price">
+                                <span>₹{{this.price}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Product -->
+                </div>
+              {{/each}}
+                </div>
+            </div>
+        </div>
+    </section>
+

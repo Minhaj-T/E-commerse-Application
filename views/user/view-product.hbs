@@ -1,0 +1,265 @@
+<style>
+    
+
+    .brands {
+    padding: 20px 0;
+    background-color: #ffffff;
+    }
+
+}
+</style>
+<section class="hero-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-12 custom-padding-right">
+                <div class="slider-head">
+                    <!-- Start Hero Slider -->
+                    <div class="hero-slider">
+                        <!-- Start Single Slider -->
+                        {{#each banners}}
+                        <div class="single-slider" style="background-image: url(/banners/{{this._id}}.jpg);">
+                            <div class="content">
+                                <h2><span>{{this.description1}}</span>
+                                    {{this.bannerName}}
+                                </h2>
+                                <p>{{this.offer}}</p>
+                                <h3><span>Under</span> ₹{{this.offerPrice}}</h3>
+                                <div class="button">
+                                    <a href="/categoryProducts/{{this.link}}" class="btn">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                        <!-- End Single Slider -->
+                    </div>
+                    <!-- End Hero Slider -->
+                </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="row">
+                    <div class="col-lg-12 col-md-6 col-12 md-custom-padding">
+                        <!-- Start Small Banner -->
+                        <div class="hero-small-banner" style="background-image: url('/images/hero/slider-bnr.jpg');">
+                            <div class="content">
+                                <h2>
+                                    <span>MIN 40% Off</span>
+                                    Dazzling Dresses
+                                </h2>
+                                <h3>₹2999.99</h3>
+                            </div>
+                        </div>
+                        <!-- End Small Banner -->
+                    </div>
+                    <div class="col-lg-12 col-md-6 col-12">
+                        <!-- Start Small Banner -->
+                        <div class="hero-small-banner style2">
+                            <div class="content">
+                                <h2>Weekly Sale!</h2>
+                                <p>Saving up to 50% off all online store items this week.</p>
+                                <div class="button">
+                                    <a class="btn" href="product-grids.html">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Start Small Banner -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+ <!-- Start Brands Area -->
+    <div class="brands">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3 col-md-12 col-12">
+                    <h2 class="title"> <strong> </strong></h2>
+                </div>
+            </div>
+            <div class="brands-logo-wrapper">
+                <div class="brands-logo-carousel d-flex align-items-center justify-content-between">
+                    <div class="brand-logo">
+                        <img src="\images\brands\Allen-Solly-Logo-PNG-HD.png" alt="#">
+                    </div>
+                    <div class="brand-logo">
+                        <img src="\images\brands\gucci_PNG18.png" alt="#">
+                    </div>
+                    <div class="brand-logo">
+                        <img src="\images\brands\Louis-Vuitton-01.png" alt="#">
+                    </div>
+                    <div class="brand-logo">
+                        <img src="\images\brands\channel logo.jpg" alt="#">
+                    </div>
+                    <div class="brand-logo">
+                        <img src="\images\brands\pngwing.com (2).png" alt="#">
+                    </div>
+                    <div class="brand-logo">
+                        <img src="\images\brands\pngwing.com (3).png" alt="#">
+                    </div>
+                    <div class="brand-logo">
+                        <img src="\images\brands\pngwing.com (4).png" alt="#">
+                    </div>
+                    <div class="brand-logo">
+                        <img src="\images\brands\pngwing.com (5).png" alt="#">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Brands Area -->
+
+<section class="trending-product section" style="margin-top: 12px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title">
+                    <h2>Trending Product</h2>
+                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have
+                        suffered alteration in some form.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {{#each product}}
+            <div class="col-lg-3 col-md-6 col-12">
+                <!-- Start Single Product -->
+                <div class="single-product ">
+                    <div class="product-image">
+                        <img src="/product-images/{{this._id}}a.jpg" class="card-img-top" alt="Product image">
+                        {{#if this.offer}}
+                        <span class="sale-tag">-{{this.proOfferPercentage}}%</span>
+                        {{/if}}
+                        <div class="button">
+                            <a onclick="addToCart('{{this._id}}')" class="btn"><i class="lni lni-cart"></i> Add to
+                                Cart</a>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <span class="category">{{this.category}}</span>
+                        <h4 class="title">
+                            <a href="/view-singleProduct/{{this._id}}">{{this.name}}</a>
+                        </h4>
+                        {{!-- <ul class="review">
+                            <li><i class="lni lni-star-filled"></i></li>
+                            <li><i class="lni lni-star-filled"></i></li>
+                            <li><i class="lni lni-star-filled"></i></li>
+                            <li><i class="lni lni-star-filled"></i></li>
+                            <li><i class="lni lni-star"></i></li>
+                            <li><span>4.0 Review(s)</span></li>
+                        </ul> --}}
+                        {{#if this.offer}}
+                        <div class="price">
+                            <span>₹{{this.price}}</span>
+                            <span class="discount-price">₹{{this.actualPrice}}</span>
+                        </div>
+                        {{else}}
+                        <div class="price">
+                            <span>₹{{this.price}}</span>
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
+                <!-- End Single Product -->
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    </div>
+</section>
+
+
+
+   <!-- Start Shipping Info -->
+    <section class="shipping-info">
+        <div class="container">
+            <ul>
+                <!-- Free Shipping -->
+                <li>
+                    <div class="media-icon">
+                        <i class="lni lni-delivery"></i>
+                    </div>
+                    <div class="media-body">
+                        <h5>Free Shipping</h5>
+                        <span>On order over $99</span>
+                    </div>
+                </li>
+                <!-- Money Return -->
+                <li>
+                    <div class="media-icon">
+                        <i class="lni lni-support"></i>
+                    </div>
+                    <div class="media-body">
+                        <h5>24/7 Support.</h5>
+                        <span>Live Chat Or Call.</span>
+                    </div>
+                </li>
+                <!-- Support 24/7 -->
+                <li>
+                    <div class="media-icon">
+                        <i class="lni lni-credit-cards"></i>
+                    </div>
+                    <div class="media-body">
+                        <h5>Online Payment.</h5>
+                        <span>Secure Payment Services.</span>
+                    </div>
+                </li>
+                <!-- Safe Payment -->
+                <li>
+                    <div class="media-icon">
+                        <i class="lni lni-reload"></i>
+                    </div>
+                    <div class="media-body">
+                        <h5>Easy Return.</h5>
+                        <span>Hassle Free Shopping.</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- End Shipping Info -->
+<!-- ========================= scroll-top ========================= -->
+<a href="#" class="scroll-top">
+    <i class="lni lni-chevron-up"></i>
+</a>
+<script src="\javascripts\tiny-slider.js"></script>
+<script type="text/javascript">
+    //========= Hero Slider 
+    tns({
+        container: '.hero-slider',
+        slideBy: 'page',
+        autoplay: true,
+        autoplayButtonOutput: false,
+        mouseDrag: true,
+        gutter: 0,
+        items: 1,
+        nav: false,
+        controls: true,
+        controlsText: ['<i class="lni lni-chevron-left"></i>', '<i class="lni lni-chevron-right"></i>'],
+    });
+
+    //======== Brand Slider
+    tns({
+        container: '.brands-logo-carousel',
+        autoplay: true,
+        autoplayButtonOutput: false,
+        mouseDrag: true,
+        gutter: 15,
+        nav: false,
+        controls: false,
+        responsive: {
+            0: {
+                items: 1,
+            },
+            540: {
+                items: 3,
+            },
+            768: {
+                items: 5,
+            },
+            992: {
+                items: 6,
+            }
+        }
+    });
+</script>

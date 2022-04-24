@@ -1,0 +1,84 @@
+#user-signup label.error {
+    color: #FB3A3A;
+    display: block;
+    margin: 5px;
+    padding: 0;
+    text-align: left;
+}
+#userLogin label.error {
+    color: #FB3A3A;
+    display: block;
+    margin: 5px;
+    padding: 0;
+    text-align: left;
+}
+#loginOtp label.error {
+    color: #FB3A3A;
+    display: block;
+    margin: 5px;
+    padding: 0;
+    text-align: left;
+}
+#otpFeald label.error {
+    color: #FB3A3A;
+    display: block;
+    margin: 5px;
+    padding: 0;
+    text-align: left;
+}
+#adminLogin label.error {
+    color: #FB3A3A;
+    display: block;
+    margin: 5px;
+    padding: 0;
+    text-align: left;
+}
+#checkout-form label.error {
+    color: #FB3A3A;
+    display: block;
+    margin: 5px;
+    padding: 0;
+    text-align: left;
+}
+#userChangePass label.error {
+    color: #FB3A3A;
+    display: block;
+    margin: 5px;
+    padding: 0;
+    text-align: left;
+}
+#userChangePass label.error {
+    color: #FB3A3A;
+    display: block;
+    margin: 5px;
+    padding: 0;
+    text-align: left;
+}
+#addNewAddress-form label.error {
+    color: #FB3A3A;
+    display: block;
+    margin: 5px;
+    padding: 0;
+    text-align: left;
+}
+
+/* admin validation */
+#addProductForm label.error {
+    color: #FB3A3A;
+    display: block;
+    margin: 5px;
+    padding: 0;
+    text-align: left;
+}
+#addCategoryForm label.error {
+    color: #FB3A3A;
+   
+}
+#adminLogin label.error {
+    color: #FB3A3A;
+    display: block;
+    margin: 5px;
+    padding: 0;
+    text-align: left;
+}
+

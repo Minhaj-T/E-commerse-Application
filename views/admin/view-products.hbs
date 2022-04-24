@@ -1,0 +1,77 @@
+{{!-- <section>
+    <div class="container">
+               <div class="pb-3">
+
+            <a href="/admin/add-product" class="btn btn-warning" > add product</a>
+               </div>
+   
+        <table class="table mt-3" id="DataTable">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">No</th>
+      <th scope="col">Name</th>
+      <th scope="col">Category</th>
+      <th scope="col">Price</th>
+      <th scope="col">Image</th>
+      <th scope="col">Options</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+      {{#each product}}
+    <tr>
+      <td> {{@index}}</td>
+      <td>{{this.name}}</td>
+      <td>{{this.category}}</td>
+      <td>{{this.price}}</td>
+      <td><img style="height: 30px; width: 30px;" src="/product-images/{{this._id}}.jpg" alt=""></td>
+      <td>
+        <a href="/admin/edit-product/{{this._id}}" class="btn btn-outline-primary"><i class="lni lni-pencil-alt"></i></i></a>
+        <a href="/admin/delete-product/{{this._id}}" class="btn btn-outline-danger"  onclick=" return confirm('Are you Sure to Delete : {{this.name}}  ?')" ><i class="lni lni-trash-can" ></i></a>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+    </div>
+</section> --}}
+
+
+
+<div id="page-wrapper">
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <a href="/admin/add-product" class="btn btn-info" style="margin-top: 20px; ">Add New
+                    Product</a>
+            </div>
+        </div>
+        <table class="table table-striped mt-5" style="margin-top:30px;" id="DataTable">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each product}}
+                <tr>
+                    <td> {{inc @index}}</td>
+                       <td>{{this.name}}</td>
+                        <td>{{this.category}}</td>
+                         <td>{{this.price}}</td>
+                   <td><img style="height: 30px; width: 30px;" src="/product-images/{{this._id}}a.jpg" alt=""></td>
+                    <td>
+                      <a href="/admin/edit-product/{{this._id}}" class="btn btn-outline-primary"><i class="lni lni-pencil-alt"></i></i></a>
+                      <a href="/admin/delete-product/{{this._id}}" onclick="deleteproduct(event)" name="{{this.name}}"  class="btn btn-outline-danger"  ><i class="lni lni-trash-can" ></i></a>
+                 </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>

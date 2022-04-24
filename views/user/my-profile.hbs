@@ -1,0 +1,138 @@
+<div class="container mt-3">
+	<div class="main-body">
+		<div class="row">
+			<div class="col-lg-4">
+				<div class="card">
+					<div class="card-body">
+						<div class="d-flex flex-column align-items-center text-center">
+							<img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Admin"
+								class="rounded-circle p-1 bg-primary" width="110">
+							<div class="mt-3">
+								<h4>{{user.name}}</h4>
+								<p class="text-secondary mb-1">{{user.email}}</p>
+								{{!-- <p class="text-muted font-size-sm">u</p> --}}
+								{{!-- <button class="btn btn-primary">Follow</button>
+								<button class="btn btn-outline-primary">Message</button> --}}
+								<hr>
+								<a href="/myOrders" class="list-group-item list-group-item-action py-2 ripple"><i
+										class="fas fa-chart-bar fa-fw me-3"></i><span> My Orders</span></a>
+								<br>
+								<a href="/user-change-password"
+									class="list-group-item list-group-item-action py-2 ripple"><i
+										class="fas fa-lock fa-fw me-3"></i><span>Change Password</span></a>
+								<br>
+								<a href="/add-new-addressProfile"
+									class="list-group-item list-group-item-action py-2 ripple"><i
+										class="fas fa-building fa-fw me-3"></i><span>Add New Address</span></a>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-8">
+				<div class="card">
+					<form method="post" action="/edit-profile" id="edit-profile">
+						<div class="card-body">
+							<div class="row mb-3">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Full Name</h6>
+								</div>
+								<div class="col-sm-9 text-secondary">
+									<input class="form-control" id="name" name="name" value="{{user.name}}"
+										placeholder="First Name" type="text" disabled>
+								</div>
+							</div>
+							<div class="row mb-3">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Email</h6>
+								</div>
+								<div class="col-sm-9 text-secondary">
+									<input class="form-control" id="email" name="email" value="{{user.email}}"
+										placeholder="Email" required="required" type="text" disabled>
+								</div>
+							</div>
+							<div class="row mb-3">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Mobile</h6>
+								</div>
+								<div class="col-sm-9 text-secondary">
+									<input class="form-control" id="mobile" name="phone" value="{{user.phone}}"
+										placeholder="Mobile" required="required" maxlength="10" type="tel" disabled>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-3"></div>
+								<div class="col-sm-9 text-secondary">
+									<a onclick="editProfile()" class="btn btn-primary px-4" type=""
+										id="submit">Edit
+										Profile</a>
+									<button type="submit" class="btn btn-primary px-4" id="btn"
+										style="display: none;">Update</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				{{!-- {{#each address}}
+				<div class="container">
+					<div class="row gutter-2 ">
+						<div class="col-md-6 ">
+							<div class="card h-100 ">
+								<div class="card-body floart-end">
+									<div class="container-fluid bg-1 text-center">
+										<h6 class="margin">Address</h6>
+										<span>{{this.Name}} ,{{this.House}}(house), <br>
+											{{this.Street}},{{this.Town}}-{{this.PIN}} <br>Ph :{{this.Mobile}} </span>
+
+									</div>
+
+								</div>
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+				{{/each}} --}}
+
+				<div class="row">
+					{{#each address}}
+					<div class="col-sm-6 mt-4">
+						<div class="card">
+							<div class="card-body">
+								<div class="card-body floart-end">
+									<div class="text-center">
+										<h6 class="margin">Address</h6>
+										<span>{{this.Name}} ,{{this.House}}(house), <br>
+											{{this.Town}},{{this.Street}}-{{this.PIN}} <br>Ph :{{this.Mobile}} </span>
+									</div>
+								</div>
+								<div class="text-center">
+								<a href="/edit-address/{{this._id}}" type="button" class="btn btn-primary btn-sm">Edit</a>
+                                <a href="/delete-address/{{this._id}}" type="button" onclick="deleteAddress(event)"  class="btn btn-secondary btn-sm">Delete</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					{{/each}}
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+</div>
+
+
+
+<script>
+	function editProfile() {
+		document.getElementById('name').disabled = false
+		document.getElementById('mobile').disabled = false
+		document.getElementById('email').disabled = false
+		document.getElementById('submit').style.display = "none"
+		document.getElementById('btn').style.display = "block"
+	}
+</script>

@@ -1,0 +1,41 @@
+
+<div id="page-wrapper">
+    <div class="container mt-5">
+        <table class="table table-striped mt-3" style="margin-top:30px;" id="DataTable">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">mobile No</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Options</th>
+                </tr>
+            </thead>
+          <tbody>
+      {{#each allUsers}}
+    <tr>
+      <td>{{inc @index}}</td>
+      <td>{{this.name}}</td>
+      <td>{{this.email}}</td>
+      <td>{{this.phone}}</td>
+       {{#if this.status}}
+        <td>Active</td>
+        {{else}}
+        <td>Blocked</td>
+        {{/if}}
+        {{#if this.status}}
+       <td>
+        <a href="/admin/block-user/{{this._id}}" class="btn btn-danger" name="{{this.name}}" onclick="blockUser(event)">Block</a>
+      </td>
+      {{else}}
+     <td>
+        <a href="/admin/unblock-user/{{this._id}}" class="btn btn-success"  onclick="unblockUser(event)" name="{{this.name}}" >Unblock</a>
+      </td>
+    {{/if}}
+    </tr>
+    {{/each}}
+  </tbody>
+        </table>
+    </div>
+</div>
