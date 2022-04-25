@@ -646,4 +646,14 @@ router.get('/cancelled',(req,res)=>{
   res.render('user/order-cancelled')
 })
 
+//serch section
+ router.post('/getProduct', async(req, res) => {
+  let payload=req.body.payload;
+  let search= await userHelpers.searchProduct(payload)
+  search=search.slice(0,10);
+  res.send({payload:search})
+})
+
+
+
 module.exports = router;

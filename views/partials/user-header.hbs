@@ -31,7 +31,16 @@
 </header>
 
  --}}
-
+<style>
+   #searchResult {
+    max-width: 400px;
+    width: 64%;
+    margin: 5px auto 0 auto;
+    position: absolute;
+    border-radius: 8px;
+}
+    
+</style>
 
  <header class="header navbar-area">
         <!-- Start Topbar -->
@@ -98,25 +107,25 @@
                         <div class="main-menu-search">
                             <!-- navbar search start -->
                             <div class="navbar-search search-style-5">
-                                <div class="search-select">
-                                    <div class="select-position">
-                                        <select id="select1">
-                                            <option selected>All</option>
-                                            <option value="1">option 01</option>
-                                            <option value="2">option 02</option>
-                                            <option value="3">option 03</option>
-                                            <option value="4">option 04</option>
-                                            <option value="5">option 05</option>
-                                        </select>
-                                    </div>
-                                </div>
                                 <div class="search-input">
-                                    <input type="text" placeholder="Search">
+                                    <input type="text" id="search-box" placeholder="Search" onkeyup="sendData(this)">
                                 </div>
                                 <div class="search-btn">
                                     <button><i class="lni lni-search-alt"></i></button>
                                 </div>
                             </div>
+                            <ul class="list-group list-group-flush">
+  <li class="list-group-item" id="searchResult"></li>
+  
+</ul>
+  
+
+
+                                {{!-- <div id="searchResult">
+                                   
+                                </div> --}}
+                            
+
                             <!-- navbar search Ends -->
                         </div>
                         <!-- End Main Menu Search -->
@@ -307,6 +316,41 @@
                     <!-- End Nav Social -->
                 </div>
             </div>
+           
         </div>
         <!-- End Header Bottom -->
     </header>
+
+    <script>
+        function sendData(e){
+            const searchResult = document.getElementById('searchResult');
+            let match=e.value.match(/^[a-zA-Z ]*/)
+            let match2=e.value.match(/\s*/);
+            if(match2[0]==e.value){
+                searchResult.innerHTML="";
+                return;
+            }
+            if(match[0]==e.value){
+            fetch('getProduct',{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({payload:e.value})
+                
+            }).then(res=> res.json()).then(data=>{
+                let payload=data.payload;
+                searchResult.innerHTML=''
+                if(payload.legth < 1){
+                    searchResult.innerHTML='<p>sorry. nothing foound.</p>'
+                    return;
+                }
+                payload.forEach((item,index)=>{
+                    if(index>0) searchResult.innerHTML+='<hr>';
+                    searchResult.innerHTML +=`<a href="/view-singleProduct/${item._id}">${item.name}</a>`
+                });
+            });
+                  return;
+            }
+            searchResult.innerHTML='';
+
+        }
+    </script>

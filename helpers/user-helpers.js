@@ -548,6 +548,14 @@ module.exports={
             res(banners)
         })
     },
+
+    searchProduct:(name)=>{
+        return new Promise(async(res,rej)=>{
+            let search= await db.get().collection(collection.PRODUCT_COLLECTION).find({name:{$regex:new RegExp('^'+name+'.*','i')}}).toArray();
+            res(search)
+        })
+
+    }
    
 
 
