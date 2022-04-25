@@ -297,7 +297,27 @@ module.exports={
             let categoryOffer= await db.get().collection(collection.CATEGORY_OFFERS).findOne({_id:objectId(id)})
             let catName=categoryOffer.category
             let product=await db.get().collection(collection.PRODUCT_COLLECTION).find({category:catName},{offer:{$exists:true}}).toArray()
-            console.log(product);
+            if(product){
+                db.get().collection(collection.CATEGORY_OFFERS).deleteOne({_id:objectId(id)}).then(async()=>{
+                    await product.map((product)=>{
+
+                        db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(product._id)},{
+                            $set:{
+                                price: product.actualPrice
+                            },
+                            $unset:{
+                                offer:"",
+                                catOfferPercentage:'',
+                                actualPrice:''
+                            }
+                        }).then(()=>{
+                            res()
+                        })
+                    })
+                })
+            }else{
+                res()
+            }
 
         })
 

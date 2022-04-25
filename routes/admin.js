@@ -260,7 +260,9 @@ router.post('/category-offers',(req,res)=>{
 
 //delete category
 router.get('/delete-catOffer/:id',(req,res)=>{
-  console.log(req.params.id);
+  adminHelpers.deleteCatOffer(req.params.id).then(()=>{
+    res.redirect('/admin/category-offers')
+  })
 
 })
 
