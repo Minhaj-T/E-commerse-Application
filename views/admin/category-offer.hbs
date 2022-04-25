@@ -20,7 +20,7 @@
         <tbody>
             {{#each catOffers}}
             <tr>
-                <td scope="row"></td>
+                <td>{{inc @index}}</td>
                 <td>{{this.category}}</td>
 
                 <td>{{this.Starting}}</td>
@@ -73,8 +73,8 @@
                                         <label class="pt-4">Expiry Date</label>
                                         <input type="Date" class="form-control" required name="Expiry" id="exp">
                                         <label class="pt-4">Offer Percentage</label>
-                                        <input type="text" class="form-control" onkeypress="return isNumber(event)"
-                                            required name="catOfferPercentage" min="1" max="95">
+                                            <input type="text" onkeypress="return isNumber(event)" min="1" max="95"
+                                            class="form-control" required name="catOfferPercentage">
                                     </div>
                                     <input type="submit" value="Add" id="catsub" class="btn btn-block btn-info">
                                 </form>
@@ -88,12 +88,7 @@
 </section>
 
 
-<script>
-    $("#proSelect").select2({
-        placeholder: "Select A Product",
-        allowClear: true
-    });
-</script>
+
 <script>
     $(document).ready(function () {
 
@@ -119,14 +114,4 @@
         })
 
     })
-</script>
-<script>
-    function isNumber(evt) {
-        evt = (evt) ? evt : window.event;
-        var charCode = (evt.which) ? evt.which : evt.keyCode;
-        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-            return false;
-        }
-        return true;
-    }
 </script>

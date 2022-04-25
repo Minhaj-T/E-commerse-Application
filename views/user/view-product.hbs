@@ -128,8 +128,9 @@
                     <div class="product-image">
                         <img src="/product-images/{{this._id}}a.jpg" class="card-img-top" alt="Product image">
                         {{#if this.offer}}
-                        <span class="sale-tag">-{{this.proOfferPercentage}}%</span>
+                        <span class="sale-tag">-{{this.proOfferPercentage}}{{this.catOfferPercentage}}%</span>
                         {{/if}}
+
                         <div class="button">
                             <a onclick="addToCart('{{this._id}}')" class="btn"><i class="lni lni-cart"></i> Add to
                                 Cart</a>

@@ -9,6 +9,7 @@ const { route } = require('./admin');
 const { response } = require('express');
 var paypal = require('paypal-rest-sdk');
 
+
 //Twilio Setups
 const accountSID = process.env.accountSID;
 const authToken = process.env.authToken;
@@ -39,14 +40,18 @@ router.get('/', async function(req, res, next) {
   let ordersCount=0
    let todayDate = new Date().toISOString().slice(0, 10);
    console.log(todayDate);
-    // let result2 = await adminHelpers.startProductOffer(todayDate);
     adminHelpers.startProductOffer(todayDate).then(()=>{  
+      console.log("the prosuct offer called");
     })
+    // adminHelpers.startCategoryOffer(todayDate).then(()=>{
+    //   console.log("the category offer callled");
+    // })
   if (req.session.user) {
     let userId = req.session.user._id
     cartCount = await userHelpers.getCartCount(userId)
     ordersCount=await userHelpers.getOrdersCount(userId)
   }
+  let catOff=await adminHelpers.startCategoryOffer(todayDate)
   let homeCategory= await userHelpers.getHomeCategories();
   let banners = await userHelpers.getAllBanners()
   productHelpers.getAllProduct().then((product)=>{

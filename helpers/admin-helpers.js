@@ -234,10 +234,12 @@ module.exports={
     },
 
      //Offer section
-    // Category offers
+    //----------------------------------- Category offers------------------------------------------
+
     addCategoryOffer: (data) => {
-     data.catOfferPercentage=parseInt(data.catOfferPercentage)
-    return new Promise((res,rej)=>{
+     return new Promise((res,rej)=>{
+         data.startDateIso=new Date(data.Starting)
+        data.endDateIso=new Date(data.Expiry)
         db.get().collection(collection.CATEGORY_OFFERS).insertOne(data).then(async (response) => {
             res(response)
         }).catch((err) => {
@@ -245,7 +247,6 @@ module.exports={
         })
 
     })
-
     },
 
     getAllCatOffers: () => {
@@ -255,8 +256,56 @@ module.exports={
         })
     },
 
+    //set the catoffer
+    startCategoryOffer:(date)=>{
+        let catStartDateIso = new Date(date);
+        console.log('this is a category offer.................... ',date);
+        return new Promise(async(res,rej)=>{
+            let data= await db.get().collection(collection.CATEGORY_OFFERS).find({startDateIso:{$lte:catStartDateIso}}).toArray();
+            if (data.length > 0) {
+                await data.map(async (onedata) => {
 
-     //Product offers
+                    let products = await db.get().collection(collection.PRODUCT_COLLECTION).find({ category: onedata.category, offer: { $exists: false } }).toArray();
+
+                    await products.map(async (product) => {
+                        let actualPrice = product.price
+                        let newPrice = (((product.price) * (onedata.catOfferPercentage)) / 100)
+                        newPrice = newPrice.toFixed()
+                        console.log(actualPrice, newPrice, onedata.catOfferPercentage);
+                        db.get().collection(collection.PRODUCT_COLLECTION).updateOne({ _id: objectId(product._id) },
+                            {
+                                $set: {
+                                    actualPrice: actualPrice,
+                                    price: (actualPrice - newPrice),
+                                    offer: true,
+                                    catOfferPercentage: onedata.catOfferPercentage
+                                }
+                            })
+                    })
+                })
+                res();
+            }else{
+                res()
+            }
+
+        })
+
+    },
+
+    deleteCatOffer:(id)=>{
+        return new Promise(async(res,rej)=>{
+            let categoryOffer= await db.get().collection(collection.CATEGORY_OFFERS).findOne({_id:objectId(id)})
+            let catName=categoryOffer.category
+            let product=await db.get().collection(collection.PRODUCT_COLLECTION).find({category:catName},{offer:{$exists:true}}).toArray()
+            console.log(product);
+
+        })
+
+    },
+
+
+     //-------------------------------------Product offers----------------------------
+
      addProductOffer: (data) => {
          return new Promise(async(res,rej)=>{
             data.startDateIso = new Date(data.Starting)
@@ -375,7 +424,9 @@ module.exports={
 
          },
 
-          //report 
+
+
+          //---------------------------------report ------------------------------------------------
          //sales monthly report
          monthlyReport:()=>{
              return new Promise(async(res,rej)=>{

@@ -243,7 +243,7 @@ router.get('/cancelled/:id',(req,res)=>{
 
 })
 
-//Offer Management Section....
+//-------------------Offer Management Section....------------------
 //Category offers
 router.get('/category-offers', verifyAdminLogin, async (req, res) => {
   let category= await adminHelpers.getAllCategory();
@@ -256,6 +256,12 @@ router.post('/category-offers',(req,res)=>{
   adminHelpers.addCategoryOffer(req.body).then(()=>{
    res.redirect("/admin/category-offers")    
   })
+})
+
+//delete category
+router.get('/delete-catOffer/:id',(req,res)=>{
+  console.log(req.params.id);
+
 })
 
 
@@ -330,7 +336,7 @@ router.post('/report',(req,res)=>{
 
 })
 
-//Banner management section----
+//-----------------Banner management section---------
 router.get('/banners',async(req,res)=>{
   let categories= await adminHelpers. getAllCategory()
   let banners = await userHelpers.getAllBanners()
