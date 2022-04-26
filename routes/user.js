@@ -521,7 +521,8 @@ router.get('/my-profile',verifyLogin,async(req,res)=>{
  let user=await adminHelpers.getUserdetails(user2)
  user1=await adminHelpers.getUserdetails(user2)
  req.session.user=user1;
-  res.render('user/my-profile',{user:true,user,user1,homeCategory,cartCount,ordersCount,address})
+ let url='http://localhost:3000/signup/'+user2
+  res.render('user/my-profile',{user:true,user,user1,homeCategory,cartCount,ordersCount,address,url})
 })
 
 //Edit the user profile page
@@ -675,6 +676,12 @@ router.post('/couponApply',(req,res)=>{
       res.json({ invalidCoupon: true })
     }
   })
+})
+
+//wallet section
+router.get('/wallet',(req,res)=>{
+  var user1=req.session.user;
+  res.render('user/wallet',{user1})
 })
 
 

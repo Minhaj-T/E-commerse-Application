@@ -1,3 +1,7 @@
+<style>
+
+</style>
+
 <div class="container mt-3">
 	<div class="main-body">
 		<div class="row">
@@ -24,6 +28,42 @@
 								<a href="/add-new-addressProfile"
 									class="list-group-item list-group-item-action py-2 ripple"><i
 										class="fas fa-building fa-fw me-3"></i><span>Add New Address</span></a>
+								<br>
+
+								<button type="button" class="list-group-item list-group-item-action py-2 ripple"
+									data-bs-toggle="modal" data-bs-target="#myModel" id="shareBtn"
+									data-bs-placement="top" title="Click Me!"> Share </button> <!-- Modal -->
+								<div class="modal fade" id="myModel" tabindex="-1" aria-labelledby="myModelLabel"
+									aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="myModelLabel">Share Modal</h5> <button
+													type="button" class="btn-close" data-bs-dismiss="modal"
+													aria-label="Close"></button>
+											</div>
+											<div class="modal-body">
+												<p>Share this link via</p>
+												<div class="d-flex align-items-center icons"> <a href="#"
+														class="fs-5 d-flex align-items-center justify-content-center">
+														<span class="fab fa-facebook-f"></span> </a> <a href="#"
+														class="fs-5 d-flex align-items-center justify-content-center">
+														<span class="fab fa-twitter"></span> </a> <a href="#"
+														class="fs-5 d-flex align-items-center justify-content-center">
+														<span class="fab fa-instagram"></span> </a> <a href="#"
+														class="fs-5 d-flex align-items-center justify-content-center">
+														<span class="fab fa-whatsapp"></span> </a> <a href="#"
+														class="fs-5 d-flex align-items-center justify-content-center">
+														<span class="fab fa-telegram-plane"></span> </a> </div>
+												<p>Or copy link</p>
+												<div class="field d-flex align-items-center justify-content-between">
+													<span class="fas fa-link text-center"></span> <input type="text"
+														id="myInput" value="{{url}}"> <button
+														onclick="myFunction()">Copy</button> </div>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 
@@ -64,8 +104,7 @@
 							<div class="row">
 								<div class="col-sm-3"></div>
 								<div class="col-sm-9 text-secondary">
-									<a onclick="editProfile()" class="btn btn-primary px-4" type=""
-										id="submit">Edit
+									<a onclick="editProfile()" class="btn btn-primary px-4" type="" id="submit">Edit
 										Profile</a>
 									<button type="submit" class="btn btn-primary px-4" id="btn"
 										style="display: none;">Update</button>
@@ -109,8 +148,10 @@
 									</div>
 								</div>
 								<div class="text-center">
-								<a href="/edit-address/{{this._id}}" type="button" class="btn btn-primary btn-sm">Edit</a>
-                                <a href="/delete-address/{{this._id}}" type="button" onclick="deleteAddress(event)"  class="btn btn-secondary btn-sm">Delete</a>
+									<a href="/edit-address/{{this._id}}" type="button"
+										class="btn btn-primary btn-sm">Edit</a>
+									<a href="/delete-address/{{this._id}}" type="button" onclick="deleteAddress(event)"
+										class="btn btn-secondary btn-sm">Delete</a>
 								</div>
 							</div>
 						</div>
@@ -135,4 +176,25 @@
 		document.getElementById('submit').style.display = "none"
 		document.getElementById('btn').style.display = "block"
 	}
+</script>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function (e) {
+		let field = document.querySelector('.field');
+		var copyText = document.getElementById("myInput");
+		let copyBtn = document.querySelector('.field button');
+
+		copyBtn.onclick = () => {
+			copyText.select();
+			copyText.setSelectionRange(0, 99999)
+			if (document.execCommand("copy")) {
+				field.classList.add('active');
+				copyBtn.innerText = 'Copied';
+				setTimeout(() => {
+					field.classList.remove('active');
+					copyBtn.innerText = 'Copy';
+				}, 3500)
+			}
+		}
+	})
 </script>
