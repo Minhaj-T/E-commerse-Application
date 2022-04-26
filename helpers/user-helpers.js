@@ -266,6 +266,7 @@ module.exports={
     },
 
     placeOrder:(order,products,total)=>{
+        let coupon = order.Coupon
         return new Promise((res,rej)=>{
             let dateIso = new Date()
             let date = moment(dateIso).format('YYYY/MM/DD')
@@ -286,16 +287,25 @@ module.exports={
                 PaymentMethod: order.Payment,
                 Products: products,
                 Total: total,
+                Coupon: coupon,
                 DateISO: dateIso,
                 Date: date,
                 Time: time,
                 Status:status
             }
-            console.log(orderObj);
-            db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response)=>{
-                
-                res(response.insertedId)
-
+            let user = order.userId 
+            db.get().collection(collection.COUPON_COLLECTION).updateOne({ Coupon: coupon },
+                {
+                    $push: {
+                        Users: user
+                    }
+            }).then(()=>{
+                console.log("user pushed to coupon collection");
+                db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response)=>{
+                    console.log("order inserted");
+                    res(response.insertedId)
+    
+                })
             })
 
         })
@@ -331,7 +341,7 @@ module.exports={
         return new Promise(async (resolve, reject) => {
             let orders = await db.get().collection(collection.ORDER_COLLECTION).find({ User: objectId(Id) }).sort({'DateISO': -1}).toArray()
             resolve(orders)
-            console.log(orders);
+            // console.log(orders);
         })
     },
 
@@ -339,7 +349,7 @@ module.exports={
      getOrdersCount: (userId) => {
         return new Promise(async (resolve, reject) => {
             let order = await db.get().collection(collection.ORDER_COLLECTION).countDocuments({User:objectId(userId)})
-            console.log(order);
+            // console.log(order);
             resolve(order)
         })
     },
@@ -555,7 +565,45 @@ module.exports={
             res(search)
         })
 
-    }
+    },
+
+    //vlidate the coupon with the checkout page
+    couponValidate: (data, user) => {
+        return new Promise(async(res,rej)=>{
+            obj = {}
+                let date=new Date()
+                date=moment(date).format('YYYY-MM-DD')
+              console.log(date);
+   
+                let coupon= await db.get().collection(collection.COUPON_COLLECTION).findOne({Coupon:data.Coupon,Available:true})
+                if(coupon){
+                        let users = coupon.Users
+                        let userChecker = users.includes(user)
+                        if(userChecker){
+                            obj.couponUsed=true;
+                            res(obj)
+                        }else{
+                            if(date <= coupon.Expiry){
+                                let total = parseInt(data.Total)
+                                let percentage = parseInt(coupon.Offer)
+                                let discountVal = ((total * percentage) / 100).toFixed()
+                                obj.total = total - discountVal
+                                obj.success = true
+                                res(obj)
+                            }else{
+                                obj.couponExpired = true
+                                  console.log("Expired");
+                                   res(obj)
+                            }
+                        }
+                    }else{
+                        obj.invalidCoupon = true
+                        console.log("invalid");
+                        res(obj)
+
+                    }   
+             })
+        },
    
 
 

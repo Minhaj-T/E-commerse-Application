@@ -52,14 +52,13 @@ router.get('/', async function(req, res, next) {
     ordersCount=await userHelpers.getOrdersCount(userId)
   }
   let catOff=await adminHelpers.startCategoryOffer(todayDate)
+  let startCoupon = await adminHelpers.startCouponOffers(todayDate)
   let homeCategory= await userHelpers.getHomeCategories();
   let banners = await userHelpers.getAllBanners()
   productHelpers.getAllProduct().then((product)=>{
 
     res.render('user/view-product', {product,user:true,user1,homeCategory,cartCount,ordersCount,userPage:true,banners}); 
   })
- 
-  
 });
 
 router.get('/login', async(req,res)=>{
@@ -657,6 +656,25 @@ router.get('/cancelled',(req,res)=>{
   let search= await userHelpers.searchProduct(payload)
   search=search.slice(0,10);
   res.send({payload:search})
+})
+
+//-------------------Coupon management section-------------------------------------
+router.post('/couponApply',(req,res)=>{
+  let id = req.session.user._id
+  userHelpers.couponValidate(req.body, id).then((response)=>{
+    req.session.couponTotal = response.total
+    if (response.success) {
+      res.json({ couponSuccess: true, total: response.total })
+    } else if (response.couponUsed) {
+      res.json({ couponUsed: true })
+    }
+    else if (response.couponExpired) {
+      res.json({ couponExpired: true })
+    }
+    else {
+      res.json({ invalidCoupon: true })
+    }
+  })
 })
 
 

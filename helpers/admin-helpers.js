@@ -444,6 +444,77 @@ module.exports={
 
          },
 
+//----------------------The coupon Mangement-------------------------------
+//add coupon into server
+         addCoupon:(data)=>{
+             return new Promise(async(res,rej)=>{
+                let startDateIso=new Date(data.Starting)
+                let endDateIso=new Date(data.Expiry)
+                let expiry = await moment(data.Expiry).format('YYYY-MM-DD')
+                 let starting = await moment(data.Starting).format('YYYY-MM-DD')
+                 let dataobj = await {
+                    Coupon: data.Coupon,
+                    Offer: parseInt(data.Offer),
+                    Starting: starting,
+                    Expiry: expiry,
+                    startDateIso: startDateIso,
+                    endDateIso: endDateIso,
+                    Users: []
+                }
+                db.get().collection(collection.COUPON_COLLECTION).insertOne(dataobj).then(()=>{
+                    res()
+                }).catch((err)=>{
+                    res(err)
+                })
+
+             })
+         },
+
+         startCouponOffers:(date)=>{
+             let couponStartDate = new Date(date);
+            return new Promise(async(res,rej)=>{
+                let data= await db.get().collection(collection.COUPON_COLLECTION).find({startDateIso:{$lte:couponStartDate}}).toArray()
+                console.log("this is the result ",data);
+                if(data.length >0){
+                    await data.map((onedata)=>{
+                        db.get().collection(collection.COUPON_COLLECTION).updateOne({_id:objectId(onedata._id)},{
+                          $set:{
+                            Available: true
+                          }
+                        }).then(()=>{
+                            res()
+                        })
+                    })
+                }else{
+                    res()
+                }
+            })
+
+
+         },
+
+
+         //get the all coupen Details
+         getAllCoupons:()=>{
+             return new Promise((res,rej)=>{
+                 let coupons=db.get().collection(collection.COUPON_COLLECTION).find().toArray()
+                 res(coupons)
+             })
+             
+         },
+
+         deleteCoupon: (id) => {
+             return new Promise((res,rej)=>{
+                 db.get().collection(collection.COUPON_COLLECTION).deleteOne({_id:objectId(id)}).then(()=>{
+                     res()
+                 })
+             })
+
+         },
+
+
+
+
 
 
           //---------------------------------report ------------------------------------------------
@@ -534,7 +605,7 @@ module.exports={
 
          },
 
-         //banner session started
+         //--------------------------banner session started-----------------------------
          addBanner:(data)=>{
              return new Promise((res,rej)=>{
                  db.get().collection(collection.BANNER_COLLECTION).insertOne(data).then((response)=>{

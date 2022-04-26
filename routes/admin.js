@@ -307,9 +307,6 @@ router.get('/edit-proOffer/:id',(req,res)=>{
   })
 
   router.post('/edit-proOffer/:id',(req,res)=>{
-
-    console.log(req.params.id);
-
     adminHelpers.updateProOffer(req.params.id,req.body).then((response)=>{
       res.redirect("/admin/product-offers")
 
@@ -393,5 +390,24 @@ router.get('/delete-banner/:id',(req,res)=>{
   })
 })
 
+//------------------Coupen section---------------
+router.get('/coupons',(req,res)=>{
+  adminHelpers.getAllCoupons().then((coupons)=>{
+    res.render('admin/coupons',{admin:true,coupons})
+  })
+
+})
+router.post('/add-coupon',(req,res)=>{
+  adminHelpers.addCoupon(req.body).then(()=>{
+    res.redirect('/admin/coupons')
+  })
+})
+
+//delete category offer
+router.get('/delete-coupon/:id',(req,res)=>{
+  adminHelpers.deleteCoupon(req.params.id).then(()=>{
+    res.redirect('/admin/coupons')
+  })
+})
 
 module.exports = router;
