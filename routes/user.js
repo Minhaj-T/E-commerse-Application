@@ -340,8 +340,12 @@ router.post('/place-order',async(req,res)=>{
  let userId=req.body.userId
  
   let products = await userHelpers.getCartProductList(req.body.userId)
- let  total = await userHelpers.getTotalAmount(req.body.userId)
-  userHelpers.placeOrder(req.body,products,total).then((orderId)=>{
+  if (req.session.couponTotal) {
+    var total = req.session.couponTotal
+  } else {
+    total = await userHelpers.getTotalAmount(req.body.userId)
+  }
+  userHelpers.placeOrder(req.body,products,total,).then((orderId)=>{
      
     req.session.orderId=orderId
     
@@ -444,6 +448,7 @@ router.get("/success", (req, res) => {
       console.log(JSON.stringify(payment));
       userHelpers.changePaymentStatus(req.session.orderId).then(()=>{
         userHelpers.clearCart(req.session.user._id).then(()=>{
+          req.session.couponTotal = null
         res.redirect('/order-success')
         })
       })
@@ -451,11 +456,16 @@ router.get("/success", (req, res) => {
   });
 });
 
-router.get("/cancel", (req, res) => res.render('user/order-cancelled'));
+router.get("/cancel", (req, res) =>{
+ res.render('user/order-cancelled')
+ req.session.couponTotal = null
+})
+  
 
 //order succsess page
 router.get('/order-success',(req,res)=>{
   res.render('user/order-success',{adminlogin:true})
+  req.session.couponTotal = null
 })
 
 

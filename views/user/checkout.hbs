@@ -197,25 +197,29 @@
 
                 <div class="sub-total-price">
                   
-                    <div class="total-price discount">
-                    <p class="value">Items Price:</p>
-                    <p class="price">₹ {{total}}.00</p>
+                    <div class="total-price">
+                    <p class="value">Products Total :</p>
+                    <p class="price">₹ {{total}}</p>
                   </div>
-                  <div class="total-price shipping " id="newTotal" style="display: none;">
-                    <p class="value" id="tdTotal" style="display: none;">Discount Price:</p>
-                    <p class="price" id="totalOriginal" style="display: none;"></p>
+                  <div class="total-price shipping " >
+                    <p class="value" id="discountLabel" style="display: none;">Discount Price:</p>
+                    <p class="price" id="discounttd" style="display: none;">₹ <span style="display: none;" id="discount"></span> </p>
                   </div>
                   <div class="total-price">
-                    <p class="value">Coupon discount</p>
-                    <p class="price" > <span id="discount"> </span></p>
+                    <p class="value" id="newTotal" style="display: none;">New Total</p>
+                    <p class="price" id="tdTotal" style="display: none;">₹ <span id="totalOriginal" style="display: none;">{{total}}</span> </p>
+                  </div>
+                   <div class="total-price">
+                    <p class="value">Shipping</p>
+                    <p class="price">Free</p>
                   </div>
                 
                 </div>
 
-                <div class="total-payable">
+                <div class="total-payable" id="newTotal">
                   <div class="payable-price">
-                    <p class="value">Total Price:</p>
-                    <p class="price" id="totalOriginal"></p>
+                    <p class="value">Total :</p>
+                    <p class="price" >₹ <span id="ttlprc">{{total}}</span> </p>
                   </div>
                 </div>
                 <hr />
@@ -317,14 +321,15 @@ function autoFill(name, house, street, town, pin, mobile, email) {
             },
             method: 'post',
             success: (response) => {
-            
               if (response.couponSuccess) {
                 let oldTotal = parseInt(document.getElementById('totalOriginal').innerHTML)
+                document.getElementById('couponInput').readOnly = true
                 let discount = oldTotal - parseInt(response.total)
-  console.log(discount)
-                document.getElementById('discount').value = discount
+                document.getElementById('discount').innerHTML = discount
+                document.getElementById("ttlprc").innerHTML=response.total
                     $('#discount').show()
-
+                    $('#discountLabel').show()
+                    $('#discounttd').show()
                     $('#newTotal').show()
                     $('#tdTotal').show()
                     $('#totalOriginal').show()
