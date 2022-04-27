@@ -8,6 +8,7 @@ const adminHelpers = require('../helpers/admin-helpers');
 const { route } = require('./admin');
 const { response } = require('express');
 var paypal = require('paypal-rest-sdk');
+const createReferal=require('referral-code-generator')
 
 
 //Twilio Setups
@@ -76,28 +77,47 @@ router.get('/login', async(req,res)=>{
 })
 
 router.get('/signup',async(req,res)=>{
+  let refer=req.query.refer?req.query.refer:null
   let homeCategory = await userHelpers.getHomeCategories()
   let cartCount=0;
   if(req.session.loggedIn){
     res.redirect('/');
   }
   
-  res.render('user/signup',{user:true,homeCategory,cartCount,"usererr":req.session.usererr})
+  res.render('user/signup',{user:true,homeCategory,cartCount,"usererr":req.session.usererr,refer})
   req.session.usererr=false;
 })
+
 router.post('/signup',(req,res)=>{
+  console.log("this is the submin post requst ",req.body);
+  let refer=createReferal.alphaNumeric('uppercase', 2, 3)
+  req.body.refer=refer
+  if(req.body.referedBy!=''){
+    userHelpers.checkReferal(req.body.referedBy).then((data)=>{
+      req.body.referedBy=data[0]._id
+      req.body.wallet=100
+      userHelpers.doSignin(req.body).then((response)=>{
+        req.session.loggedIn=true
+        req.session.user=response.user
+        res.redirect('/')
+      })
+      
+    }).catch(()=>{
+      req.session.referErr="Sorry No such Code Exists"
+      res.redirect('/signup')
+    })
+  }else{
   userHelpers.doSignin(req.body).then((response)=>{
     if(response.usererr){
-
       req.session.usererr=true;
       res.redirect('/signup')
     }else{
   req.session.loggedIn=true
-  req.session.user=req.body
-
+  req.session.user=response.user
 res.redirect('/');
     }
   })
+}
 })
 
 router.post('/login',(req,res)=>{
@@ -458,7 +478,6 @@ router.get("/success", (req, res) => {
 
 router.get("/cancel", (req, res) =>{
  res.render('user/order-cancelled')
- req.session.couponTotal = null
 })
   
 
@@ -531,8 +550,10 @@ router.get('/my-profile',verifyLogin,async(req,res)=>{
  let user=await adminHelpers.getUserdetails(user2)
  user1=await adminHelpers.getUserdetails(user2)
  req.session.user=user1;
- let url='http://localhost:3000/signup/'+user2
-  res.render('user/my-profile',{user:true,user,user1,homeCategory,cartCount,ordersCount,address,url})
+ let refer=user.refer
+ let wallet=user.wallet
+ let referalLink='http://localhost:3000/signup?refer='+refer
+  res.render('user/my-profile',{user:true,user,user1,homeCategory,cartCount,ordersCount,address,referalLink,wallet})
 })
 
 //Edit the user profile page

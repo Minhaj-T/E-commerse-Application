@@ -15,6 +15,15 @@ module.exports={
 
     doSignin:(userData)=>{
         return new Promise( async(res,rej)=>{
+            if (userData.wallet) {
+                console.log("chek the wallet.......................................",userData.wallet);
+                let mainUser=await db.get().collection(collection.USER_COLLECTION).findOne({_id:userData.referedBy})
+                if(mainUser.wallet<200){
+                  await db.get().collection(collection.USER_COLLECTION).updateOne({ _id: userData.referedBy }, { $inc: { wallet: 50 } });
+                }
+              }
+              userData.status = true;
+              userData.wallet = userData.wallet ? userData.wallet : 0;
             let phoneext= `+91${userData.phone}`;
             let response={};
             userData.password= await bcrypt.hash(userData.password,10)
@@ -23,7 +32,11 @@ module.exports={
                 email: userData.email,
                 phone: `+91${userData.phone}`,
                 password: userData.password,
-                status: true
+                status: true,
+                refer:userData.refer,
+                referedBy:userData.referedBy,
+                wallet:userData.wallet
+                
             }
            let userexst= await db.get().collection(collection.USER_COLLECTION).findOne({ "$or": [ { email: userData.email }, { phone: phoneext} ] });
             if (userexst) {
@@ -33,8 +46,11 @@ module.exports={
                 console.log(userexst);
                 
             }else{
-            db.get().collection(collection.USER_COLLECTION).insertOne(user).then((data)=>{
-                res(data.insertedId)
+            db.get().collection(collection.USER_COLLECTION).insertOne(user).then(async(data)=>{
+                console.log(data);
+                let user = await db.get().collection(collection.USER_COLLECTION).findOne({ _id:data.insertedId });
+                  response.user = user;
+                res(response)
             })
             }
         })
@@ -430,7 +446,7 @@ module.exports={
          return new Promise(async(res,rej)=>{
 
              let user= await db.get().collection(collection.USER_COLLECTION).findOne({_id:objectId(userId)})
-             let address=user.address;
+             let address=user?.address;
              res(address)
          })
          
@@ -604,6 +620,18 @@ module.exports={
                     }   
              })
         },
+
+        checkReferal: (referal) => {
+            return new Promise(async (res, rej) => {
+              let refer = await db.get().collection(collection.USER_COLLECTION).find({ refer: referal }).toArray();
+              if(refer){
+
+                  res(refer)
+              }else{
+                  res(err)
+              }
+            });
+          },
    
 
 

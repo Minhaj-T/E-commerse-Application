@@ -23,6 +23,7 @@
     "nodemon": "^2.0.15",
     "paypal-rest-sdk": "^1.8.1",
     "razorpay": "^2.8.1",
+    "referral-code-generator": "^1.0.8",
     "sweetalert2": "^11.4.8",
     "twilio": "^3.76.0",
     "uuid": "^8.3.2"
