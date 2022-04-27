@@ -68,5 +68,14 @@ module.exports={
            let allUsers= db.get().collection(collection.USER_COLLECTION).find().toArray()
            res(allUsers)
         })
+    },
+
+    //get the product based in category name
+    getCategoryProducts:(catname)=>{
+        return new Promise(async(res,rej)=>{
+           let categorys=await db.get().collection(collection.PRODUCT_COLLECTION).find({category:catname}).toArray()
+           res(categorys)
+        })
+
     }
 }

@@ -329,9 +329,12 @@ router.get('/view-singleProduct/:id',async(req,res)=>{
   }
   let homeCategory = await userHelpers.getHomeCategories()
   console.log(proId);
-  productHelpers.getProductDetalils(proId).then((Product)=>{
+  productHelpers.getProductDetalils(proId).then(async(Product)=>{
+    categorys=await productHelpers.getCategoryProducts(Product.category)
+
+    console.log(categorys);
   
-    res.render('user/view-singleProduct',{Product,homeCategory,user1,cartCount,ordersCount})
+    res.render('user/view-singleProduct',{Product,homeCategory,user1,cartCount,ordersCount,userPage:true,categorys})
   })
 })
 
