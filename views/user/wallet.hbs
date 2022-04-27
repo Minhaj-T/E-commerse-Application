@@ -1,1 +1,30 @@
-<p>this is {{user1.name}} wallet</p>
+
+
+                <div class="single-banner right">
+                        <div class="content">
+                                    <div id="sectionD" class="tab-pane">
+                    <div class="wallet-container text-center pt-2"
+                        style="box-shadow: 0 2px 6px 0 rgba(218, 8, 8, 0.2);transition: 0.3s;background: linear-gradient(rgb(247, 245, 245),rgb(245, 245, 245));">
+                        <p class="page-title "
+                            style="font-size: larger;font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+                            <i class="fa fa-align-left pr-2"></i>My E-wallet</p>
+
+                        <div class="amount-box text-center mt-5">
+                            <img style="height: 50px;"
+                                src="https://lh3.googleusercontent.com/ohLHGNvMvQjOcmRpL4rjS3YQlcpO0D_80jJpJ-QA7-fQln9p3n7BAnqu3mxQ6kI4Sw"
+                                alt="wallet">
+                            <p>Total Balance</p>
+                            <p class="amount pt-3 pb-3" style="font-size: x-large;">₹ {{#if wallet}}{{wallet}}{{else}}0{{/if}}</p>
+                        </div>
+                        {{#if userData.wallet}}
+                        <div class="txn-history d-flex justify-content-center mt-5">
+                            <p><b class="pl-3">Hurray you earned {{userData.wallet}}</b></p>
+                            <p class="txn-list pl-3">You can use {{userData.wallet}} at Checkout</p>
+                        </div>
+                        {{/if}}
+
+                    </div>
+                </div>
+                         
+                        </div>
+                    </div>

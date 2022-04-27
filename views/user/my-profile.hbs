@@ -30,9 +30,10 @@
 										class="fas fa-building fa-fw me-3"></i><span>Add New Address</span></a>
 								<br>
 
-								<button type="button" class="list-group-item list-group-item-action py-2 ripple"
+								<a type="button" class="list-group-item list-group-item-action py-2 ripple"
 									data-bs-toggle="modal" data-bs-target="#myModel" id="shareBtn"
-									data-bs-placement="top" title="Click Me!"> Share </button> <!-- Modal -->
+									data-bs-placement="top" title="Click Me!"><i
+										class="fas fa-retweet fa-fw me-2"></i><span>Refer</span></a> <!-- Modal -->
 								<div class="modal fade" id="myModel" tabindex="-1" aria-labelledby="myModelLabel"
 									aria-hidden="true">
 									<div class="modal-dialog">
@@ -59,7 +60,59 @@
 												<div class="field d-flex align-items-center justify-content-between">
 													<span class="fas fa-link text-center"></span> <input type="text"
 														id="myInput" value="{{url}}"> <button
-														onclick="myFunction()">Copy</button> </div>
+														onclick="myFunction()">Copy</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<br>
+
+								<a type="button" class="list-group-item list-group-item-action py-2 ripple"
+									data-bs-toggle="modal" data-bs-target="#myModel1" id="shareBtn"
+									data-bs-placement="top" title="Click Me!"><i
+										class="fas fa-wallet fa-fw me-2"></i><span>wallet</span></a> <!-- Modal -->
+								<div class="modal fade" id="myModel1" tabindex="-1" aria-labelledby="myModelLabel"
+									aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="myModelLabel">E-Wallet</h5> <button
+													type="button" class="btn-close" data-bs-dismiss="modal"
+													aria-label="Close"></button>
+											</div>
+											<div class="modal-body">
+												<div class="single-banner right">
+
+													<div id="sectionD" class="tab-pane">
+														<div class="wallet-container text-center pt-2"
+															style="box-shadow: 0 2px 6px 0 rgba(218, 8, 8, 0.2);transition: 0.3s;background: linear-gradient(rgb(247, 245, 245),rgb(245, 245, 245));">
+
+															<div class="amount-box text-center mt-5">
+																<img style="height: 50px;"
+																	src="https://lh3.googleusercontent.com/ohLHGNvMvQjOcmRpL4rjS3YQlcpO0D_80jJpJ-QA7-fQln9p3n7BAnqu3mxQ6kI4Sw"
+																	alt="wallet">
+																<p>Total Balance</p>
+																<p class="amount pt-3 pb-3" style="font-size: x-large;">
+																	₹ {{#if wallet}}{{wallet}}{{else}}0{{/if}}</p>
+															</div>
+															{{#if userData.wallet}}
+															<div class="txn-history d-flex justify-content-center mt-5">
+																<p><b class="pl-3">Hurray you earned
+																		{{userData.wallet}}</b></p>
+																<p class="txn-list pl-3">You can use {{userData.wallet}}
+																	at Checkout</p>
+															</div>
+															{{/if}}
+
+														</div>
+													</div>
+
+
+												</div>
+
+
+
 											</div>
 										</div>
 									</div>
