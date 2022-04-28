@@ -175,6 +175,68 @@
         </div>
     </div>
 </div>
+<div class="container">
+    <div class="main-body">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card ">
+                    
+                    <div class="card-header">
+                        <i class="fas fa-chart-area "></i>
+                        All Transactions
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+                        <div class="row text-center">
+                    </div>
+                      <div class="row">
+                        <div class="col-md-12 card mt-4">
+                            {{#if data.noData}}
+                            <table id="example" class="display nowrap" style="width:100%">
+                                {{else}}
+                                <table id="example" class="display nowrap" style="width:100%">
+                                    {{/if}}
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">No.</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">User</th>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col">Discount</th>
+                                            <th scope="col">Payment</th>
+                                            <th scope="col">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each data.currentOrders}}
+                                        <tr>
+                                            <td>{{inc @index}}</td>
+                                            <td>{{this.Date}}</td>
+
+                                            <td>{{this.User}}</td>
+
+
+                                            <td>{{this.Total}}</td>
+                                            <td>
+                                                {{#if this.Discount}}
+                                                {{this.Discount}}
+                                                {{else}}
+                                                0{{/if}}
+                                            </td>
+                                            <td>{{this.PaymentMethod}}</td>
+                                            <td>{{this.Status}}</td>
+
+
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"
@@ -250,4 +312,15 @@
 
   
 
+</script>
+
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
+} );
 </script>
