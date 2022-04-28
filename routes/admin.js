@@ -115,12 +115,14 @@ router.get('/delete-product/:id',verifyAdminLogin,(req,res)=>{
 
 router.get('/edit-product/:id',verifyAdminLogin, async(req,res)=>{
   let product=await productHelpers.getProductDetalils(req.params.id)
+  let category= await adminHelpers. getAllCategory()
   console.log(product);
 
-  res.render('admin/edit-product',{admin:true,product})
+  res.render('admin/edit-product',{admin:true,product,category})
 })
 
 router.post('/edit-product/:id',verifyAdminLogin,(req,res)=>{
+  console.log("this is my edited ",req.body);
   productHelpers.updateProdct(req.params.id,req.body).then((response)=>{
     let id = req.params.id
     if (req.files?.image1) {

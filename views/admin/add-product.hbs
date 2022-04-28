@@ -9,7 +9,7 @@
           <label for="category"> <b> Category </b></label>
           <select name="category" id="category" class="custom-select p-2">
             <option value="" selected>Choose a Category</option>
-            {{#each category}}
+            {{#each Category}}
             <option value="{{this.category}}">{{this.category}}</option>
             {{/each}}
           </select>
@@ -21,29 +21,29 @@
           <div class="row">
             <div class="col-12">
               <div id="image-box1" style="width: 500px; height: 500px; display: none;"></div>
-              <button class="btn btn-primary mt-3" type="button" style="display: none;" id="crop-btn1">Crop</button>
+              <button class="btn btn-primary  mt-3" type="button" style="display: none;" id="crop-btn1">Crop</button>
             </div>
             <div class="mt-5 col-md-6">
               <label for="">IMAGE 1</label>
-              <img src="" alt="" style="width: 100px; height:auto" id="imgview1">
-              <input type="file" name="image1" id="file1" class="form-control" onchange="return fileValidation1()">
+              <img src="" alt="" style="width: 100px; height:auto" id="imgView1">
+              <input type="file" name="image1" id="id_image1" class="form-control" onchange=" fileValidation1(event)"
+                accept="image/*">
             </div>
             <div class="mt-5 col-md-6">
               <label for="">IMAGE 2</label>
-              <img src="" alt="" style="width: 100px; height:auto" id="imgview2">
-              <input type="file" name="image2" id="file2" class="form-control" onchange="return fileValidation2()">
+              <img src="" alt="" style="width: 100px; height:auto" id="imgView2">
+              <input type="file" name="image2" id="id_image2" class="form-control" onchange=" fileValidation2(event)">
             </div>
             <div class="mt-5 col-md-6">
               <label for="">IMAGE 3</label>
-              <img src="" alt="" style="width: 100px; height:auto" id="imgview3">
-              <input type="file" name="image3" id="file3" class="form-control" onchange="return fileValidation3()">
+              <img src="" alt="" style="width: 100px; height:auto" id="imgView3">
+              <input type="file" name="image3" id="id_image3" class="form-control" onchange=" fileValidation3(event)">
             </div>
             <div class="mt-5 col-md-6">
               <label for="">IMAGE 4</label>
-              <img src="" alt="" style="width: 100px; height:auto" id="imgview4">
-              <input type="file" name="image4" id="file4" class="form-control" onchange="return fileValidation4()">
+              <img src="" alt="" style="width: 100px; height:auto" id="imgView4">
+              <input type="file" name="image4" id="id_image4" class="form-control" onchange=" fileValidation4(event)">
             </div>
-
           </div>
           <div class="text-center">
             <input type="submit" class="btn btn-primary mt-3" value="Add Product" />

@@ -49,11 +49,12 @@ module.exports={
 
     },
     updateProdct:(proId,proDetails)=>{
+        console.log("this is the submitside", proDetails.category);
         return new Promise((res,rej)=>{
             db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(proId)},{
                 $set:{
                     name:proDetails.name,       
-                    catogory:proDetails.catogory,
+                    category:proDetails.category,
                     price:proDetails.price,
                     discription:proDetails.discription
                 }

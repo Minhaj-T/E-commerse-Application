@@ -315,6 +315,18 @@ $(document).ready(function () {
             },
             category: {         
                 required: true,
+            },
+            image1: {
+                required: true
+            },
+            image2: {
+                required: true
+            },
+            image3: {
+                required: true
+            },
+            image4: {
+                required: true
             }
         },
         messages: {
