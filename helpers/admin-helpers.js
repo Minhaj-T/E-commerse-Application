@@ -206,7 +206,8 @@ module.exports={
             if(status=='Delivered'){
                 db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:objectId(orderId)},{
                     $set:{
-                        Status:status
+                        Status:status,
+                        Delivered: true
                     }
                 }).then(()=>{
                     res()
@@ -214,7 +215,8 @@ module.exports={
             }else if(status=="Cancelled"){
                 db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:objectId(orderId)},{
                     $set:{
-                        Status:status
+                        Status:status,
+                        Cancelled: true
                     }
                 }).then((response)=>{
                     res()

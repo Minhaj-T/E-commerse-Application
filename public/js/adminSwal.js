@@ -190,6 +190,32 @@ function deleteCoupon(event) {
     })
 }
 
+function changeStatus(event) {
+    event.preventDefault();
+    var link = event.currentTarget.href;
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Do you want to change the order status",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes,Change'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire(
+                'Changed!',
+                'Order status changed.',
+                'success'
+            )
+            window.location = link;
+        }
+        else {
+            return false;
+        }
+    })
+}
+
 
 
 

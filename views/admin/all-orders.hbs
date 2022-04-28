@@ -1,90 +1,92 @@
 <section>
-<div class="contents order-2 order-md-1">
-  <div class="container">
-    <div class="row align-items-center justify-content-center">
-    <table class="table table-striped" id="DataTable">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">No</th>
-          <th scope="col">Date</th>
-          <th scope="col">User</th>
-          <th scope="col">Address</th>
-          <th scope="col">Amonunt</th>
-          <th scope="col">Status</th>
+  <div class="contents order-2 order-md-1">
+    <div class="container">
+      <div class="row align-items-center justify-content-center">
+        <table class="table table-striped" id="DataTable">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Date</th>
+              <th scope="col">User</th>
+              <th scope="col">Address</th>
+              <th scope="col">Amonunt</th>
+              <th scope="col">Status</th>
 
-        </tr>
-      </thead>
-      <tbody>
-        {{#each ordersList}}
-          <tr>
-            <td>{{inc @index}}</td>
-            <td>{{this.Date}}{{this.time}}</td>
-            <td>{{this.deliveryDetails.Name}}</td>
-            <td>{{this.deliveryDetails.Name}},
-              {{this.deliveryDetails.House}},
-              <br />
-              {{this.deliveryDetails.Street}},<br />
-              {{this.deliveryDetails.PIN}},
-              {{this.deliveryDetails.Mobile}}
-            </td>
-            <td>₹{{this.Total}}
-              <br />
-              {{this.PaymentMethod}}</td>
-            <td>
-              <div class="dropdown">
-                <button
-                  type="button"
-                  class="btn btn-primary  dropdown-toggle p-1"style=" height: 2em;width:7em;" id="{{this._id}}"
-                  data-bs-toggle="dropdown" value="{{this.Status}}" 
-                  onclick="statusChecker('{{this._id}}')" >
-                  {{this.Status}}
-                </button>
-               <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/admin/placed/{{this._id}}" id="{{this._id}}placed"  onclick="changeStatus(event)" style="text-decoration: none;">placed</a></li>
-                  <li><a class="dropdown-item" href="/admin/shipped/{{this._id}}" id="{{this._id}}ship"  onclick="changeStatus(event)" style="text-decoration: none;">Shipped</a></li>
-                  <li><a class="dropdown-item"href="/admin/delivered/{{this._id}}" id="{{this._id}}deliver"  onclick="changeStatus(event)" style="text-decoration: none;">Delivered</a></li>
-                  <li><a class="dropdown-item" href="/admin/cancelled/{{this._id}}" id="{{this._id}}cancel" onclick="changeStatus(event)" style="text-decoration: none;">Canceled</a></li>
-                </ul>
-              </div>
-            </td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each ordersList}}
+            <tr>
+              <td>{{inc @index}}</td>
+              <td>{{this.Date}}{{this.time}}</td>
+              <td>{{this.deliveryDetails.Name}}</td>
+              <td>{{this.deliveryDetails.Name}},
+                {{this.deliveryDetails.House}},
+                <br />
+                {{this.deliveryDetails.Street}},<br />
+                {{this.deliveryDetails.PIN}},
+                {{this.deliveryDetails.Mobile}}
+              </td>
+              <td>₹{{this.Total}}
+                <br />
+                {{this.PaymentMethod}}
+              </td>
+              <td>
+                <div class="dropdown">
+                  <button class="btn btn-primary  dropdown-toggle p-1" style=" height: 3em;width:8em;" id="{{this._id}}"
+                    data-toggle="dropdown" value="{{this.Status}}" aria-haspopup="true" aria-expanded="false"
+                    onclick="statusChecker('{{this._id}}')">
+                    {{this.Status}}
+                  </button>
+
+                  <ul class="dropdown-menu">
+                    <a class="dropdown-item" href="/admin/placed/{{this._id}}" onclick="changeStatus(event)"
+                      style="text-decoration: none;" id="{{this._id}}placed">Placed</a>
+                    <a class="dropdown-item" href="/admin/shipped/{{this._id}}" onclick="changeStatus(event)"
+                      style="text-decoration: none;" id="{{this._id}}ship">Shipped</a>
+                    <a class="dropdown-item" href="/admin/delivered/{{this._id}}" onclick="changeStatus(event)"
+                      style="text-decoration: none;" id="{{this._id}}deliver">Delivered</a>
+                    <a class="dropdown-item" href="/admin/cancelled/{{this._id}}" onclick="changeStatus(event)"
+                      style="text-decoration: none;" id="{{this._id}}cancel">Cancelled</a>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
-  </div>
-  </div>  
 </section>
 
 
-<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-    crossorigin="anonymous"></script>
 <script>
-    function statusChecker(orderId) {
-        console.log("llog", orderId)
-        let status = document.getElementById(orderId).value
+  function statusChecker(orderId) {
+    console.log("llog", orderId)
+    let status = document.getElementById(orderId).value
 
-        console.log('ja', status)
-        if (status === 'Placed') {
-            console.log("Placed")
-            document.getElementById(orderId + 'placed').style.display = "none";
+    console.log('ja', status)
+    if (status === 'Placed') {
+      console.log("Placed........")
+      document.getElementById(orderId + 'placed').style.display = "none";
 
-        } else if (status === 'Shipped') {
-            console.log("Shipped")
-            document.getElementById(orderId + 'placed').style.display = "none";
-            document.getElementById(orderId + 'ship').style.display = "none";
+    } else if (status === 'Shipped') {
+      console.log("Shipped")
+      document.getElementById(orderId + 'placed').style.display = "none";
+      document.getElementById(orderId + 'ship').style.display = "none";
 
-        } else if (status === 'Delivered') {
-            document.getElementById(orderId + 'placed').style.display = "none";
-            document.getElementById(orderId + 'ship').style.display = "none";
-            document.getElementById(orderId + 'cancel').style.display = "none";
-            document.getElementById(orderId + 'deliver').style.display = "none";
+    } else if (status === 'Delivered') {
+      document.getElementById(orderId + 'placed').style.display = "none";
+      document.getElementById(orderId + 'ship').style.display = "none";
+      document.getElementById(orderId + 'cancel').style.display = "none";
+      document.getElementById(orderId + 'deliver').style.display = "none";
 
-        } else if (status === 'Cancelled') {
-            document.getElementById(orderId + 'placed').style.display = "none";
-            document.getElementById(orderId + 'ship').style.display = "none";
-            document.getElementById(orderId + 'deliver').style.display = "none";
-            document.getElementById(orderId + 'cancel').style.display = "none";
-        }
+    } else if (status === 'Cancelled') {
+      document.getElementById(orderId + 'placed').style.display = "none";
+      document.getElementById(orderId + 'ship').style.display = "none";
+      document.getElementById(orderId + 'deliver').style.display = "none";
+      document.getElementById(orderId + 'cancel').style.display = "none";
     }
+  }
 </script>
