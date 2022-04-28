@@ -43,6 +43,26 @@ router.post('/admin-login',(req,res)=>{
   })
   })
 
+
+//admin dashboard
+
+  router.get('/dashboard',verifyAdminLogin,async(req,res)=>{
+    if(req.session.adminLoggedIn){
+      let newOrders = await productHelpers.getNewOrders()
+      let newProducts = await productHelpers.getNewProducts()
+      let newUsers = await productHelpers.getNewUsers()
+      let totalIncome = await productHelpers.getTotalIncome()
+      let totalUsers = await productHelpers.getTotalUsers()
+      let totalProducts = await productHelpers.getTotalProducts()
+      let totalOrders = await productHelpers.getTotalOrders()
+      let allOrderStatus = await productHelpers.getAllOrderStatus()
+      let allMethods = await productHelpers.getAllMethods()
+    res.render('admin/dashboard',{admin:true,'adminName':req.session.adminName,newOrders, newUsers, newProducts, totalIncome, totalUsers, totalProducts, totalOrders, allOrderStatus,allMethods})
+    }else{
+     res.redirect('/admin/admin-login')
+    }
+  })
+
 router.get('/add-product',verifyAdminLogin, async(req,res)=>{
   let category= await adminHelpers. getAllCategory()
 res.render('admin/add-product',{admin:true,category})
@@ -70,13 +90,8 @@ router.post('/add-product',verifyAdminLogin,(req,res)=>{
  })
 })
 
-router.get('/dashboard',verifyAdminLogin,(req,res)=>{
-  if(req.session.adminLoggedIn){
-  res.render('admin/dashboard',{admin:true,'adminName':req.session.adminName})
-  }else{
-   res.redirect('/admin/admin-login')
-  }
-})
+
+
 
 router.get('/view-products',verifyAdminLogin,(req,res)=>{
   productHelpers.getAllProduct().then((product)=>{
@@ -220,6 +235,14 @@ router.get('/all-orders', async (req, res) => {
 })
 
 //Order Status changinge
+router.get('/placed/:id', (req, res) => {
+  let status = 'Placed'
+  console.log(req.params.id);
+  adminHelpers.changeOrderStatus(req.params.id, status).then(() => {
+    res.redirect('/admin/all-orders')
+  })
+})
+
 router.get('/shipped/:id', (req, res) => {
   let status = 'Shipped'
   console.log(req.params.id);

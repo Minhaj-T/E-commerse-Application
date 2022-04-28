@@ -34,15 +34,16 @@
               <div class="dropdown">
                 <button
                   type="button"
-                  class="btn btn-primary  dropdown-toggle p-1"style=" height: 2em;width:7em;"
+                  class="btn btn-primary  dropdown-toggle p-1"style=" height: 2em;width:7em;" id="{{this._id}}"
                   data-bs-toggle="dropdown" value="{{this.Status}}" 
                   onclick="statusChecker('{{this._id}}')" >
                   {{this.Status}}
                 </button>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/admin/shipped/{{this._id}}">Shipped</a></li>
-                  <li><a class="dropdown-item"href="/admin/delivered/{{this._id}}">Delivered</a></li>
-                  <li><a class="dropdown-item" href="/admin/cancelled/{{this._id}}">Canceled</a></li>
+               <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="/admin/placed/{{this._id}}" id="{{this._id}}placed"  onclick="changeStatus(event)" style="text-decoration: none;">placed</a></li>
+                  <li><a class="dropdown-item" href="/admin/shipped/{{this._id}}" id="{{this._id}}ship"  onclick="changeStatus(event)" style="text-decoration: none;">Shipped</a></li>
+                  <li><a class="dropdown-item"href="/admin/delivered/{{this._id}}" id="{{this._id}}deliver"  onclick="changeStatus(event)" style="text-decoration: none;">Delivered</a></li>
+                  <li><a class="dropdown-item" href="/admin/cancelled/{{this._id}}" id="{{this._id}}cancel" onclick="changeStatus(event)" style="text-decoration: none;">Canceled</a></li>
                 </ul>
               </div>
             </td>
@@ -54,3 +55,36 @@
   </div>
   </div>  
 </section>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+<script>
+    function statusChecker(orderId) {
+        console.log("llog", orderId)
+        let status = document.getElementById(orderId).value
+
+        console.log('ja', status)
+        if (status === 'Placed') {
+            console.log("Placed")
+            document.getElementById(orderId + 'placed').style.display = "none";
+
+        } else if (status === 'Shipped') {
+            console.log("Shipped")
+            document.getElementById(orderId + 'placed').style.display = "none";
+            document.getElementById(orderId + 'ship').style.display = "none";
+
+        } else if (status === 'Delivered') {
+            document.getElementById(orderId + 'placed').style.display = "none";
+            document.getElementById(orderId + 'ship').style.display = "none";
+            document.getElementById(orderId + 'cancel').style.display = "none";
+            document.getElementById(orderId + 'deliver').style.display = "none";
+
+        } else if (status === 'Cancelled') {
+            document.getElementById(orderId + 'placed').style.display = "none";
+            document.getElementById(orderId + 'ship').style.display = "none";
+            document.getElementById(orderId + 'deliver').style.display = "none";
+            document.getElementById(orderId + 'cancel').style.display = "none";
+        }
+    }
+</script>

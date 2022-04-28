@@ -288,7 +288,7 @@ module.exports={
             let date = moment(dateIso).format('YYYY/MM/DD')
             let time = moment(dateIso).format('HH:mm:ss')
 
-            let status=order.Payment==='COD'?'placed':'pending'
+            let status=order.Payment==='COD'?'Placed':'pending'
             let  orderObj = {
                 deliveryDetails: {
                     Name: order.Name,

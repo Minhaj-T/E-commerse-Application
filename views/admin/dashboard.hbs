@@ -10,7 +10,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Total Revenue</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">₹ {{totalIncome}}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -28,7 +28,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                 Total Users</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{totalUsers}}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-users fa-2x text-gray-300"></i>
@@ -48,7 +48,7 @@
                             </div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{totalProducts}}</div>
                                 </div>
 
                             </div>
@@ -69,7 +69,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                 Total Orders</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{totalOrders}}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
@@ -108,12 +108,122 @@
             </div>
             <!-- Card Body -->
             <div class="card-body">
-                <div class="chart-pie pt-4 pb-2">
+                <div class="chart-area">
                     <canvas id="myChart"></canvas>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<div class="row">
+    <div class="col-xl-8 col-lg-7">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Recent Products</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="container mt-1">
+                    <table class="table " id="adminTable">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each newProducts}}
+                            <tr>
+                                <td>{{inc @index}}</td>
+                                <td  width="300px">{{this.name}}</td>
+                                <td>{{this.category}}</td>
+                                <td>₹ {{this.price}}</td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-lg-5">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Recent Users</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="container mt-1">
+                    <table class="table " id="adminTable">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">User Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each newUsers}}
+                            <tr>
+                                <td width="63px">
+                                    <div class="imgBox"><img
+                                            src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
+                                            alt="#"></div>
+                                </td>
+                                <td>{{this.name}}</td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Area Chart -->
+    <div class="col-xl-12 col-lg-7">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Recent Orders</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                    <div class="container mt-1">
+                        <table class="table " id="adminTable">
+                        <thead class="thead-dark">
+                                <tr>
+                                   <th scope="col">No</td>
+                                   <th scope="col">User</td>
+                                   <th scope="col">Date</td>
+                                   <th scope="col">Price</td>
+                                   <th scope="col">Payment</td>
+                                   <th scope="col">Status</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each newOrders}}
+                                <tr>
+                                    <td>{{inc @index}}</td>
+                                    <td>{{this.User}}</td>
+                                    <td>{{this.Date}}<br>{{this.Time}}</td>
+                                    <td>₹{{this.Total}}</td>
+                                    <td>{{this.PaymentMethod}}</td>
+                                    <td>{{this.Status}}</td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
 
