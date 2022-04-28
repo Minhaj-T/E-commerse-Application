@@ -368,3 +368,68 @@ $(document).ready(function () {
         }
     })
     })    
+
+
+ //Offers
+$(document).ready(function () {
+    $('#productPage').validate({
+        rules: {
+            Coupon: {
+                required: true,
+                minlength: 5,
+                maxlength: 20,
+            },
+            Starting: {
+                required: true,
+            },
+            Expiry: {
+                required: true,
+            },
+            Offer: {
+                required: true,
+            },
+            category: {
+                required: true,
+            },
+            Product: {
+                required: true,
+            }
+
+        }
+    })
+})
+
+// Bannner mangement
+
+
+$(document).ready(function () {
+    $('#bannerSection').validate({
+        rules: {
+            bannerName: {
+                required: true,
+            },
+            offer: {
+                required: true,
+            },
+            description1: {
+                required: true,
+            },
+            description2: {
+                required: true,
+            },
+            offerPrice: {
+                required: true,
+            },
+            link: {
+                required: true,
+            },
+            Image3: {
+                required: true,
+            }
+
+        }
+    })
+})
+
+
+   
