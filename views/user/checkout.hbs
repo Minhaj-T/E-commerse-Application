@@ -1,28 +1,28 @@
 <div class="row">
   {{#each address}}
-    <div class="col-sm-4 p-4">
-      <div class="card">
-        <div class="card-body">
+  <div class="col-sm-4 p-4">
+    <div class="card">
+      <div class="card-body">
 
-          <div class="text-center">
-            <h6 class="margin">Address </h6>
-            <span>{{this.Name}}
-              ,{{this.House}}(house),
-              <br />
-              {{this.Town}},{{this.Street}}-{{this.PIN}}
-              <br />Ph :{{this.Mobile}}
-            </span>
-          </div>
-
+        <div class="text-center">
+          <h6 class="margin">Address </h6>
+          <span>{{this.Name}}
+            ,{{this.House}}(house),
+            <br />
+            {{this.Town}},{{this.Street}}-{{this.PIN}}
+            <br />Ph :{{this.Mobile}}
+          </span>
         </div>
-          <div class="text-center  mb-2">
-               <button class="btn btn-primary "
-                            onclick="autoFill('{{this.Name}}','{{this.House}}','{{this.Street}}','{{this.Town}}','{{this.PIN}}','{{this.Mobile}}','{{this.Email}}')">
-                            Choose
-                        </button>
-            </div>
+
+      </div>
+      <div class="text-center  mb-2">
+        <button class="btn btn-primary "
+          onclick="autoFill('{{this.Name}}','{{this.House}}','{{this.Street}}','{{this.Town}}','{{this.PIN}}','{{this.Mobile}}','{{this.Email}}')">
+          Choose
+        </button>
       </div>
     </div>
+  </div>
   {{/each}}
 </div>
 
@@ -44,12 +44,7 @@
                           <label>Full Name</label>
                           <div class="row">
                             <div class="form-input form">
-                              <input
-                                type="text"
-                                id="fname"
-                                name="Name"
-                                placeholder="Enter Your Full Name"
-                              />
+                              <input type="text" id="fname" name="Name" placeholder="Enter Your Full Name" />
                             </div>
                           </div>
                         </div>
@@ -58,12 +53,7 @@
                         <div class="single-form form-default">
                           <label>House Name</label>
                           <div class="form-input form">
-                            <input
-                              type="text"
-                              id="house"
-                              name="House"
-                              placeholder="House Name"
-                            />
+                            <input type="text" id="house" name="House" placeholder="House Name" />
                           </div>
                         </div>
                       </div>
@@ -71,12 +61,7 @@
                         <div class="single-form form-default">
                           <label>Street Address</label>
                           <div class="form-input form">
-                            <input
-                              id="street"
-                              name="Street"
-                              type="text"
-                              placeholder="Street Address"
-                            />
+                            <input id="street" name="Street" type="text" placeholder="Street Address" />
                           </div>
                         </div>
                       </div>
@@ -85,12 +70,7 @@
                         <div class="single-form form-default">
                           <label>City</label>
                           <div class="form-input form">
-                            <input
-                              type="text"
-                              id="city"
-                              name="Town"
-                              placeholder="Town / City"
-                            />
+                            <input type="text" id="city" name="Town" placeholder="Town / City" />
                           </div>
                         </div>
                       </div>
@@ -98,15 +78,8 @@
                         <div class="single-form form-default">
                           <label>Postcode / ZIP</label>
                           <div class="form-input form">
-                            <input
-                              type="tel"
-                              id="pin"
-                              name="PIN"
-                              maxlength="6"
-                              onkeypress="return isNumber(event)"
-                              required
-                              placeholder="Post Code"
-                            />
+                            <input type="tel" id="pin" name="PIN" maxlength="6" onkeypress="return isNumber(event)"
+                              required placeholder="Post Code" />
                           </div>
                         </div>
                       </div>
@@ -114,14 +87,8 @@
                         <div class="single-form form-default">
                           <label>Phone</label>
                           <div class="form-input form">
-                            <input
-                              type="tel"
-                              id="phone"
-                              onkeypress="return isNumber(event)"
-                              name="Mobile"
-                              maxlength="10"
-                              placeholder="Phone"
-                            />
+                            <input type="tel" id="phone" onkeypress="return isNumber(event)" name="Mobile"
+                              maxlength="10" placeholder="Phone" />
                           </div>
                         </div>
                       </div>
@@ -129,21 +96,11 @@
                         <div class="single-form form-default">
                           <label>Email Address</label>
                           <div class="form-input form">
-                            <input
-                              type="text"
-                              id="email"
-                              name="Email"
-                              placeholder="Email Address"
-                            />
+                            <input type="text" id="email" name="Email" placeholder="Email Address" />
                           </div>
                         </div>
                       </div>
-                      <input
-                        type="text"
-                        name="userId"
-                        value="{{userId}}"
-                        hidden
-                      />
+                      <input type="text" name="userId" value="{{userId}}" hidden />
                     </div>
 
                   </section>
@@ -155,71 +112,99 @@
           <div class="col-lg-4 float-end">
             <div class="checkout-sidebar">
               <div class="checkout-sidebar-coupon">
+                <div class="row">
+                  {{#if userDetails.wallet}}
+                  <div class="col-sm-12">
+                    <div class="card">
+                      <div class="card-body1">
+                        <div class="card-body floart-end">
+                          <div class="text-center">
+                            <div>
+                              <img style="height: 40px;"
+                                src="https://lh3.googleusercontent.com/ohLHGNvMvQjOcmRpL4rjS3YQlcpO0D_80jJpJ-QA7-fQln9p3n7BAnqu3mxQ6kI4Sw"
+                                alt="wallet">
+                            </div>
+                            <span>Balance = ₹{{userDetails.wallet}} </span>
+                          </div>
+                        </div>
+                        <input type="text" id="Totalpro" name="Totalpro" value="{{total}}" hidden>
+                        <div class="form-input form text-center">
+                          <input type="text" placeholder="₹ Enter the amount" id="wallet" name="walletAmount"
+                            style="width: 50%; height: 36px; padding-right: 1px;" />
+                        </div>
+                        <div class="button text-center p-2">
+                          <a id="couponBtn" onclick="applayWallet()" class="btn"
+                            style="width: 113px; height: 34px;padding: 6px; ">apply</a>
+                        </div>
+                        <div class="alert alert-danger" style="display: none;" id="valueNotCorrect" role="alert">
+                      Enter the Correct Amount
+                    </div>
+                      </div>
+                    </div>
+                  </div>
+                  {{/if}}
+                </div>
+                <br>
+
                 <p>Appy Coupon to get discount!</p>
 
                 <div class="single-form form-default">
                   <div class="form-input form">
                     <input type="text" placeholder="Coupon Code" id="couponInput" name="Coupon" />
                   </div>
-                  <input type="text" id="couponTotal" name="Total"
-                  value="{{total}}" hidden>
+                  <input type="text" id="couponTotal" name="Total" value="{{total}}" hidden>
                   <div class="button">
-                    <a
-                      id="couponBtn"
-                      onclick="couponApply()"
-                      class="btn"
-                    >apply</a>
+                    <a id="couponBtn" onclick="couponApply()" class="btn">apply</a>
                   </div>
                   {{!-- Error handling of coupons --}}
-                   <div class="mt-2">
-                      <div class="alert alert-danger" style="display: none;"
-                        id="couponUsed" role="alert">
-                          This Coupon was redeemed
-                          </div>
-                      <div class="alert alert-danger" style="display: none;"
-                          id="couponInvalid" role="alert">
-                              This Coupon is invalid
-                                </div>
-                       <div class="alert alert-success" style="display: none;"
-                            id="couponSuccess" role="alert">
-                                Coupon Applied Successfully
-                                  </div>
-                         <div class="alert alert-warning" style="display: none;"
-                              id="couponExpired" role="alert">
-                                    Sorry!!! Your Coupon has been Expired
-                                    </div>
-                     </div>  
+                  <div class="mt-2">
+                    <div class="alert alert-danger" style="display: none;" id="couponUsed" role="alert">
+                      This Coupon was redeemed
+                    </div>
+                    <div class="alert alert-danger" style="display: none;" id="couponInvalid" role="alert">
+                      This Coupon is invalid
+                    </div>
+                    <div class="alert alert-success" style="display: none;" id="couponSuccess" role="alert">
+                      Coupon Applied Successfully
+                    </div>
+                    <div class="alert alert-warning" style="display: none;" id="couponExpired" role="alert">
+                      Sorry!!! Your Coupon has been Expired
+                    </div>
+                  </div>
                 </div>
 
               </div>
               <div class="checkout-sidebar-price-table mt-30">
+
                 <h5 class="title">Pricing Table</h5>
 
                 <div class="sub-total-price">
-                  
-                    <div class="total-price">
+
+                  <div class="total-price">
                     <p class="value">Products Total :</p>
                     <p class="price">₹ {{total}}</p>
                   </div>
-                  <div class="total-price shipping " >
+                  <div class="total-price shipping ">
                     <p class="value" id="discountLabel" style="display: none;">Discount Price:</p>
-                    <p class="price" id="discounttd" style="display: none;">₹ <span style="display: none;" id="discount"></span> </p>
+                    <p class="price" id="discounttd" style="display: none;">₹ <span style="display: none;"
+                        id="discount"></span> </p>
                   </div>
                   <div class="total-price">
                     <p class="value" id="newTotal" style="display: none;">New Total</p>
-                    <p class="price" id="tdTotal" style="display: none;">₹ <span id="totalOriginal" style="display: none;">{{total}}</span> </p>
+                    <p class="price" id="tdTotal" style="display: none;">₹ <span id="totalOriginal"
+                        style="display: none;">{{total}}</span> </p>
                   </div>
-                   <div class="total-price">
+                  <div class="total-price">
                     <p class="value">Shipping</p>
                     <p class="price">Free</p>
                   </div>
-                
+
                 </div>
 
                 <div class="total-payable" id="newTotal">
                   <div class="payable-price">
                     <p class="value">Total :</p>
-                    <p class="price" >₹ <span id="ttlprc">{{total}}</span> </p>
+                    <p class="price">₹ <span id="ttlprc">{{total}}</span> </p>
                   </div>
                 </div>
                 <hr />
@@ -227,29 +212,13 @@
                   <div class="payment-accordion element-mrg">
                     <div id="faq" class="panel-group">
                       <h5 class="title">Payment methods</h5>
-                      <input
-                        type="radio"
-                        name="Payment"
-                        value="COD"
-                        style="width:5%;height:auto"
-                        checked
-                      />
+                      <input type="radio" name="Payment" value="COD" style="width:5%;height:auto" checked />
                       <label>Cash on Delivery</label>
                       <br />
-                      <input
-                        type="radio"
-                        name="Payment"
-                        value="Razorpay"
-                        style="width:5%;height:auto"
-                      />
+                      <input type="radio" name="Payment" value="Razorpay" style="width:5%;height:auto" />
                       <label>Razor Pay</label>
                       <br />
-                      <input
-                        type="radio"
-                        name="Payment"
-                        value="Paypal"
-                        style="width:5%;height:auto"
-                      />
+                      <input type="radio" name="Payment" value="Paypal" style="width:5%;height:auto" />
                       <label>Paypal</label>
                       <div id="paypal-payment-button"></div>
                     </div>
@@ -257,20 +226,15 @@
                 </div>
 
                 <div class="price-table-btn button">
-                  <button
-                    class="btn btn-primary btn-hover"
-                    id="submit"
-                    type="submit"
-                    style="width: 100%;"
-                    href="#"
-                  >Place Order</button>
+                  <button class="btn btn-primary btn-hover" id="submit" type="submit" style="width: 100%;"
+                    href="#">Place Order</button>
                 </div>
               </div>
               {{! <div class="checkout-sidebar-banner mt-30">
-                        <a href="product-grids.html">
-                            <img src="https://via.placeholder.com/400x330" alt="#">
-                        </a>
-                    </div>  }}
+                <a href="product-grids.html">
+                  <img src="https://via.placeholder.com/400x330" alt="#">
+                </a>
+              </div> }}
             </div>
           </div>
         </form>
@@ -280,95 +244,125 @@
 </section>
 
 <script>
-function autoFill(name, house, street, town, pin, mobile, email) {
- const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 2000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        })
-        Toast.fire({
-            icon: 'success',
-            title: 'Address selected'
-        })
+  function autoFill(name, house, street, town, pin, mobile, email) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+    Toast.fire({
+      icon: 'success',
+      title: 'Address selected'
+    })
 
-        document.getElementById('fname').value = name
-        document.getElementById('house').value = house
-        document.getElementById('street').value = street
-        document.getElementById('city').value = town
-        document.getElementById('pin').value = pin
-        document.getElementById('phone').value = mobile
-        document.getElementById('email').value = email
-  
-        
-}
+    document.getElementById('fname').value = name
+    document.getElementById('house').value = house
+    document.getElementById('street').value = street
+    document.getElementById('city').value = town
+    document.getElementById('pin').value = pin
+    document.getElementById('phone').value = mobile
+    document.getElementById('email').value = email
+
+
+  }
 </script>
 <script>
-    function couponApply() {
-      console.log("tisssss calll....")
-        let couponCode = document.getElementById('couponInput').value
-        let couponTotal = document.getElementById('couponTotal').value
-         $.ajax({
-            url: '/couponApply',
-            data: {
-                Coupon: couponCode,
-                Total: couponTotal
-            },
-            method: 'post',
-            success: (response) => {
-              if (response.couponSuccess) {
-                let oldTotal = parseInt(document.getElementById('totalOriginal').innerHTML)
-                document.getElementById('couponInput').readOnly = true
-                let discount = oldTotal - parseInt(response.total)
-                document.getElementById('discount').innerHTML = discount
-                document.getElementById("ttlprc").innerHTML=response.total
-                    $('#discount').show()
-                    $('#discountLabel').show()
-                    $('#discounttd').show()
-                    $('#newTotal').show()
-                    $('#tdTotal').show()
-                    $('#totalOriginal').show()
+  function couponApply() {
+    console.log("tisssss calll....")
+    let couponCode = document.getElementById('couponInput').value
+    let couponTotal = document.getElementById('couponTotal').value
+    $.ajax({
+      url: '/couponApply',
+      data: {
+        Coupon: couponCode,
+        Total: couponTotal
+      },
+      method: 'post',
+      success: (response) => {
+        if (response.couponSuccess) {
+          let oldTotal = parseInt(document.getElementById('totalOriginal').innerHTML)
+          document.getElementById('couponInput').readOnly = true
+          let discount = oldTotal - parseInt(response.total)
+          document.getElementById('discount').innerHTML = discount
+          document.getElementById("ttlprc").innerHTML = response.total
+          $('#discount').show()
+          $('#discountLabel').show()
+          $('#discounttd').show()
+          $('#newTotal').show()
+          $('#tdTotal').show()
+          $('#totalOriginal').show()
 
 
 
-                document.getElementById('totalOriginal').innerHTML = response.total
-                    $('#couponSuccess').show()
-                    $('#couponUsed').hide()
-                    $('#couponInvalid').hide()
-                    $('#couponExpired').hide()
+          document.getElementById('totalOriginal').innerHTML = response.total
+          $('#couponSuccess').show()
+          $('#couponUsed').hide()
+          $('#couponInvalid').hide()
+          $('#couponExpired').hide()
 
-            }
-               if (response.couponUsed) {
-                    $('#couponUsed').show()
-                    $('#couponSuccess').hide()
-                    $('#couponInvalid').hide()
-                    $('#couponExpired').hide()
-                    $('#discount').hide()
-                    $('#discountLabel').hide()
-                }
-                if (response.invalidCoupon) {
-                    $('#couponInvalid').show()
-                    $('#couponSuccess').hide()
-                    $('#couponUsed').hide()
-                    $('#couponExpired').hide()
-                    $('#discount').hide()
-                    $('#discountLabel').hide()
-                }
-                if (response.couponExpired) {
-                    $('#couponExpired').show()
-                    $('#couponSuccess').hide()
-                    $('#couponInvalid').hide()
-                    $('#couponUsed').hide()
-                    $('#discount').hide()
-                    $('#discountLabel').hide()
-                }
-            }
-         })
+        }
+        if (response.couponUsed) {
+          $('#couponUsed').show()
+          $('#couponSuccess').hide()
+          $('#couponInvalid').hide()
+          $('#couponExpired').hide()
+          $('#discount').hide()
+          $('#discountLabel').hide()
+        }
+        if (response.invalidCoupon) {
+          $('#couponInvalid').show()
+          $('#couponSuccess').hide()
+          $('#couponUsed').hide()
+          $('#couponExpired').hide()
+          $('#discount').hide()
+          $('#discountLabel').hide()
+        }
+        if (response.couponExpired) {
+          $('#couponExpired').show()
+          $('#couponSuccess').hide()
+          $('#couponInvalid').hide()
+          $('#couponUsed').hide()
+          $('#discount').hide()
+          $('#discountLabel').hide()
+        }
+      }
+    })
+  }
+
+</script>
+
+<script>
+  function applayWallet(){
+    let walletval = document.getElementById('wallet').value
+    let ttlpro = document.getElementById('Totalpro').value
+    $.ajax({
+      url:'/applayWallet',
+      data:{
+        wallet:walletval,
+        Total:ttlpro
+      },
+      method:'post',
+    success:(response)=>{
+      console.log(response,response.total)
+      if(response.walletSuccess){
+        document.getElementById('discount').innerHTML =response.total;
+        document.getElementById("ttlprc").innerHTML = response.total;
+         $('#discount').show()
+          $('#discountLabel').show()
+          $('#discounttd').show()
+
+      }else{
+        $('#valueNotCorrect').show()
+      }
+
     }
-       
+    })
+    
+  }
 </script>

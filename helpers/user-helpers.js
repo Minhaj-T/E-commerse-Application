@@ -632,6 +632,19 @@ module.exports={
               }
             });
           },
+
+
+          applayWallet:(val,userId)=>{
+              console.log(userId);
+              let value=parseInt(val)
+            return new Promise((res,rej)=>{
+                db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userId)},{ $inc: { wallet: -value }}).then((response)=>{
+                    res(response)
+                    console.log(response);
+            })
+            }) 
+    
+        }
    
 
 

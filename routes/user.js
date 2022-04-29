@@ -168,9 +168,9 @@ router.get('/cart',verifyLogin,async(req,res)=>{
    total= await userHelpers.getTotalAmount(user1._id)
  }
  if(cartCount>0){
- res.render('user/cart',{user2:req.session.user._id,user1,user:true,products,cartCount,total,homeCategory,ordersCount})
+ res.render('user/cart',{user2:req.session.user._id,user1,user:true,products,cartCount,total,homeCategory,ordersCount,userPage:true})
  }else{
-  res.render('user/empty-cart', { homeCategory, user: true, user1,ordersCount,cartCount })
+  res.render('user/empty-cart', { homeCategory, user: true, user1,ordersCount,cartCount,userPage:true })
 
  }
 
@@ -354,9 +354,10 @@ router.get('/checkout',verifyLogin,async(req,res)=>{
     ordersCount=await userHelpers.getOrdersCount(userId)
     address=await userHelpers.getUserAddress(userId)
   }
+  let userDetails=await adminHelpers.getUserdetails(userId)
   let total = await userHelpers.getTotalAmount(userId)
   console.log(total);
-     res.render('user/checkout',{user:true,total ,userId,user1,homeCategory,cartCount,ordersCount,address})
+     res.render('user/checkout',{user:true,total ,userId,user1,homeCategory,cartCount,ordersCount,address,userDetails,userPage:true})
 })
 
 //place order page
@@ -365,9 +366,15 @@ router.post('/place-order',async(req,res)=>{
  let userId=req.body.userId
  
   let products = await userHelpers.getCartProductList(req.body.userId)
-  if (req.session.couponTotal) {
-    var total = req.session.couponTotal
-  } else {
+  if (req.session.couponTotal ||req.session.walletTotal ) {
+    if(req.session.couponTotal){
+
+      var total = req.session.couponTotal
+    }else{
+      var total=req.session.walletTotal
+    }
+  }
+   else {
     total = await userHelpers.getTotalAmount(req.body.userId)
   }
   userHelpers.placeOrder(req.body,products,total,).then((orderId)=>{
@@ -718,6 +725,27 @@ router.post('/couponApply',(req,res)=>{
 router.get('/wallet',(req,res)=>{
   var user1=req.session.user;
   res.render('user/wallet',{user1})
+})
+
+//applay the wallet into check out page
+router.post('/applayWallet',async(req,res)=>{
+  
+  var user=req.session.user._id;
+  let ttl=parseInt( req.body.Total)
+  let walletAmount=parseInt(req.body.wallet)
+  let userDetails=await adminHelpers.getUserdetails(user)
+  if(userDetails.wallet >=  walletAmount){
+    let total=ttl-walletAmount;
+    console.log("this is the subtracted value",total);
+    userHelpers.applayWallet(walletAmount,user).then(()=>{
+      req.session.walletTotal = total
+      res.json({ walletSuccess: true,total })
+    })
+  }else{
+    res.json({ valnotCurrect: true })
+
+  }
+
 })
 
 
