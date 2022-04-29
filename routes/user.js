@@ -537,11 +537,18 @@ router.get('/singleOrder/:id', verifyLogin,async(req, res) => {
 })
 
 //cancel my orders
-router.get('/cancel-order/:id',(req,res)=>{
+router.post('/cancel-order',(req,res)=>{
+  console.log(req.body);
   
-  let orderId=req.params.id
+  let orderId=req.body.orderId
+  let Total= req.body.Total
+  var user=req.session.user._id;
+  console.log("this is my cancel route",orderId,Total);
   userHelpers.cancelOrder(orderId).then((response)=>{
-    res.json({ status: true })
+    userHelpers.addWallet(user,Total).then(()=>{
+
+      res.json({ status: true })
+    })
   })
 
 })

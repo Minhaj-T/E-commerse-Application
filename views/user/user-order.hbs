@@ -86,8 +86,9 @@
             <div class="row">
             <div class="wish-button">
               {{#if this.Cancelled}}
+               <button id="" type="button" class="btn btn-outline-danger p-2">Return</button>
               {{else}}
-              <button id="cncl" type="button" onclick="cancelOrder('{{this._id}}')" class="btn btn-outline-danger p-2">Calncel</button>
+              <button id="cncl" type="button" onclick="cancelOrder('{{this._id}}','{{this.Total}}')" class="btn btn-outline-danger p-2">Calncel</button>
               {{/if}}
               <a class="btn btn-outline-primary p-2"  href="/singleOrder/{{this._id}}" >view product</a>
             </div>

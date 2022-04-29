@@ -333,6 +333,7 @@ module.exports={
              db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:objectId(Id)},{
                  $set:{
                     Status: 'Cancelled',
+                    Total:'------',
                     Cancelled: true
                  }
              }).then((response)=>{
@@ -644,6 +645,17 @@ module.exports={
             })
             }) 
     
+        },
+
+        addWallet:(userId,total)=>{
+            let Total=parseInt(total)
+            console.log("this is the add wallet route in my sever side",userId,Total)
+            return new Promise((res,rej)=>{
+                db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userId)},{ $inc: { wallet: Total } }).then((response)=>{
+                    res(response)
+                })
+            })
+
         }
    
 

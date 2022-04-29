@@ -227,7 +227,7 @@ function removeCartItem(cartId, proId) {
 
 
 //Cancel the order in to my orders
-function cancelOrder(orderId) {
+function cancelOrder(orderId,total) {
     Swal.fire({
         title: 'Are you sure?',
         text: "Do you want to Cancel this order",
@@ -239,8 +239,12 @@ function cancelOrder(orderId) {
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url:'/cancel-order/'+orderId,
-                method:'get',
+                url:'/cancel-order',
+                data: {
+                    orderId: orderId,
+                    Total:total
+                },
+                method:'post',
                 success:((response)=>{
                     if(response.status){
                         location.reload()
