@@ -333,7 +333,6 @@ module.exports={
              db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:objectId(Id)},{
                  $set:{
                     Status: 'Cancelled',
-                    Total:'------',
                     Cancelled: true
                  }
              }).then((response)=>{

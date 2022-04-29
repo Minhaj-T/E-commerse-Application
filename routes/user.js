@@ -516,9 +516,9 @@ router.get('/myOrders',verifyLogin,async(req,res)=>{
   let orders=await userHelpers.getUserOrders(id)
   if(ordersCount > 0){
 
-    res.render('user/user-order', { orders, user: true,user1,homeCategory,cartCount,ordersCount})
+    res.render('user/user-order', { orders, user: true,user1,homeCategory,cartCount,ordersCount,userPage:true})
   }else{
-    res.render('user/empty-order',{user: true,user1,homeCategory,cartCount,ordersCount})
+    res.render('user/empty-order',{user: true,user1,homeCategory,cartCount,ordersCount,userPage:true})
   }
 })
 
