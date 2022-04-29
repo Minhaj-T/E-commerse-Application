@@ -8,6 +8,11 @@
 						<div class="card-body p-5">
 							<h1 class="fs-4 card-title fw-bold mb-4">Admin Login</h1>
 							<form method="POST" action="/admin/admin-login" class="needs-validation" novalidate="" id="adminLogin" >
+							 {{#if loginErr}}
+                                <div class="alert alert-danger" role="alert">
+                                       Please Check Your Phone Number and Password
+                                       </div>
+                                {{/if}}
 								<div class="mb-3">
 									<label class="mb-2 text-muted" for="email">E-Mail Address</label>
 									<input id="email" type="email" class="form-control" name="email" value="" required autofocus>

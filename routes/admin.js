@@ -24,7 +24,8 @@ router.get('/admin-login',(req,res)=>{
   if(req.session.adminLoggedIn){
     res.redirect('/admin/dashboard');
   }
-  res.render('admin/admin-login',{adminlogin:true});
+  res.render('admin/admin-login',{adminlogin:true,"loginErr":req.session.loginErr});
+  req.session.loginErr=false
 })
 
 router.post('/admin-login',(req,res)=>{
@@ -38,7 +39,9 @@ router.post('/admin-login',(req,res)=>{
         res.redirect('/admin/dashboard');
         let todayDate = new Date().toISOString().slice(0, 10);
         let dt=new Date(todayDate);
-        console.log(dt);
+    }else{
+      req.session.loginErr=true;
+      res.redirect('/admin/admin-login')
     }
   })
   })
@@ -65,7 +68,7 @@ router.post('/admin-login',(req,res)=>{
 
 router.get('/add-product',verifyAdminLogin, async(req,res)=>{
   let category= await adminHelpers. getAllCategory()
-res.render('admin/add-product',{admin:true,category})
+res.render('admin/add-product',{admin:true,'adminName':req.session.adminName,category})
 })
 
 router.post('/add-product',verifyAdminLogin,(req,res)=>{
@@ -95,7 +98,7 @@ router.post('/add-product',verifyAdminLogin,(req,res)=>{
 
 router.get('/view-products',verifyAdminLogin,(req,res)=>{
   productHelpers.getAllProduct().then((product)=>{
-    res.render('admin/view-products',{admin:true,product});
+    res.render('admin/view-products',{admin:true,'adminName':req.session.adminName,product});
   })
 });
 
@@ -118,7 +121,7 @@ router.get('/edit-product/:id',verifyAdminLogin, async(req,res)=>{
   let category= await adminHelpers. getAllCategory()
   console.log(product);
 
-  res.render('admin/edit-product',{admin:true,product,category})
+  res.render('admin/edit-product',{admin:true,'adminName':req.session.adminName,product,category})
 })
 
 router.post('/edit-product/:id',verifyAdminLogin,(req,res)=>{
@@ -147,7 +150,7 @@ router.post('/edit-product/:id',verifyAdminLogin,(req,res)=>{
 //get the all users in to server
 router.get('/get-AllUsers',verifyAdminLogin,(req,res)=>{
   adminHelpers.getAllUsers().then((allUsers)=>{
-    res.render('admin/view-allusers',{allUsers,admin:true})
+    res.render('admin/view-allusers',{allUsers,admin:true,'adminName':req.session.adminName})
   })
 })
 
@@ -170,7 +173,7 @@ router.get('/unblock-user/:id',(req,res)=>{
 router.get('/AllblockUsers', (req,res)=>{
 
   adminHelpers.getAllBlockUsers().then((allBlockUsers)=>{
-    res.render('admin/view-allBlockusers',{allBlockUsers,admin:true})
+    res.render('admin/view-allBlockusers',{allBlockUsers,admin:true,'adminName':req.session.adminName})
   })
   
 })
@@ -183,7 +186,7 @@ router.get('/admin-logout',(req,res)=>{
 
 router.get('/add-category',(req,res)=>{
 
-  res.render('admin/add-category',{admin:true})
+  res.render('admin/add-category',{admin:true,'adminName':req.session.adminName})
 })
 
 router.post('/add-category',(req,res)=>{
@@ -199,7 +202,7 @@ router.get('/view-categorys',(req,res)=>{
   adminHelpers.getAllCategory().then((categorys)=>{
     console.log(categorys);
 
-    res.render('admin/view-categorys',{categorys,admin:true})
+    res.render('admin/view-categorys',{categorys,admin:true,'adminName':req.session.adminName})
 
   })
 })
@@ -207,7 +210,7 @@ router.get('/view-categorys',(req,res)=>{
 router.get('/edit-categorys/:id',(req,res)=>{
   let catId=req.params.id;
   adminHelpers.getCategoryDetails(catId).then((category)=>{
-    res.render('admin/edit-categorys',{category,admin:true})
+    res.render('admin/edit-categorys',{category,admin:true,'adminName':req.session.adminName})
   })
 
 })
@@ -233,7 +236,7 @@ router.get('/delete-category/:id',(req,res)=>{
 router.get('/all-orders', async (req, res) => {
   let ordersList = await adminHelpers.getAllOrders()
   console.log(ordersList);
-  res.render('admin/all-orders', { admin: true, ordersList, })
+  res.render('admin/all-orders', { admin: true, ordersList,'adminName':req.session.adminName })
 })
 
 //Order Status changinge
@@ -273,7 +276,7 @@ router.get('/cancelled/:id',(req,res)=>{
 router.get('/category-offers', verifyAdminLogin, async (req, res) => {
   let category= await adminHelpers.getAllCategory();
   let catOffers= await adminHelpers.getAllCatOffers();
-  res.render('admin/category-offer',{admin:true,category,catOffers
+  res.render('admin/category-offer',{admin:true,category,catOffers,'adminName':req.session.adminName
   })
 })
 
@@ -297,7 +300,7 @@ router.get('/delete-catOffer/:id',(req,res)=>{
 router.get('/product-offers', verifyAdminLogin, async (req, res) => {
   let products= await productHelpers.getAllProduct()
   let proOffers = await adminHelpers.getAllProOffers()
-  res.render('admin/product-offer',{admin:true,products,proOffers,"proOfferExist": req.session.proOfferExist })
+  res.render('admin/product-offer',{admin:true,products,proOffers,"proOfferExist": req.session.proOfferExist,'adminName':req.session.adminName })
   req.session.proOfferExist=false;
 
 })
@@ -328,7 +331,7 @@ router.get('/edit-proOffer/:id',(req,res)=>{
     let products = await productHelpers.getAllProduct()
     console.log(products);
     
-    res.render('admin/edit-proOffers',({admin:true,proOffer,products}))
+    res.render('admin/edit-proOffers',({admin:true,proOffer,products,'adminName':req.session.adminName}))
   })
 
   router.post('/edit-proOffer/:id',(req,res)=>{
@@ -345,7 +348,7 @@ router.get('/report',(req,res)=>{
   adminHelpers.monthlyReport().then((data)=>{
     console.log(data);
 
-    res.render('admin/report',{admin:true,data})
+    res.render('admin/report',{admin:true,data,'adminName':req.session.adminName})
   })
 
 })
@@ -354,7 +357,7 @@ router.post('/report',(req,res)=>{
   adminHelpers.salesReport(req.body).then((data)=>{
     console.log(data);
 
-    res.render('admin/report',{admin:true,data})
+    res.render('admin/report',{admin:true,data,'adminName':req.session.adminName})
     
   })
 
@@ -364,7 +367,7 @@ router.post('/report',(req,res)=>{
 router.get('/banners',async(req,res)=>{
   let categories= await adminHelpers. getAllCategory()
   let banners = await userHelpers.getAllBanners()
-  res.render('admin/banners',{admin:true,categories,banners})
+  res.render('admin/banners',{admin:true,categories,banners,'adminName':req.session.adminName})
 })
 
 //add banner detils into server
@@ -389,7 +392,7 @@ router.get('/edit-banner/:id',(req,res)=>{
   console.log(req.params.id);
   let id =req.params.id;
   adminHelpers.getBannerDetails(id).then((banner)=>{
-    res.render('admin/edit-banner',{admin:true,banner})
+    res.render('admin/edit-banner',{admin:true,banner,'adminName':req.session.adminName})
   })
 })
 
@@ -418,7 +421,7 @@ router.get('/delete-banner/:id',(req,res)=>{
 //------------------Coupen section---------------
 router.get('/coupons',(req,res)=>{
   adminHelpers.getAllCoupons().then((coupons)=>{
-    res.render('admin/coupons',{admin:true,coupons})
+    res.render('admin/coupons',{admin:true,coupons,'adminName':req.session.adminName})
   })
 
 })

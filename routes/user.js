@@ -77,15 +77,17 @@ router.get('/login', async(req,res)=>{
 })
 
 router.get('/signup',async(req,res)=>{
-  let refer=req.query.refer?req.query.refer:null
-  let homeCategory = await userHelpers.getHomeCategories()
-  let cartCount=0;
   if(req.session.loggedIn){
     res.redirect('/');
-  }
+  }else{
+  let refer=await req.query.refer?req.query.refer:null
+  console.log("this is the refer",refer);
+  let homeCategory = await userHelpers.getHomeCategories()
+  let cartCount=0;
   
   res.render('user/signup',{user:true,homeCategory,cartCount,"usererr":req.session.usererr,refer})
   req.session.usererr=false;
+  }
 })
 
 router.post('/signup',(req,res)=>{
