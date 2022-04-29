@@ -514,7 +514,12 @@ router.get('/myOrders',verifyLogin,async(req,res)=>{
 
   let id = req.session.user._id
   let orders=await userHelpers.getUserOrders(id)
-      res.render('user/user-order', { orders, user: true,user1,homeCategory,cartCount,ordersCount})
+  if(ordersCount > 0){
+
+    res.render('user/user-order', { orders, user: true,user1,homeCategory,cartCount,ordersCount})
+  }else{
+    res.render('user/empty-order',{user: true,user1,homeCategory,cartCount,ordersCount})
+  }
 })
 
 
