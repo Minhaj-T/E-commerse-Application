@@ -9,6 +9,8 @@ const { route } = require('./admin');
 const { response } = require('express');
 var paypal = require('paypal-rest-sdk');
 const createReferal=require('referral-code-generator')
+var nodemailer = require('nodemailer');
+const emailHelpers=require('../helpers/email-helpers')
 
 
 //Twilio Setups
@@ -32,6 +34,11 @@ const verifyLogin=(req,res,next)=>{
     res.redirect('/login')
   }
 }
+
+
+ 
+
+
 
 
 /* GET home page. */
@@ -479,10 +486,9 @@ router.get("/success", (req, res) => {
     } else {
       console.log(JSON.stringify(payment));
       userHelpers.changePaymentStatus(req.session.orderId).then(()=>{
-        userHelpers.clearCart(req.session.user._id).then(()=>{
+        
           req.session.couponTotal = null
         res.redirect('/order-success')
-        })
       })
     }
   });
@@ -495,7 +501,14 @@ router.get("/cancel", (req, res) =>{
 
 //order succsess page
 router.get('/order-success',(req,res)=>{
-  res.render('user/order-success',{adminlogin:true})
+  var user=req.session.user;
+  var msg="Your Order Confirmed"
+  userHelpers.clearCart(req.session.user._id).then(()=>{
+  emailHelpers.sentMail(user,msg).then(()=>{
+
+    res.render('user/order-success',{adminlogin:true})
+  })
+})
   req.session.couponTotal = null
 })
 
@@ -543,16 +556,21 @@ router.get('/singleOrder/:id', verifyLogin,async(req, res) => {
 
 //cancel my orders
 router.post('/cancel-order',(req,res)=>{
-  console.log(req.body);
+  console.log("this is your calcel order",req.body);
   
   let orderId=req.body.orderId
   let Total= req.body.Total
   var user=req.session.user._id;
+  var user1=req.session.user
+  let msg="Your Order Canceles Successfully ! OrderId="+orderId
   console.log("this is my cancel route",orderId,Total);
   userHelpers.cancelOrder(orderId).then((response)=>{
     userHelpers.addWallet(user,Total).then(()=>{
+      emailHelpers.sentMail(user1,msg,orderId).then(()=>{
 
-      res.json({ status: true })
+        res.json({ status: true })
+      })
+
     })
   })
 

@@ -35,7 +35,7 @@
                 <div class="dropdown">
                   <button class="btn btn-primary  dropdown-toggle p-1" style=" height: 3em;width:8em;" id="{{this._id}}"
                     data-toggle="dropdown" value="{{this.Status}}" aria-haspopup="true" aria-expanded="false"
-                    onclick="statusChecker('{{this._id}}')">
+                    onclick="statusChecker('{{this._id}}')" onload="colorset('{{this._id}}')">
                     {{this.Status}}
                   </button>
 
@@ -60,12 +60,23 @@
   </div>
 </section>
 
+{{!-- <script>
+  function colorset(id){
+    console.log("tissssssssssssssssssssssssssssssss")
+ let status = document.getElementById(id).value
+  if(status=='Placed'){
+
+    var col=document.getElementById(id);
+    col.style.color="#FF0000";
+  }
+  }
+</script> --}}
+
 
 <script>
   function statusChecker(orderId) {
     console.log("llog", orderId)
     let status = document.getElementById(orderId).value
-
     console.log('ja', status)
     if (status === 'Placed') {
       console.log("Placed........")

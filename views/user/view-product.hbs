@@ -54,10 +54,14 @@
                         <!-- Start Small Banner -->
                         <div class="hero-small-banner style2">
                             <div class="content">
-                                <h2>Weekly Sale!</h2>
-                                <p>Saving up to 50% off all online store items this week.</p>
+                                <h2>Summer Surprise!</h2>
+                                <p>Take an Extra 20% OFF <br>
+                                Friday, April 29-
+                                Sunday, May 29</p>
+                                <p hidden id="p1" >	O654G979</p>
+                                
                                 <div class="button">
-                                    <a class="btn" href="product-grids.html">Shop Now</a>
+                                    <button class="btn" onclick="copyToClipboard('#p1')">Copy the Code</button>
                                 </div>
                             </div>
                         </div>
@@ -264,3 +268,33 @@
         }
     });
 </script>
+
+<script>
+    
+    function copyToClipboard(element) {
+         const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+    Toast.fire({
+      icon: 'success',
+      title: 'Copy the Coupon Code'
+    })
+  var $temp = $("<input>");
+  $("body").append($temp);
+  $temp.val($(element).text()).select();
+  document.execCommand("copy");
+  $temp.remove();
+}
+</script>
+
+
+   
+
