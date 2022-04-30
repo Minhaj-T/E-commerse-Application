@@ -727,7 +727,12 @@ router.post('/verify-payment', (req, res)=>{
 })
 //cancel the order page
 router.get('/cancelled',(req,res)=>{
-  res.render('user/order-cancelled')
+  let user = req.session.user
+  let msg="Your Order is not Compleated"
+  emailHelpers.sentMail(user,msg).then(()=>{
+    res.render('user/order-cancelled')
+  })
+
 })
 
 //serch section
