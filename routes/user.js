@@ -557,14 +557,19 @@ router.get('/singleOrder/:id', verifyLogin,async(req, res) => {
 //cancel my orders
 router.post('/cancel-order',(req,res)=>{
   console.log("this is your calcel order",req.body);
-  
   let orderId=req.body.orderId
   let Total= req.body.Total
+  var paymentMethod=req.body.Payment
+  console.log(paymentMethod);
   var user=req.session.user._id;
   var user1=req.session.user
   let msg="Your Order Canceles Successfully ! OrderId="+orderId
-  console.log("this is my cancel route",orderId,Total);
   userHelpers.cancelOrder(orderId).then((response)=>{
+    if(paymentMethod=='COD'){
+      emailHelpers.sentMail(user1,msg,orderId).then(()=>{
+        res.json({ status: true })
+      })
+    }else{
     userHelpers.addWallet(user,Total).then(()=>{
       emailHelpers.sentMail(user1,msg,orderId).then(()=>{
 
@@ -572,6 +577,7 @@ router.post('/cancel-order',(req,res)=>{
       })
 
     })
+  }
   })
 
 })
