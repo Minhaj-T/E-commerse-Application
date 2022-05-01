@@ -350,7 +350,7 @@ router.get("/login/resend-otp", (req, res) => {
 //------------------Category section started-----------------------------
 
 //get the product into category
-router.get("/categoryProducts/:category", async (req, res) => {
+router.get("/categoryProducts/:category",verifyLogin, async (req, res) => {
   let category = req.params.category;
   var user1 = req.session.user;
   let cartCount = 0;
@@ -433,7 +433,7 @@ router.get("/checkout", verifyLogin, async (req, res) => {
 });
 
 //place order page
-router.post("/place-order", async (req, res) => {
+router.post("/place-order",verifyLogin, async (req, res) => {
   let userId = req.body.userId;
 
   let products = await userHelpers.getCartProductList(req.body.userId);
@@ -549,7 +549,7 @@ router.get("/success", (req, res) => {
   );
 });
 
-router.get("/cancel", (req, res) => {
+router.get("/cancel",verifyLogin, (req, res) => {
   let user = req.session.user;
   let msg = "Your Order is not Compleated";
   emailHelpers.sendMail(user, msg).then(() => {
@@ -558,7 +558,7 @@ router.get("/cancel", (req, res) => {
 });
 
 //order succsess page
-router.get("/order-success", (req, res) => {
+router.get("/order-success",verifyLogin, (req, res) => {
   var user = req.session.user;
   const output = `
     <p>You have a new Messege From ShopGrids</p>
@@ -637,7 +637,7 @@ router.get("/singleOrder/:id", verifyLogin, async (req, res) => {
 });
 
 //cancel my orders
-router.post("/cancel-order", (req, res) => {
+router.post("/cancel-order",verifyLogin, (req, res) => {
   let orderId = req.body.orderId;
   let Total = req.body.Total;
   var paymentMethod = req.body.Payment;
@@ -710,7 +710,7 @@ router.post("/edit-profile", (req, res) => {
 });
 
 //profile change the password
-router.get("/user-change-password", async (req, res) => {
+router.get("/user-change-password",verifyLogin, async (req, res) => {
   var user1 = req.session.user;
   let homeCategory = await userHelpers.getHomeCategories();
   let cartCount = 0;
@@ -786,7 +786,7 @@ router.post("/add-new-addressProfile", (req, res) => {
 });
 
 //delete the address for user
-router.get("/delete-address/:id", (req, res) => {
+router.get("/delete-address/:id",verifyLogin, (req, res) => {
   let addId = req.params.id;
   let userId = req.session.user._id;
   userHelpers.deleteAddress(addId, userId).then((response) => {
@@ -828,7 +828,7 @@ router.post("/edit-address", (req, res) => {
 });
 
 //verify our payment in server side
-router.post("/verify-payment", (req, res) => {
+router.post("/verify-payment",verifyLogin, (req, res) => {
   userHelpers
     .verifyPayment(req.body)
     .then((response) => {
@@ -860,7 +860,7 @@ router.post("/getProduct", async (req, res) => {
 });
 
 //-------------------Coupon management section-------------------------------------
-router.post("/couponApply", (req, res) => {
+router.post("/couponApply",verifyLogin, (req, res) => {
   let id = req.session.user._id;
   userHelpers.couponValidate(req.body, id).then((response) => {
     req.session.couponTotal = response.total;
@@ -877,7 +877,7 @@ router.post("/couponApply", (req, res) => {
 });
 
 //wallet section
-router.get("/wallet", (req, res) => {
+router.get("/wallet",verifyLogin, (req, res) => {
   var user1 = req.session.user;
   res.render("user/wallet", { user1 });
 });
