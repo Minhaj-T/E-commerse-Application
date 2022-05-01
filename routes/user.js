@@ -25,6 +25,7 @@ paypal.configure({
   client_secret: process.env.SECRET,
 });
 
+// -----------set the middleware to check user login true------------
 const verifyLogin = (req, res, next) => {
   if (req.session.loggedIn) {
     next();
@@ -43,9 +44,6 @@ router.get("/", async function (req, res, next) {
   adminHelpers.startProductOffer(todayDate).then(() => {
     console.log("the prosuct offer called");
   });
-  // adminHelpers.startCategoryOffer(todayDate).then(()=>{
-  //   console.log("the category offer callled");
-  // })
   if (req.session.user) {
     let userId = req.session.user._id;
     cartCount = await userHelpers.getCartCount(userId);
@@ -69,6 +67,9 @@ router.get("/", async function (req, res, next) {
   });
 });
 
+
+//----------------login section------------------------
+
 router.get("/login", async (req, res) => {
   if (req.session.loggedIn) {
     res.redirect("/");
@@ -88,6 +89,33 @@ router.get("/login", async (req, res) => {
   }
   res.render("user/login", { user: true });
 });
+
+router.post("/login", (req, res) => {
+  userHelpers.doLogin(req.body).then((response) => {
+    if (response.status) {
+      let status = response.user.status;
+      console.log(status);
+      if (status) {
+        req.session.loggedIn = true;
+        req.session.user = response.user;
+
+        res.redirect("/");
+      } else {
+        req.session.blockErr = true;
+        req.session.user = null;
+        req.session.userLoggedIn = false;
+        res.redirect("/login");
+      }
+    } else {
+      req.session.loginErr = true;
+      res.redirect("/login");
+    }
+  });
+});
+
+
+
+//-----------Signup Section Started------------
 
 router.get("/signup", async (req, res) => {
   if (req.session.loggedIn) {
@@ -144,33 +172,8 @@ router.post("/signup", (req, res) => {
   }
 });
 
-router.post("/login", (req, res) => {
-  userHelpers.doLogin(req.body).then((response) => {
-    if (response.status) {
-      let status = response.user.status;
-      console.log(status);
-      if (status) {
-        req.session.loggedIn = true;
-        req.session.user = response.user;
 
-        res.redirect("/");
-      } else {
-        req.session.blockErr = true;
-        req.session.user = null;
-        req.session.userLoggedIn = false;
-        res.redirect("/login");
-      }
-    } else {
-      req.session.loginErr = true;
-      res.redirect("/login");
-    }
-  });
-});
-
-router.get("/logout", (req, res) => {
-  req.session.destroy();
-  res.redirect("/login");
-});
+//--------------start the cart section----------------------
 
 router.get("/cart", verifyLogin, async (req, res) => {
   var user1 = req.session.user;
@@ -210,7 +213,7 @@ router.get("/cart", verifyLogin, async (req, res) => {
     });
   }
 });
-
+//add to cart button
 router.get("/add-to-cart/:id", (req, res) => {
   console.log("api call");
   let user = req.session.user._id;
@@ -238,29 +241,8 @@ router.post("/delete-cart-product", (req, res) => {
   });
 });
 
-router.get("/categoryProducts/:category", async (req, res) => {
-  let category = req.params.category;
-  var user1 = req.session.user;
-  let cartCount = 0;
-  let ordersCount = 0;
-  if (req.session.user) {
-    let userId = req.session.user._id;
-    cartCount = await userHelpers.getCartCount(userId);
-    ordersCount = await userHelpers.getOrdersCount(userId);
-  }
-  let homeCategory = await userHelpers.getHomeCategories();
-  let product = await userHelpers.getProductsByCateogry(category);
 
-  res.render("user/category-pro", {
-    product,
-    user1,
-    category,
-    homeCategory,
-    cartCount,
-    ordersCount,
-    userPage: true
-  });
-});
+//----------OTP login section started---------------
 
 //phone number entering form
 router.get("/loginOtp", async (req, res) => {
@@ -355,6 +337,7 @@ router.post("/login/otp", (req, res) => {
     });
 });
 
+//resend the otp 
 router.get("/login/resend-otp", (req, res) => {
   let number = req.session.number;
 
@@ -371,6 +354,35 @@ router.get("/login/resend-otp", (req, res) => {
     });
 });
 
+
+//------------------Category section started-----------------------------
+
+//get the product into category
+router.get("/categoryProducts/:category", async (req, res) => {
+  let category = req.params.category;
+  var user1 = req.session.user;
+  let cartCount = 0;
+  let ordersCount = 0;
+  if (req.session.user) {
+    let userId = req.session.user._id;
+    cartCount = await userHelpers.getCartCount(userId);
+    ordersCount = await userHelpers.getOrdersCount(userId);
+  }
+  let homeCategory = await userHelpers.getHomeCategories();
+  let product = await userHelpers.getProductsByCateogry(category);
+
+  res.render("user/category-pro", {
+    product,
+    user1,
+    category,
+    homeCategory,
+    cartCount,
+    ordersCount,
+    userPage: true
+  });
+});
+
+//this is the single view of the each product
 router.get("/view-singleProduct/:id", async (req, res) => {
   let proId = req.params.id;
   let cartCount = 0;
@@ -399,6 +411,8 @@ router.get("/view-singleProduct/:id", async (req, res) => {
     });
   });
 });
+
+//--------------Check out || Place order section Started---------------------
 
 //checkout page
 router.get("/checkout", verifyLogin, async (req, res) => {
@@ -672,6 +686,8 @@ router.post("/cancel-order", (req, res) => {
   });
 });
 
+//------------------User Profile section Started------------------------
+
 //Render the user profile page
 router.get("/my-profile", verifyLogin, async (req, res) => {
   let user2 = req.session.user._id;
@@ -801,7 +817,6 @@ router.get("/delete-address/:id", (req, res) => {
 });
 
 //edit the address for user
-
 router.get("/edit-address/:id", verifyLogin, async (req, res) => {
   var user1 = req.session.user;
   let homeCategory = await userHelpers.getHomeCategories();
@@ -978,6 +993,12 @@ router.get('/about',async(req,res)=>{
     Msgsend:req.session.Msgsend
   });
 })
+
+//Logout the User
+router.get("/logout", (req, res) => {
+  req.session.destroy();
+  res.redirect("/login");
+});
 
 
 module.exports = router;
