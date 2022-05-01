@@ -956,5 +956,28 @@ router.post('/contact',(req,res)=>{
   });
 })
 
+//About section
+
+router.get('/about',async(req,res)=>{
+  var user1 = req.session.user;
+  let homeCategory = await userHelpers.getHomeCategories();
+  let cartCount = 0;
+  let ordersCount = 0;
+  if (req.session.user) {
+    let userId = req.session.user._id;
+    cartCount = await userHelpers.getCartCount(userId);
+    ordersCount = await userHelpers.getOrdersCount(userId);
+  }
+  res.render('user/about',{
+    user: true,
+    user1,
+    homeCategory,
+    cartCount,
+    ordersCount,
+    userPage: true,
+    Msgsend:req.session.Msgsend
+  });
+})
+
 
 module.exports = router;
