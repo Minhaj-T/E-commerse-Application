@@ -184,7 +184,7 @@ module.exports={
                 },
                 {
                     $project: {
-                        item: 1, quantity: 1, product: { $arrayElemAt: ['$products', 0] }
+                        item: 1, quantity: 1, product: { $arrayElemAt: ['$products', 0] }   
                     }
                 }
             ]).toArray()

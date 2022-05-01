@@ -3,9 +3,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="section-title">
-                    <h2>Your Orderd Product</h2>
-                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have
-                        suffered alteration in some form.</p>
+                    <h2>Your Orderd Products</h2>
                 </div>
             </div>
         </div>
@@ -18,12 +16,12 @@
                         <img src="/product-images/{{this.product._id}}a.jpg" class="card-img-top" alt="Product image">
                     </div>
                     <div class="product-info">
-                        <span class="category">{{this.product.category}}</span>
-                        <h4 class="title">
+                        <span class="category button text-center mb-2">{{this.product.category}}</span>
+                        <h4 class="title button text-center mb-2">
                             <a href="/view-singleProduct/{{this.product._id}}">{{this.product.name}}</a>
                         </h4>
-                        <div class="price">
-                            <span>₹{{this.product.price}}</span>
+                        <div class="form-group button text-center">
+                            <button  class="btn ">Quantity: {{this.quantity}}</button>
                         </div>
                     </div>
                 </div>
@@ -34,6 +32,9 @@
     </div>
     </div>
 </section>
+
+
+
 <!-- ========================= scroll-top ========================= -->
 <a href="#" class="scroll-top">
     <i class="lni lni-chevron-up"></i>
