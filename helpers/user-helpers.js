@@ -13,6 +13,8 @@ var instance = new Razorpay({
 
 module.exports={
 
+    //______________________check the signin data in server side______________________
+
     doSignin:(userData)=>{
         return new Promise( async(res,rej)=>{
             if (userData.wallet) {
@@ -37,6 +39,7 @@ module.exports={
                 wallet:userData.wallet
                 
             }
+             //check the user exist
            let userexst= await db.get().collection(collection.USER_COLLECTION).findOne({ "$or": [ { email: userData.email }, { phone: phoneext} ] });
             if (userexst) {
                 response.usererr=true;
@@ -53,6 +56,8 @@ module.exports={
             }
         })
     },
+
+    //______________________Check the Login data in server side______________________
 
         doLogin:(userData)=>{
             return new Promise(async(res,rej)=>{
@@ -81,13 +86,15 @@ module.exports={
             })
         },
 
+
+            // get the all categorys in server
         getHomeCategories: () => {
             return new Promise(async (resolve, reject) => {
                 let category = await db.get().collection(collection.CATEGORY_COLLECTION).find().limit(10).toArray()
                 resolve(category)
             })
         },
-
+            //get the product in category wise
         getProductsByCateogry: (cat) => {
             return new Promise(async (resolve, reject) => {
                 let products = await db.get().collection(collection.PRODUCT_COLLECTION).find({category:cat}).toArray()
@@ -95,7 +102,7 @@ module.exports={
             })
         },
 
-        //get the user detaile using the mobile number
+           //get the user detaile using the mobile number
         getUserdetails:(No)=>{
             return new Promise(async(res,rej)=>{
                 let user=await db.get().collection(collection.USER_COLLECTION).findOne({phone:No})
@@ -103,7 +110,9 @@ module.exports={
             })
         },
 
-        //add the items into the cart
+        // _______________The cart section start________________
+
+            //add the items into the cart
         addToCart:( proId,userId)=>{
             let proObj = {
                 item: objectId(proId),
@@ -127,7 +136,6 @@ module.exports={
                         res()
                     })
                     }
-
                 }else{
                     let cartObj={
                         user:objectId(userId),
@@ -141,7 +149,7 @@ module.exports={
 
         },
 
-         //Get user cart products    
+        //Get user cart products    
     getCartProducts: (userId) => {
         return new Promise(async(res,rej)=>{
 
@@ -176,7 +184,6 @@ module.exports={
 
             }
             ]).toArray() 
-            console.log(cartItems);
             res(cartItems)
         })
     },
@@ -253,8 +260,7 @@ module.exports={
                     from:collection.PRODUCT_COLLECTION,
                     localField:'item',
                     foreignField:'_id',
-                    as:'product'
-                    
+                    as:'product' 
                 }
             },
             {
@@ -278,6 +284,8 @@ module.exports={
         })
 
     },
+
+    // _________________The order section started_________________________
 
     placeOrder:(order,products,total)=>{
         let coupon = order.Coupon
@@ -314,9 +322,7 @@ module.exports={
                         Users: user
                     }
             }).then(()=>{
-                console.log("user pushed to coupon collection");
                 db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response)=>{
-                    console.log("order inserted");
                     res(response.insertedId)
     
                 })
@@ -325,7 +331,7 @@ module.exports={
         })
 
     },
-     //Cancel order by user
+        //Cancel order by user
      cancelOrder: (Id) => {
          return new Promise((res,rej)=>{
              db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:objectId(Id)},{
@@ -341,32 +347,31 @@ module.exports={
 
      },
 
-    //Get cart product list to show in cart
+        //Get cart product list to show in cart
      getCartProductList: (userId) => {
         return new Promise(async (res, rej) => {
             let cart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: objectId(userId) })
              res(cart.products)
-            console.log("cart products", cart.products);
         })
      },
 
-       //Get user order with user id for my order section
+        //Get user order with user id for my order section
     getUserOrders: (Id) => {
         return new Promise(async (resolve, reject) => {
             let orders = await db.get().collection(collection.ORDER_COLLECTION).find({ User: objectId(Id) }).sort({'DateISO': -1}).toArray()
             resolve(orders)
-            // console.log(orders);
         })
     },
 
-     //order count for the heading part
+        //order count for the heading part
      getOrdersCount: (userId) => {
         return new Promise(async (resolve, reject) => {
             let order = await db.get().collection(collection.ORDER_COLLECTION).countDocuments({User:objectId(userId)})
-            // console.log(order);
             resolve(order)
         })
     },
+
+    // ____________Statr the Profile section________________
 
 
     updateProfile: (id, newData) => {
@@ -386,7 +391,7 @@ module.exports={
 
         })
     },
-
+        // change the password
     changePassword:(userId,data)=>{
         return new Promise(async(res,rej)=>{
             let response = {}
@@ -414,7 +419,7 @@ module.exports={
         })
     },
 
-    //add the new address
+        //add the new address
     addNewAddress:(details)=>{
         return new Promise(async (resolve, reject) => {
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(details.User) })
@@ -439,7 +444,7 @@ module.exports={
             }
         })
     },
-     //Get user address with user Id
+         //Get user address with user Id
      getUserAddress: (userId) => {
          return new Promise(async(res,rej)=>{
 
@@ -450,7 +455,7 @@ module.exports={
          
      },
 
-     //delete the address of the user
+         //delete the address of the user
      deleteAddress:(addId,userId)=>{
          return new Promise((res,rej)=>{
              db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userId)},{
@@ -461,10 +466,9 @@ module.exports={
          })
      },
 
-     //ger the single data
+         //ger the single data
      getSingleAddress:(addId,userId) => {
         return new Promise(async(res,rej)=>{
-
             let address= await db.get().collection(collection.USER_COLLECTION).aggregate([
                 {
                     $match:{_id:objectId(userId)}
@@ -486,8 +490,8 @@ module.exports={
         })
         
     },
-       //edit address
-       editAddress: (newData) => {
+        //edit address
+    editAddress: (newData) => {
         return new Promise((res, rej) => {
             db.get().collection(collection.USER_COLLECTION).updateOne({ _id: objectId(newData.User), "address._id": objectId(newData._id) }, {
                 $set: {
@@ -507,7 +511,9 @@ module.exports={
         })
     },
 
-    //if razorpay the generate the razorepaay gateway
+    // ______________Razorpay section_________________
+
+        //if razorpay the generate the razorepaay gateway
     generateRazorpay: (orderId, total) => {
         return new Promise((res, rej) => {
             var options = {
@@ -542,7 +548,7 @@ module.exports={
 
     },
 
-      //Change payment status after payment verify
+          //Change payment status after payment verify
       changePaymentStatus: (oId) => {
         return new Promise((resolve, reject) => {
             db.get().collection(collection.ORDER_COLLECTION).updateOne({ _id: objectId(oId) },
@@ -556,7 +562,7 @@ module.exports={
         })
     },
 
-    //For clear cart after placing order
+        //For clear cart after placing order
     clearCart: (User) => {
         return new Promise((resolve, reject) => {
             db.get().collection(collection.CART_COLLECTION).deleteOne({ user: objectId(User) }).then(() => {
@@ -564,7 +570,7 @@ module.exports={
             })
         })
     },
-    //Get banners from banner collection
+         //Get banners from banner collection
     getAllBanners: () => {
         return new Promise(async (res, rej) => {
             let banners = await db.get().collection(collection.BANNER_COLLECTION).find().toArray()
@@ -580,14 +586,12 @@ module.exports={
 
     },
 
-    //vlidate the coupon with the checkout page
+        //vlidate the coupon with the checkout page
     couponValidate: (data, user) => {
         return new Promise(async(res,rej)=>{
             obj = {}
                 let date=new Date()
                 date=moment(date).format('YYYY-MM-DD')
-              console.log(date);
-   
                 let coupon= await db.get().collection(collection.COUPON_COLLECTION).findOne({Coupon:data.Coupon,Available:true})
                 if(coupon){
                         let users = coupon.Users
@@ -617,12 +621,11 @@ module.exports={
                     }   
              })
         },
-
+        // Chech the referal Code
         checkReferal: (referal) => {
             return new Promise(async (res, rej) => {
               let refer = await db.get().collection(collection.USER_COLLECTION).find({ refer: referal }).toArray();
               if(refer){
-
                   res(refer)
               }else{
                   res(err)
@@ -630,14 +633,13 @@ module.exports={
             });
           },
 
+        // __________The wallet section started___________
 
           applayWallet:(val,userId)=>{
-              console.log(userId);
               let value=parseInt(val)
             return new Promise((res,rej)=>{
                 db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userId)},{ $inc: { wallet: -value }}).then((response)=>{
                     res(response)
-                    console.log(response);
             })
             }) 
     
@@ -645,7 +647,6 @@ module.exports={
 
         addWallet:(userId,total)=>{
             let Total=parseInt(total)
-            console.log("this is the add wallet route in my sever side",userId,Total)
             return new Promise((res,rej)=>{
                 db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userId)},{ $inc: { wallet: Total } }).then((response)=>{
                     res(response)
