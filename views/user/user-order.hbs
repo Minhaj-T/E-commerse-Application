@@ -1,5 +1,3 @@
-
-
 <section class="blog-section section">
   <div class="container">
     <div class="row">
@@ -12,7 +10,7 @@
       </div>
     </div>
     <div class="row">
-    {{#each orders}}
+      {{#each orders}}
       <div class="col-lg-4 col-md-6 col-12">
         <!-- Start Single Blog -->
         <div class="single-blog">
@@ -28,7 +26,7 @@
                   <div class="py-2">
                     <span class="d-block text-muted">Order Date</span>
                     <span>{{this.Time}}</span> <br>
-                    <span>{{this.Date}}</span> 
+                    <span>{{this.Date}}</span>
                   </div>
                 </td>
                 <td>
@@ -41,13 +39,13 @@
             </table>
             <table class="table table-borderless">
               <tr>
-                 
+
                 <td>
                   <div class="py-2">
                     <span class="d-block text-muted">Delivery Address</span>
-                    <span>{{this.deliveryDetails.Name}} 
-                        {{this.deliveryDetails.House}},{{this.deliveryDetails.Street}}, <br>
-                        {{this.deliveryDetails.Town}},{{this.deliveryDetails.PIN}},{{this.deliveryDetails.Mobile}}
+                    <span>{{this.deliveryDetails.Name}}
+                      {{this.deliveryDetails.House}},{{this.deliveryDetails.Street}}, <br>
+                      {{this.deliveryDetails.Town}},{{this.deliveryDetails.PIN}},{{this.deliveryDetails.Mobile}}
                     </span>
                   </div>
                 </td>
@@ -64,19 +62,16 @@
                     <span>{{this.PaymentMethod}}</span>
                   </div>
                 </td>
-                  <td>
+                <td>
                   <div class="py-2">
                     <span class="d-block text-muted">Order Status</span>
                     <span>{{this.Status}}</span>
                   </div>
-                </td> 
+                </td>
                 <td>
                   <div class="py-2">
                     <div class="text-left">
-                      <span
-                        class="text-muted"
-                        style="font-size: larger;"
-                      ><strong>Totel</strong></span>
+                      <span class="text-muted" style="font-size: larger;"><strong>Totel</strong></span>
                     </div>
                     <span>₹ {{this.Total}}</span>
                   </div>
@@ -84,27 +79,26 @@
               </tr>
             </table>
             <div class="row">
-            <div class="wish-button">
-              {{#if this.Cancelled}}
-               <button id="" type="button" class="btn btn-outline-danger p-2">Return</button>
-              {{else}}
-              <button id="cncl" type="button" onclick="cancelOrder('{{this._id}}','{{this.Total}}','{{this.PaymentMethod}}')" class="btn btn-outline-danger p-2">Calncel</button>
-              {{/if}}
-              <a class="btn btn-outline-primary p-2"  href="/singleOrder/{{this._id}}" >view product</a>
-            </div>
+              <div class="wish-button">
+                {{#if this.Cancelled}}
+                <button id="" type="button" class="btn btn-outline-danger p-2">Return</button>
+                {{else}}
+                <button id="cncl" type="button"
+                  onclick="cancelOrder('{{this._id}}','{{this.Total}}','{{this.PaymentMethod}}')"
+                  class="btn btn-outline-danger p-2">Calncel</button>
+                {{/if}}
+                <a class="btn btn-outline-primary p-2" href="/singleOrder/{{this._id}}">view product</a>
+              </div>
             </div>
           </div>
         </div>
         <!-- End Single Blog -->
       </div>
-    {{/each}}
+      {{/each}}
     </div>
   </div>
 </section>
 <!-- ========================= scroll-top ========================= -->
 <a href="#" class="scroll-top">
-    <i class="lni lni-chevron-up"></i>
+  <i class="lni lni-chevron-up"></i>
 </a>
-
-
-  

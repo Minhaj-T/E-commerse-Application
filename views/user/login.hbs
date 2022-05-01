@@ -1,49 +1,47 @@
+<div class="account-login section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1 col-12">
+                <form class="card login-form" action="/login" method="post" id="userLogin">
+                    <div class="card-body">
+                        <div class="title">
+                            <h3>Login Now</h3>
+                            <p>You can login using your Phone Number and Password.</p>
+                            {{#if loginErr}}
 
-     <div class="account-login section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1 col-12">
-                    <form class="card login-form" action="/login" method="post" id="userLogin">
-                        <div class="card-body">
-                            <div class="title">
-                                <h3>Login Now</h3>
-                                <p>You can login using your Phone Number and Password.</p>
-                                {{#if loginErr}}
-                                
-                                <div class="alert alert-danger" role="alert">
-                                       Please Check Your Phone Number and Password
-                                       </div>
-                                {{/if}}
-                                {{#if blockErr}}
-                                <div class="alert alert-danger" role="alert">
-                                    You are temporarily blocked by admin 
-                                </div>
-                                {{/if}}
+                            <div class="alert alert-danger" role="alert">
+                                Please Check Your Phone Number and Password
                             </div>
-                            <div class="form-group input-group">
-                                <label for="reg-fn">Phone Number</label>
-                                <input class="form-control" type="tel" name="phone" id="" >
+                            {{/if}}
+                            {{#if blockErr}}
+                            <div class="alert alert-danger" role="alert">
+                                You are temporarily blocked by admin
                             </div>
-                            <div class="form-group input-group">
-                                <label for="reg-fn">Password</label>
-                                <input class="form-control" type="password" name="password" id="reg-pass">
-                            </div>
-                            <div class="d-flex flex-wrap justify-content-between bottom-content">
-                               
-                                <a class="lost-pass" href="/loginOtp"><strong>Login with OTP</strong></a>
-                            </div>
-                            <div class="button">
-                                <button class="btn" type="submit">Login</button>
-                            </div>
-                            <p class="outer-link">Don't have an account? <a href="/signup">Register here </a>
-                            </p>
+                            {{/if}}
                         </div>
-                    </form>
-                </div>
+                        <div class="form-group input-group">
+                            <label for="reg-fn">Phone Number</label>
+                            <input class="form-control" type="tel" name="phone" id="">
+                        </div>
+                        <div class="form-group input-group">
+                            <label for="reg-fn">Password</label>
+                            <input class="form-control" type="password" name="password" id="reg-pass">
+                        </div>
+                        <div class="d-flex flex-wrap justify-content-between bottom-content">
+                            <a class="lost-pass" href="/loginOtp"><strong>Login with OTP</strong></a>
+                        </div>
+                        <div class="button">
+                            <button class="btn" type="submit">Login</button>
+                        </div>
+                        <p class="outer-link">Don't have an account? <a href="/signup">Register here </a>
+                        </p>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <!-- ========================= scroll-top ========================= -->
+</div>
+<!-- ========================= scroll-top ========================= -->
 <a href="#" class="scroll-top">
     <i class="lni lni-chevron-up"></i>
 </a>

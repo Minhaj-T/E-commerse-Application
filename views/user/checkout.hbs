@@ -1,31 +1,34 @@
+
+{{!-- This is my checkout page --}}
+
 <div class="container">
-<div class="row">
-  {{#each address}}
-  <div class="col-sm-4 p-4">
-    <div class="card">
-      <div class="card-body">
+  <div class="row">
+    {{#each address}}
+    <div class="col-sm-4 p-4">
+      <div class="card">
+        <div class="card-body">
 
-        <div class="text-center">
-          <h6 class="margin">Address </h6>
-          <span>{{this.Name}}
-            ,{{this.House}}(house),
-            <br />
-            {{this.Town}},{{this.Street}}-{{this.PIN}}
-            <br />Ph :{{this.Mobile}}
-          </span>
+          <div class="text-center">
+            <h6 class="margin">Address </h6>
+            <span>{{this.Name}}
+              ,{{this.House}}(house),
+              <br />
+              {{this.Town}},{{this.Street}}-{{this.PIN}}
+              <br />Ph :{{this.Mobile}}
+            </span>
+          </div>
+
         </div>
-
-      </div>
-      <div class="text-center  mb-2">
-        <button class="btn btn-primary "
-          onclick="autoFill('{{this.Name}}','{{this.House}}','{{this.Street}}','{{this.Town}}','{{this.PIN}}','{{this.Mobile}}','{{this.Email}}')">
-          Choose
-        </button>
+        <div class="text-center  mb-2">
+          <button class="btn btn-primary "
+            onclick="autoFill('{{this.Name}}','{{this.House}}','{{this.Street}}','{{this.Town}}','{{this.PIN}}','{{this.Mobile}}','{{this.Email}}')">
+            Choose
+          </button>
+        </div>
       </div>
     </div>
+    {{/each}}
   </div>
-  {{/each}}
-</div>
 </div>
 
 <section class="checkout-wrapper section">
@@ -139,8 +142,8 @@
                             style="width: 113px; height: 34px;padding: 6px; ">apply</a>
                         </div>
                         <div class="alert alert-danger" style="display: none;" id="valueNotCorrect" role="alert">
-                      Enter the Correct Amount
-                    </div>
+                          Enter the Correct Amount
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -232,11 +235,6 @@
                     href="#">Place Order</button>
                 </div>
               </div>
-              {{! <div class="checkout-sidebar-banner mt-30">
-                <a href="product-grids.html">
-                  <img src="https://via.placeholder.com/400x330" alt="#">
-                </a>
-              </div> }}
             </div>
           </div>
         </form>
@@ -246,7 +244,7 @@
 </section>
 <!-- ========================= scroll-top ========================= -->
 <a href="#" class="scroll-top">
-    <i class="lni lni-chevron-up"></i>
+  <i class="lni lni-chevron-up"></i>
 </a>
 
 <script>
@@ -344,31 +342,31 @@
 </script>
 
 <script>
-  function applayWallet(){
+  function applayWallet() {
     let walletval = document.getElementById('wallet').value
     let ttlpro = document.getElementById('Totalpro').value
     $.ajax({
-      url:'/applayWallet',
-      data:{
-        wallet:walletval,
-        Total:ttlpro
+      url: '/applayWallet',
+      data: {
+        wallet: walletval,
+        Total: ttlpro
       },
-      method:'post',
-    success:(response)=>{
-      console.log(response,response.total)
-      if(response.walletSuccess){
-        document.getElementById('discount').innerHTML =response.total;
-        document.getElementById("ttlprc").innerHTML = response.total;
-         $('#discount').show()
+      method: 'post',
+      success: (response) => {
+        console.log(response, response.total)
+        if (response.walletSuccess) {
+          document.getElementById('discount').innerHTML = response.total;
+          document.getElementById("ttlprc").innerHTML = response.total;
+          $('#discount').show()
           $('#discountLabel').show()
           $('#discounttd').show()
 
-      }else{
-        $('#valueNotCorrect').show()
-      }
+        } else {
+          $('#valueNotCorrect').show()
+        }
 
-    }
+      }
     })
-    
+
   }
 </script>

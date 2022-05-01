@@ -1,95 +1,103 @@
+{{!-- Edit address fror the user side --}}
 
-     <div class="account-login section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    {{#each address}}
-        <form action="/edit-address" id="addNewAddress-form" class="mt-3" method="POST">
-                <div class="checkout-steps-form-style-1">
-                    <ul id="accordionExample"> 
-                        <li>
-                            <h6 class="title collapsed text-primary">Enter Your Address</h6>
-                            <section class="checkout-steps-form-content collapse show ">
-                            
-                                <div class="row">
-                                    <div class="col-md-12">
-                                       <div class="single-form form-default">
-                                            <label>Full Name</label>
-                                            <div class="row">
-                                                <div class=" form-input form">
-                                                    <input type="text" id="fname" value="{{address.Name}}" name="Name" placeholder="Enter Your Full Name" >
+<div class="account-login section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                {{#each address}}
+                <form action="/edit-address" id="addNewAddress-form" class="mt-3" method="POST">
+                    <div class="checkout-steps-form-style-1">
+                        <ul id="accordionExample">
+                            <li>
+                                <h6 class="title collapsed text-primary">Enter Your Address</h6>
+                                <section class="checkout-steps-form-content collapse show ">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="single-form form-default">
+                                                <label>Full Name</label>
+                                                <div class="row">
+                                                    <div class=" form-input form">
+                                                        <input type="text" id="fname" value="{{address.Name}}"
+                                                            name="Name" placeholder="Enter Your Full Name">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="single-form form-default">
-                                            <label>House Name</label>
-                                            <div class="form-input form">
-                                                <input type="text" id="house" value="{{address.House}}" name="House" placeholder="House Name">
+                                        <div class="col-md-6">
+                                            <div class="single-form form-default">
+                                                <label>House Name</label>
+                                                <div class="form-input form">
+                                                    <input type="text" id="house" value="{{address.House}}" name="House"
+                                                        placeholder="House Name">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="single-form form-default">
-                                            <label>Street Address</label>
-                                            <div class="form-input form">
-                                                <input id="street" name="Street" value="{{address.Street}}"  type="text" placeholder="Street Address">
+                                        <div class="col-md-6">
+                                            <div class="single-form form-default">
+                                                <label>Street Address</label>
+                                                <div class="form-input form">
+                                                    <input id="street" name="Street" value="{{address.Street}}"
+                                                        type="text" placeholder="Street Address">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-md-6">
-                                        <div class="single-form form-default">
-                                            <label>City</label>
-                                            <div class="form-input form">
-                                                <input  type="text" id="city" value="{{address.Town}}" name="Town" placeholder="Town / City" >
+                                        <div class="col-md-6">
+                                            <div class="single-form form-default">
+                                                <label>City</label>
+                                                <div class="form-input form">
+                                                    <input type="text" id="city" value="{{address.Town}}" name="Town"
+                                                        placeholder="Town / City">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="single-form form-default">
-                                            <label>Postcode / ZIP</label>
-                                            <div class="form-input form">
-                                                <input type="tel" id="pin" name="PIN" value="{{address.PIN}}" maxlength="6" onkeypress="return isNumber(event)" required placeholder="Post Code">
+                                        <div class="col-md-6">
+                                            <div class="single-form form-default">
+                                                <label>Postcode / ZIP</label>
+                                                <div class="form-input form">
+                                                    <input type="tel" id="pin" name="PIN" value="{{address.PIN}}"
+                                                        maxlength="6" onkeypress="return isNumber(event)" required
+                                                        placeholder="Post Code">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="single-form form-default">
-                                            <label>Phone</label>
-                                            <div class="form-input form">
-                                                <input type="tel" id="phone" name="Mobile" value="{{address.Mobile}}" maxlength="10" placeholder="Phone">
+                                        <div class="col-md-6">
+                                            <div class="single-form form-default">
+                                                <label>Phone</label>
+                                                <div class="form-input form">
+                                                    <input type="tel" id="phone" name="Mobile"
+                                                        value="{{address.Mobile}}" maxlength="10" placeholder="Phone">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                     <div class="col-md-6">
-                                        <div class="single-form form-default">
-                                            <label>Email Address</label>
-                                            <div class="form-input form">
-                                                <input type="text" id="email" name="Email" value="{{address.Email}}" placeholder="Email Address">
+                                        <div class="col-md-6">
+                                            <div class="single-form form-default">
+                                                <label>Email Address</label>
+                                                <div class="form-input form">
+                                                    <input type="text" id="email" name="Email" value="{{address.Email}}"
+                                                        placeholder="Email Address">
+                                                </div>
                                             </div>
                                         </div>
+                                        <input type="text" name="User" value="{{address.User}}" hidden>
+                                        <input type="text" name="_id" value="{{address._id}}" hidden>
                                     </div>
-                                    <input type="text" name="User" value="{{address.User}}" hidden>
-                                    <input type="text" name="_id" value="{{address._id}}" hidden>
-                                </div>
-                                <div class="button">
-                                <button class="btn btn-primary" type="submit">Edit The Address</button>
-                            </div>
-                           {{!-- <button  type="submit" class="btn btn-primary mt-3">Add New Address</button> --}}
-                            </section>
-                        </li>
-                    </ul>
-                </div>
-           
-            </form>
-                   {{/each}}
-                </div>
+                                    <div class="button">
+                                        <button class="btn btn-primary" type="submit">Edit The Address</button>
+                                    </div>
+                                </section>
+                            </li>
+                        </ul>
+                    </div>
+
+                </form>
+                {{/each}}
             </div>
         </div>
     </div>
-    <!-- ========================= scroll-top ========================= -->
+</div>
+<!-- ========================= scroll-top ========================= -->
 <a href="#" class="scroll-top">
     <i class="lni lni-chevron-up"></i>
 </a>

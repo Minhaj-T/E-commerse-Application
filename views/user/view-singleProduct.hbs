@@ -1,107 +1,108 @@
 <style>
     .section {
-    padding-top: 35px;
-    padding-bottom: 0px;
-    position: relative;
-}
+        padding-top: 35px;
+        padding-bottom: 0px;
+        position: relative;
+    }
 </style>
 
- <!-- Start Item Details -->
-    <section class="item-details section">
-        <div class="container">
-            <div class="top-area">
-                <div class="row align-items-center">
-                    <div class="col-lg-6 col-md-12 col-12">
-                        <div class="product-images">
-                            <main id="gallery">
-                                <div id="img-container" >
-                                    <img src="/product-images/{{Product._id}}a.jpg" id="current" alt="#">
-                                </div>
-                                <div class="images">
-                                     <img src="/product-images/{{Product._id}}a.jpg" class="img" alt="#">
-                                    <img src="/product-images/{{Product._id}}b.jpg" class="img" alt="#">
-                                    <img src="/product-images/{{Product._id}}c.jpg" class="img" alt="#">
-                                    <img src="/product-images/{{Product._id}}d.jpg" class="img" alt="#">
-                                    
-                                    
-                                </div>
-                            </main>
-                        </div>
+<!-- Start Item Details -->
+<section class="item-details section">
+    <div class="container">
+        <div class="top-area">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-12 col-12">
+                    <div class="product-images">
+                        <main id="gallery">
+                            <div id="img-container">
+                                <img src="/product-images/{{Product._id}}a.jpg" id="current" alt="#">
+                            </div>
+                            <div class="images">
+                                <img src="/product-images/{{Product._id}}a.jpg" class="img" alt="#">
+                                <img src="/product-images/{{Product._id}}b.jpg" class="img" alt="#">
+                                <img src="/product-images/{{Product._id}}c.jpg" class="img" alt="#">
+                                <img src="/product-images/{{Product._id}}d.jpg" class="img" alt="#">
+
+
+                            </div>
+                        </main>
                     </div>
-                    <div class="col-lg-6 col-md-12 col-12">
-                        <div class="product-info">
-                            <h2 class="title">{{Product.name}}</h2>
-                            <p class="category"><i class="lni lni-tag"></i> {{Product.category}}<a href="javascript:void(0)"></a></p>
-                            {{#if Product.offer}}
-                            <h3 class="price">₹{{Product.price}}<span>₹{{Product.actualPrice}}</span></h3>
-                            {{else}}
-                            <h3 class="price">₹{{Product.price}}</h3>
-                            {{/if}}
-                            <p class="info-text">
-                                {{Product.discription}}
-                            </p>
-                            <div class="row">
-                                {{!-- <div class="col-lg-4 col-md-4 col-12">
-                                    <div class="form-group color-option">
-                                        <label class="title-label" for="size">Choose color</label>
-                                        <div class="single-checkbox checkbox-style-1">
-                                            <input type="checkbox" id="checkbox-1" checked>
-                                            <label for="checkbox-1"><span></span></label>
-                                        </div>
-                                        <div class="single-checkbox checkbox-style-2">
-                                            <input type="checkbox" id="checkbox-2">
-                                            <label for="checkbox-2"><span></span></label>
-                                        </div>
-                                        <div class="single-checkbox checkbox-style-3">
-                                            <input type="checkbox" id="checkbox-3">
-                                            <label for="checkbox-3"><span></span></label>
-                                        </div>
-                                        <div class="single-checkbox checkbox-style-4">
-                                            <input type="checkbox" id="checkbox-4">
-                                            <label for="checkbox-4"><span></span></label>
-                                        </div>
+                </div>
+                <div class="col-lg-6 col-md-12 col-12">
+                    <div class="product-info">
+                        <h2 class="title">{{Product.name}}</h2>
+                        <p class="category"><i class="lni lni-tag"></i> {{Product.category}}<a
+                                href="javascript:void(0)"></a></p>
+                        {{#if Product.offer}}
+                        <h3 class="price">₹{{Product.price}}<span>₹{{Product.actualPrice}}</span></h3>
+                        {{else}}
+                        <h3 class="price">₹{{Product.price}}</h3>
+                        {{/if}}
+                        <p class="info-text">
+                            {{Product.discription}}
+                        </p>
+                        <div class="row">
+                            {{!-- <div class="col-lg-4 col-md-4 col-12">
+                                <div class="form-group color-option">
+                                    <label class="title-label" for="size">Choose color</label>
+                                    <div class="single-checkbox checkbox-style-1">
+                                        <input type="checkbox" id="checkbox-1" checked>
+                                        <label for="checkbox-1"><span></span></label>
                                     </div>
-                                </div> --}}
-                                <div class="col-lg-4 col-md-4 col-12">
-                                          <div class="form-group">
-                                        <label for="color">Size</label>
-                                        <select class="form-control" id="color">
-                                            <option>M</option>
-                                            <option>L</option>
-                                            <option>XL</option>
-                                            <option>XXL</option>
-                                        </select>
+                                    <div class="single-checkbox checkbox-style-2">
+                                        <input type="checkbox" id="checkbox-2">
+                                        <label for="checkbox-2"><span></span></label>
+                                    </div>
+                                    <div class="single-checkbox checkbox-style-3">
+                                        <input type="checkbox" id="checkbox-3">
+                                        <label for="checkbox-3"><span></span></label>
+                                    </div>
+                                    <div class="single-checkbox checkbox-style-4">
+                                        <input type="checkbox" id="checkbox-4">
+                                        <label for="checkbox-4"><span></span></label>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-4 col-12">
-                                  <div class="form-group quantity">
-                                        <label for="color">Quantity</label>
-                                        <select class="form-control">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select>
-                                    </div>
+                            </div> --}}
+                            <div class="col-lg-4 col-md-4 col-12">
+                                <div class="form-group">
+                                    <label for="color">Size</label>
+                                    <select class="form-control" id="color">
+                                        <option>M</option>
+                                        <option>L</option>
+                                        <option>XL</option>
+                                        <option>XXL</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="bottom-content">
-                                <div class="row align-items-end">
-                                    <div class="col-lg-4 col-md-4 col-12">
-                                        <div class="button cart-button">
-                                            <button class="btn" onclick="addToCart('{{Product._id}}')" style="width: 100%;">Add to Cart</button>
-                                        </div>
+                            <div class="col-lg-4 col-md-4 col-12">
+                                <div class="form-group quantity">
+                                    <label for="color">Quantity</label>
+                                    <select class="form-control">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bottom-content">
+                            <div class="row align-items-end">
+                                <div class="col-lg-4 col-md-4 col-12">
+                                    <div class="button cart-button">
+                                        <button class="btn" onclick="addToCart('{{Product._id}}')"
+                                            style="width: 100%;">Add to Cart</button>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-12">
-                                        <div class="wish-button">
-                                            <button class="btn"><i class="lni lni-bolt-alt"></i> Buy Now</button>
-                                        </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-12">
+                                    <div class="wish-button">
+                                        <button class="btn"><i class="lni lni-bolt-alt"></i> Buy Now</button>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-12">
-                                        <div class="wish-button">
-                                            <button class="btn"><i class="lni lni-heart"></i> To Wishlist</button>
-                                        </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-12">
+                                    <div class="wish-button">
+                                        <button class="btn"><i class="lni lni-heart"></i> To Wishlist</button>
                                     </div>
                                 </div>
                             </div>
@@ -110,16 +111,17 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
 
-    <section class="trending-product section" style=" margin-bottom: 45px;">
+<section class="trending-product section" style=" margin-bottom: 45px;">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="section-title">
                     <h2>Related Product</h2>
-                    
+
                 </div>
             </div>
         </div>
@@ -144,14 +146,6 @@
                         <h4 class="title">
                             <a href="/view-singleProduct/{{this._id}}">{{this.name}}</a>
                         </h4>
-                        {{!-- <ul class="review">
-                            <li><i class="lni lni-star-filled"></i></li>
-                            <li><i class="lni lni-star-filled"></i></li>
-                            <li><i class="lni lni-star-filled"></i></li>
-                            <li><i class="lni lni-star-filled"></i></li>
-                            <li><i class="lni lni-star"></i></li>
-                            <li><span>4.0 Review(s)</span></li>
-                        </ul> --}}
                         {{#if this.offer}}
                         <div class="price">
                             <span>₹{{this.price}}</span>
@@ -179,34 +173,34 @@
 
 <script>
 
-var options1 = {
-    fillContainer: true,
-    "zoomWidth":495,
-    offset: {vertical: 0, horizontal: 10},
-    "zoomPosition":"original"
-};
+    var options1 = {
+        fillContainer: true,
+        "zoomWidth": 495,
+        offset: { vertical: 0, horizontal: 10 },
+        "zoomPosition": "original"
+    };
 
 
-new ImageZoom(document.getElementById("img-container"), options1);
+    new ImageZoom(document.getElementById("img-container"), options1);
 
 </script>
 
 
 <script type="text/javascript">
-        const current = document.getElementById("current");
-        const opacity = 0.6;
-        const imgs = document.querySelectorAll(".img");
-        imgs.forEach(img => {
-            img.addEventListener("click", (e) => {
-                //reset opacity
-                imgs.forEach(img => {
-                    img.style.opacity = 1;
-                });
-                current.src = e.target.src;
-                //adding class 
-                //current.classList.add("fade-in");
-                //opacity
-                e.target.style.opacity = opacity;
+    const current = document.getElementById("current");
+    const opacity = 0.6;
+    const imgs = document.querySelectorAll(".img");
+    imgs.forEach(img => {
+        img.addEventListener("click", (e) => {
+            //reset opacity
+            imgs.forEach(img => {
+                img.style.opacity = 1;
             });
+            current.src = e.target.src;
+            //adding class 
+            //current.classList.add("fade-in");
+            //opacity
+            e.target.style.opacity = opacity;
         });
-    </script>
+    });
+</script>

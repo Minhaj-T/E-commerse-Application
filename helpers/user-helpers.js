@@ -207,7 +207,6 @@ module.exports={
         return new Promise((res,rej)=>{
             if(count==-1 && quantity==1){
                 db.get().collection(collection.CART_COLLECTION).updateOne({_id:objectId(details.cart)},{
-
                     $pull:{products:{item:objectId(details.product)}}
                 }).then((response)=>{
                     res({removeProduct:true})

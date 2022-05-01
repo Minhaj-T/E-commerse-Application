@@ -1,51 +1,40 @@
-
-    <section class="trending-product section" style="margin-top: 12px;">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-title">
-                        <h2>Your Orderd Product</h2>
-                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have
-                            suffered alteration in some form.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-              {{#each products}}
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="/product-images/{{this.product._id}}a.jpg" class="card-img-top" alt="Product image">
-                        </div>
-                        <div class="product-info">
-                            <span class="category">{{this.product.category}}</span>
-                            <h4 class="title">
-                                <a href="/view-singleProduct/{{this.product._id}}">{{this.product.name}}</a>
-                            </h4>
-                            {{!-- <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star"></i></li>
-                                <li><span>4.0 Review(s)</span></li>
-                            </ul> --}}
-                            <div class="price">
-                                <span>₹{{this.product.price}}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
-              {{/each}}
+<section class="trending-product section" style="margin-top: 12px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title">
+                    <h2>Your Orderd Product</h2>
+                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have
+                        suffered alteration in some form.</p>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- ========================= scroll-top ========================= -->
+        <div class="row">
+            {{#each products}}
+            <div class="col-lg-3 col-md-6 col-12">
+                <!-- Start Single Product -->
+                <div class="single-product">
+                    <div class="product-image">
+                        <img src="/product-images/{{this.product._id}}a.jpg" class="card-img-top" alt="Product image">
+                    </div>
+                    <div class="product-info">
+                        <span class="category">{{this.product.category}}</span>
+                        <h4 class="title">
+                            <a href="/view-singleProduct/{{this.product._id}}">{{this.product.name}}</a>
+                        </h4>
+                        <div class="price">
+                            <span>₹{{this.product.price}}</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Single Product -->
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    </div>
+</section>
+<!-- ========================= scroll-top ========================= -->
 <a href="#" class="scroll-top">
     <i class="lni lni-chevron-up"></i>
 </a>
-
- 
