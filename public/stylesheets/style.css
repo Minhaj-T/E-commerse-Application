@@ -96,3 +96,12 @@
     text-align: left;
 
 }
+#contact-form  label.error{
+    color: #FB3A3A;
+    display: block;
+    margin: 5px;
+    padding: 0;
+    text-align: left;
+
+}
+

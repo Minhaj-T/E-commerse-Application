@@ -555,7 +555,7 @@ router.get("/success", (req, res) => {
 router.get("/cancel", (req, res) => {
   let user = req.session.user;
   let msg = "Your Order is not Compleated";
-  emailHelpers.sentMail(user, msg).then(() => {
+  emailHelpers.sendMail(user, msg).then(() => {
     res.render("user/order-cancelled",{adminlogin: true});
   });
 });
@@ -563,9 +563,15 @@ router.get("/cancel", (req, res) => {
 //order succsess page
 router.get("/order-success", (req, res) => {
   var user = req.session.user;
-  var msg = "Your Order Confirmed";
+  const output = `
+    <p>You have a new Messege From ShopGrids</p>
+    <h3>Your Order Status</h3>
+    <ul> 
+      <li>Your Order Confirmed !</li> 
+    </ul>
+  `;
   userHelpers.clearCart(req.session.user._id).then(() => {
-    emailHelpers.sentMail(user, msg).then(() => {
+    emailHelpers.sendMail(user, output).then(() => {
       res.render("user/order-success", { adminlogin: true });
     });
   });
@@ -643,15 +649,22 @@ router.post("/cancel-order", (req, res) => {
   console.log(paymentMethod);
   var user = req.session.user._id;
   var user1 = req.session.user;
-  let msg = "Your Order Canceles Successfully ! OrderId=" + orderId;
+  const output = `
+    <p>You have a new Messege From ShopGrids</p>
+    <h3>Your Order Status</h3>
+    <ul> 
+      <li>Your Order Canceled Successfully !</li> 
+      <li> OrderId=${orderId}</li>
+    </ul>
+  `;
   userHelpers.cancelOrder(orderId).then((response) => {
     if (paymentMethod == "COD") {
-      emailHelpers.sentMail(user1, msg, orderId).then(() => {
+      emailHelpers.sendMail(user1, output).then(() => {
         res.json({ status: true });
       });
     } else {
       userHelpers.addWallet(user, Total).then(() => {
-        emailHelpers.sentMail(user1, msg, orderId).then(() => {
+        emailHelpers.sendMail(user1, output).then(() => {
           res.json({ status: true });
         });
       });
@@ -842,7 +855,7 @@ router.post("/verify-payment", (req, res) => {
 router.get("/cancelled", (req, res) => {
   let user = req.session.user;
   let msg = "Your Order is not Compleated";
-  emailHelpers.sentMail(user, msg).then(() => {
+  emailHelpers.sendMail(user, msg).then(() => {
     res.render("user/order-cancelled");
   });
 });
@@ -895,5 +908,53 @@ router.post("/applayWallet", async (req, res) => {
     res.json({ valnotCurrect: true });
   }
 });
+
+//add the contact section
+router.get('/contact',async(req,res)=>{
+  var user1 = req.session.user;
+  let homeCategory = await userHelpers.getHomeCategories();
+  let cartCount = 0;
+  let ordersCount = 0;
+  if (req.session.user) {
+    let userId = req.session.user._id;
+    cartCount = await userHelpers.getCartCount(userId);
+    ordersCount = await userHelpers.getOrdersCount(userId);
+  }
+  res.render('user/contact',{
+    user: true,
+    user1,
+    homeCategory,
+    cartCount,
+    ordersCount,
+    userPage: true,
+    Msgsend:req.session.Msgsend
+  });
+  req.session.Msgsend=false;
+})
+
+router.post('/contact',(req,res)=>{
+  const output = `
+    <p>You have a new contact request</p>
+    <h3>Contact Details</h3>
+    <ul>  
+      <li>Name: ${req.body.name}</li>
+      <li>Subject: ${req.body.subject}</li>
+      <li>Email: ${req.body.email}</li>
+      <li>Phone: ${req.body.phone}</li>
+    </ul>
+    <h3>Message</h3>
+    <p>${req.body.message}</p>
+  `;
+
+  var admin ={
+    email:process.env.admingmail
+  }
+  emailHelpers.sendMail(admin, output).then(() => {
+    req.session.Msgsend=true;
+    res.redirect('/contact')
+    
+  });
+})
+
 
 module.exports = router;

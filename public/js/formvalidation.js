@@ -268,6 +268,57 @@ $(document).ready(function () {
 
 })
 
+$(document).ready(function () {
+    $('#contact-form').validate({
+        rules :{
+            name:{
+                required: true,
+                minlength: 5,
+                maxlength: 20
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            subject: {
+                required: true,
+            },
+            phone: {
+                required: true,
+                number: true,
+                minlength: 10,
+                maxlength: 10,
+            },
+            message:{
+                required: true,        
+            }
+        },
+        messages :{
+            name:{
+                required: "Enter your name",
+                minlength: "Enter at least 4 characters",
+                maxlength: "Enter maximumm 20 caharacters"
+            },
+            email: {
+                required: "Enter your Email",
+                email: "Enter a valid Email"
+            },
+            subject: {
+                required: "Enter Your Subject Here",
+            },
+            phone:{
+                required:"Enter a mobile number",
+                number: "Enter a valid mobile number",
+                minlength: "Enter 10 numbers",
+                maxlength: "Enter without country code"
+            },
+            message:{
+                required:"Enter Your Messege Here",
+            }
+        }
+    })
+    }) 
+
 //---------------------------------------------------------------------------------------------------------
 //admin side validation
 

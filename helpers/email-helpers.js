@@ -5,14 +5,18 @@ var nodemailer = require('nodemailer');
 module.exports={
     
 
-  sentMail:(user,msg)=>{
+  sendMail:(user,msg)=>{
     return new Promise ((resolve,reject)=>{
-        let gmail=user.email        
+        let gmail=user.email  
+        console.log("this is hth",gmail);      
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
               user: process.env.emailme,
               pass: process.env.emailpass
+            },
+            tls:{
+              rejectUnauthorized:false
             }
           });
 
@@ -20,7 +24,8 @@ module.exports={
             from: process.env.emailme,
             to: gmail,
             subject: 'Messege form ShopGrids',
-            text: msg  
+            text: 'text',
+            html: msg
           };
           
           transporter.sendMail(mailOptions, function(error, info){
