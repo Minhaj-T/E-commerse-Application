@@ -168,6 +168,29 @@ router.post("/signup", (req, res) => {
   }
 });
 
+//show the all Products
+router.get('/allproducts',verifyLogin,async(req,res)=>{
+  var user1 = req.session.user;
+  let cartCount = 0;
+  let ordersCount = 0;
+  if (req.session.user) {
+    let userId = req.session.user._id;
+    cartCount = await userHelpers.getCartCount(userId);
+    ordersCount = await userHelpers.getOrdersCount(userId);
+  }
+  let homeCategory = await userHelpers.getHomeCategories();
+  productHelpers.getAllProduct().then((product) => {
+  res.render('user/all-products',{
+    product,
+    user1,
+    homeCategory,
+    cartCount,
+    ordersCount,
+    userPage: true
+  });
+});
+})
+
 
 //--------------start the cart section----------------------
 
@@ -350,7 +373,7 @@ router.get("/login/resend-otp", (req, res) => {
 //------------------Category section started-----------------------------
 
 //get the product into category
-router.get("/categoryProducts/:category",verifyLogin, async (req, res) => {
+router.get("/categoryProducts/:category", async (req, res) => {
   let category = req.params.category;
   var user1 = req.session.user;
   let cartCount = 0;

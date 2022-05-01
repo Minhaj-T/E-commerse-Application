@@ -9,7 +9,7 @@
           <label for="category"> <b> Category </b></label>
           <select name="category" id="category" class="custom-select p-2">
             <option value="" selected>Choose a Category</option>
-            {{#each Category}}
+            {{#each category}}
             <option value="{{this.category}}">{{this.category}}</option>
             {{/each}}
           </select>
