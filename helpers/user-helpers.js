@@ -16,7 +16,6 @@ module.exports={
     doSignin:(userData)=>{
         return new Promise( async(res,rej)=>{
             if (userData.wallet) {
-                console.log("chek the wallet.......................................",userData.wallet);
                 let mainUser=await db.get().collection(collection.USER_COLLECTION).findOne({_id:userData.referedBy})
                 if(mainUser.wallet<200){
                   await db.get().collection(collection.USER_COLLECTION).updateOne({ _id: userData.referedBy }, { $inc: { wallet: 50 } });
@@ -47,7 +46,6 @@ module.exports={
                 
             }else{
             db.get().collection(collection.USER_COLLECTION).insertOne(user).then(async(data)=>{
-                console.log(data);
                 let user = await db.get().collection(collection.USER_COLLECTION).findOne({ _id:data.insertedId });
                   response.user = user;
                 res(response)
@@ -529,7 +527,6 @@ module.exports={
 
     verifyPayment:(details)=>{
         return new Promise((res, rej) => {
-            console.log("Details=", details);
             const crypto = require('crypto')
             let hmac = crypto.createHmac('sha256',process.env.key_secret )
             hmac.update(details['response[razorpay_order_id]'] + '|' + details['response[razorpay_payment_id]']);

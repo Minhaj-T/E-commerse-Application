@@ -42,7 +42,6 @@ router.get("/", async function (req, res, next) {
   let todayDate = new Date().toISOString().slice(0, 10);
   console.log(todayDate);
   adminHelpers.startProductOffer(todayDate).then(() => {
-    console.log("the prosuct offer called");
   });
   if (req.session.user) {
     let userId = req.session.user._id;
@@ -94,7 +93,6 @@ router.post("/login", (req, res) => {
   userHelpers.doLogin(req.body).then((response) => {
     if (response.status) {
       let status = response.user.status;
-      console.log(status);
       if (status) {
         req.session.loggedIn = true;
         req.session.user = response.user;
@@ -122,7 +120,6 @@ router.get("/signup", async (req, res) => {
     res.redirect("/");
   } else {
     let refer = (await req.query.refer) ? req.query.refer : null;
-    console.log("this is the refer", refer);
     let homeCategory = await userHelpers.getHomeCategories();
     let cartCount = 0;
 
@@ -139,7 +136,6 @@ router.get("/signup", async (req, res) => {
 });
 
 router.post("/signup", (req, res) => {
-  console.log("this is the submin post requst ", req.body);
   let refer = createReferal.alphaNumeric("uppercase", 2, 3);
   req.body.refer = refer;
   if (req.body.referedBy != "") {
@@ -213,9 +209,9 @@ router.get("/cart", verifyLogin, async (req, res) => {
     });
   }
 });
+
 //add to cart button
 router.get("/add-to-cart/:id", (req, res) => {
-  console.log("api call");
   let user = req.session.user._id;
   let product = req.params.id;
   userHelpers.addToCart(product, user).then(() => {
@@ -267,9 +263,7 @@ router.get("/loginOtp", async (req, res) => {
 router.post("/loginOtp", (req, res) => {
   let No = req.body.mobileNo;
   let no = `+91${No}`;
-  console.log(no);
   userHelpers.getUserdetails(no).then((user) => {
-    console.log(user);
     if (user) {
       if (user.status) {
         client.verify
@@ -280,7 +274,6 @@ router.post("/loginOtp", (req, res) => {
           })
           .then((resp) => {
             req.session.number = resp.to;
-            console.log(resp);
             res.redirect("/login/otp");
           });
       } else {
@@ -349,7 +342,6 @@ router.get("/login/resend-otp", (req, res) => {
     })
     .then((resp) => {
       req.session.number = resp.to;
-      console.log(resp);
       res.redirect("/login/otp");
     });
 });
@@ -394,11 +386,8 @@ router.get("/view-singleProduct/:id", async (req, res) => {
     ordersCount = await userHelpers.getOrdersCount(userId);
   }
   let homeCategory = await userHelpers.getHomeCategories();
-  console.log(proId);
   productHelpers.getProductDetalils(proId).then(async (Product) => {
     categorys = await productHelpers.getCategoryProducts(Product.category);
-
-    console.log(categorys);
 
     res.render("user/view-singleProduct", {
       Product,
@@ -429,7 +418,6 @@ router.get("/checkout", verifyLogin, async (req, res) => {
   }
   let userDetails = await adminHelpers.getUserdetails(userId);
   let total = await userHelpers.getTotalAmount(userId);
-  console.log(total);
   res.render("user/checkout", {
     user: true,
     total,
@@ -446,7 +434,6 @@ router.get("/checkout", verifyLogin, async (req, res) => {
 
 //place order page
 router.post("/place-order", async (req, res) => {
-  console.log(req.body);
   let userId = req.body.userId;
 
   let products = await userHelpers.getCartProductList(req.body.userId);
@@ -473,11 +460,9 @@ router.post("/place-order", async (req, res) => {
         });
       });
     } else if (req.body["Payment"] == "Paypal") {
-      console.log("this is the paypal felad", req.body);
       val = total / 74;
       total = val.toFixed(2);
       let totals = total.toString();
-      console.log(totals);
       req.session.total = totals;
 
       const create_payment_json = {
@@ -553,10 +538,8 @@ router.get("/success", (req, res) => {
     execute_payment_json,
     function (error, payment) {
       if (error) {
-        console.log(error.response);
         throw error;
       } else {
-        console.log(JSON.stringify(payment));
         userHelpers.changePaymentStatus(req.session.orderId).then(() => {
           req.session.couponTotal = null;
           res.redirect("/order-success");
@@ -630,7 +613,6 @@ router.get("/myOrders", verifyLogin, async (req, res) => {
 
 //View products in my orders
 router.get("/singleOrder/:id", verifyLogin, async (req, res) => {
-  console.log(req.params.id);
   let Id = req.params.id;
   var user1 = req.session.user;
   let homeCategory = await userHelpers.getHomeCategories();
@@ -656,11 +638,9 @@ router.get("/singleOrder/:id", verifyLogin, async (req, res) => {
 
 //cancel my orders
 router.post("/cancel-order", (req, res) => {
-  console.log("this is your calcel order", req.body);
   let orderId = req.body.orderId;
   let Total = req.body.Total;
   var paymentMethod = req.body.Payment;
-  console.log(paymentMethod);
   var user = req.session.user._id;
   var user1 = req.session.user;
   const output = `
@@ -724,7 +704,6 @@ router.get("/my-profile", verifyLogin, async (req, res) => {
 //Edit the user profile page
 router.post("/edit-profile", (req, res) => {
   let id = req.session.user._id;
-  console.log(req.body);
   userHelpers.updateProfile(id, req.body).then((response) => {
     res.redirect("/my-profile");
   });
@@ -801,7 +780,6 @@ router.get("/add-new-addressProfile", verifyLogin, async (req, res) => {
 
 //add new address in user profile
 router.post("/add-new-addressProfile", (req, res) => {
-  console.log(req.body);
   userHelpers.addNewAddress(req.body).then((response) => {
     res.redirect("/my-profile");
   });
@@ -830,7 +808,6 @@ router.get("/edit-address/:id", verifyLogin, async (req, res) => {
   }
   let addId = req.params.id;
   userHelpers.getSingleAddress(addId, userId).then((address) => {
-    console.log(address);
     res.render("user/edit-address", {
       userId,
       user: true,
@@ -852,7 +829,6 @@ router.post("/edit-address", (req, res) => {
 
 //verify our payment in server side
 router.post("/verify-payment", (req, res) => {
-  console.log(req.body);
   userHelpers
     .verifyPayment(req.body)
     .then((response) => {
@@ -914,7 +890,6 @@ router.post("/applayWallet", async (req, res) => {
   let userDetails = await adminHelpers.getUserdetails(user);
   if (userDetails.wallet >= walletAmount) {
     let total = ttl - walletAmount;
-    console.log("this is the subtracted value", total);
     userHelpers.applayWallet(walletAmount, user).then(() => {
       req.session.walletTotal = total;
       res.json({ walletSuccess: true, total });
