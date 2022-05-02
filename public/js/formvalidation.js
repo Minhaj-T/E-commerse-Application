@@ -194,6 +194,7 @@ $(document).ready(function () {
 
 })
  
+//add new address in user profle section
 
 $(document).ready(function () {
 

@@ -8,6 +8,8 @@ let moment=require('moment')
 
 module.exports={
 
+//___________________the sign in section_________________
+
     adminSignup:(adminData)=>{
         return new Promise(async(req,res)=>{
             adminData.password= await bcrypt.hash(adminData.password,10)
@@ -21,6 +23,7 @@ module.exports={
         })
 
     },
+// ______________the log in section_____________
 
     adminlogin:(adminData)=>{
         let loginStatus = false;
@@ -48,9 +51,7 @@ module.exports={
         })
     },
 
-
-
-
+       //get the all users
     getAllUsers:()=>{
         return new Promise(async(res,rej)=>{
            let allUsers= await db.get().collection(collection.USER_COLLECTION).find().toArray()
@@ -58,7 +59,7 @@ module.exports={
         })
     },
 
-     //Getting user details with user ID
+      //Getting user details with user ID
      getUserdetails: (Id) => {
         return new Promise(async (res, rej) => {
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(Id) })
@@ -71,6 +72,7 @@ module.exports={
         })
     },
 
+      //get the all block users
     getAllBlockUsers:()=>{
         return new Promise( async(res,rej)=>{
             let blockedUsers= await db.get().collection(collection.USER_COLLECTION).find({status:false}).toArray()
@@ -80,7 +82,7 @@ module.exports={
 
     },
 
-    //Block user by user Id
+       //Block the user by user Id
     blockUse:(userId)=>{
         return new Promise((res,rej)=>{
             db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userId)},{
@@ -105,6 +107,8 @@ module.exports={
             })
         })
     },
+ 
+//________________Category sectiom started________________
 
     addCategory:(data)=>{
         return new Promise((res,rej)=>{
@@ -154,6 +158,8 @@ module.exports={
             })
         })
     },
+
+//________________Order section started______________________
 
      //Get products of a specific order with order id
      getOrderProducts: (orderId) => {
@@ -235,9 +241,9 @@ module.exports={
 
     },
 
-     //Offer section
-    //----------------------------------- Category offers------------------------------------------
+//__________________________Offer section_______________________
 
+    //Category offers
     addCategoryOffer: (data) => {
      return new Promise((res,rej)=>{
          data.startDateIso=new Date(data.Starting)
@@ -326,7 +332,7 @@ module.exports={
     },
 
 
-     //-------------------------------------Product offers----------------------------
+     //-------------------------------------Product offers-------------------
 
      addProductOffer: (data) => {
          return new Promise(async(res,rej)=>{
@@ -447,6 +453,7 @@ module.exports={
          },
 
 //----------------------The coupon Mangement-------------------------------
+
 //add coupon into server
          addCoupon:(data)=>{
              return new Promise(async(res,rej)=>{
@@ -514,12 +521,8 @@ module.exports={
 
          },
 
+ //_______________________report______________________________________
 
-
-
-
-
-          //---------------------------------report ------------------------------------------------
          //sales monthly report
          monthlyReport:()=>{
              return new Promise(async(res,rej)=>{
@@ -606,8 +609,8 @@ module.exports={
            })
 
          },
+//_____________________________start the bannermanagement section_______________________
 
-         //--------------------------banner session started-----------------------------
          addBanner:(data)=>{
              return new Promise((res,rej)=>{
                  db.get().collection(collection.BANNER_COLLECTION).insertOne(data).then((response)=>{

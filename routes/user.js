@@ -581,19 +581,28 @@ router.get("/cancel",verifyLogin, (req, res) => {
       <li>Your Order is not Compleated !</li> 
     </ul>
   `;
+  userHelpers.cancelOrder(req.session.orderId).then((response) => {
   emailHelpers.sendMail(user, output).then(() => {
     res.render("user/order-cancelled",{adminlogin: true});
   });
 });
+});
 
 //order succsess page
-router.get("/order-success",verifyLogin, (req, res) => {
+router.get("/order-success",verifyLogin,async (req, res) => {
   var user = req.session.user;
+  let order = await userHelpers.getOrder(req.session.orderId)
   const output = `
     <p>You have a new Messege From ShopGrids</p>
-    <h3>Your Order Status</h3>
+    <h3>Your Order Details</h3>
     <ul> 
       <li>Your Order Confirmed !</li> 
+      <br>
+      <li>Order Id: ${req.session.orderId}</li>
+      <li>Date: ${order.Date}</li>
+      <li>Time: ${order.Time}</li>
+      <li>Total: ₹ ${order.Total}</li>
+      <li>Payment Method: ${order.PaymentMethod}</li>
     </ul>
   `;
   userHelpers.clearCart(req.session.user._id).then(() => {

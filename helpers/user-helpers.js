@@ -17,14 +17,14 @@ module.exports={
 
     doSignin:(userData)=>{
         return new Promise( async(res,rej)=>{
+            
             if (userData.wallet) {
                 let mainUser=await db.get().collection(collection.USER_COLLECTION).findOne({_id:userData.referedBy})
                 if(mainUser.wallet<200){
                   await db.get().collection(collection.USER_COLLECTION).updateOne({ _id: userData.referedBy }, { $inc: { wallet: 50 } });
                 }
               }
-              userData.status = true;
-              userData.wallet = userData.wallet ? userData.wallet : 0;
+            userData.wallet = userData.wallet ? userData.wallet : 0;
             let phoneext= `+91${userData.phone}`;
             let response={};
             userData.password= await bcrypt.hash(userData.password,10)
@@ -44,7 +44,6 @@ module.exports={
             if (userexst) {
                 response.usererr=true;
                 res(response)
-
                 console.log(userexst);
                 
             }else{
@@ -292,8 +291,6 @@ module.exports={
             let dateIso = new Date()
             let date = moment(dateIso).format('YYYY/MM/DD')
             let time = moment(dateIso).format('HH:mm:ss')
-
-            let status=order.Payment==='COD'?'Placed':'pending'
             let  orderObj = {
                 deliveryDetails: {
                     Name: order.Name,
@@ -312,7 +309,7 @@ module.exports={
                 DateISO: dateIso,
                 Date: date,
                 Time: time,
-                Status:status
+                Status:"Placed"
             }
             let user = order.userId 
             db.get().collection(collection.COUPON_COLLECTION).updateOne({ Coupon: coupon },
@@ -360,6 +357,14 @@ module.exports={
             let orders = await db.get().collection(collection.ORDER_COLLECTION).find({ User: objectId(Id) }).sort({'DateISO': -1}).toArray()
             resolve(orders)
         })
+    },
+
+    getOrder:(Id)=>{
+      return new Promise(async(res,rej)=>{
+          let order=await db.get().collection(collection.ORDER_COLLECTION).findOne({_id:objectId(Id)})
+          res(order)
+      })
+
     },
 
         //order count for the heading part

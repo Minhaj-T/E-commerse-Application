@@ -1,3 +1,4 @@
+// Sweet alert section for admin side
 
 //block the user
 function blockUser(event) {
