@@ -200,7 +200,6 @@
                                             <th scope="col">Date</th>
                                             <th scope="col">User</th>
                                             <th scope="col">Amount</th>
-                                            <th scope="col">Discount</th>
                                             <th scope="col">Payment</th>
                                             <th scope="col">Status</th>
                                         </tr>
@@ -215,12 +214,6 @@
 
 
                                             <td>{{this.Total}}</td>
-                                            <td>
-                                                {{#if this.Discount}}
-                                                {{this.Discount}}
-                                                {{else}}
-                                                0{{/if}}
-                                            </td>
                                             <td>{{this.PaymentMethod}}</td>
                                             <td>{{this.Status}}</td>
 

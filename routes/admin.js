@@ -207,7 +207,7 @@ router.get("/unblock-user/:id", (req, res) => {
   });
 });
 
-router.get("/AllblockUsers", (req, res) => {
+router.get("/AllblockUsers",verifyAdminLogin, (req, res) => {
   adminHelpers.getAllBlockUsers().then((allBlockUsers) => {
     res.render("admin/view-allBlockusers", {
       allBlockUsers,
@@ -219,7 +219,7 @@ router.get("/AllblockUsers", (req, res) => {
 
 //__________________Category Mangement section started______________________
 
-router.get("/add-category", (req, res) => {
+router.get("/add-category",verifyAdminLogin, (req, res) => {
   res.render("admin/add-category", {
     admin: true,
     adminName: req.session.adminName,
@@ -234,7 +234,7 @@ router.post("/add-category", (req, res) => {
   });
 });
 
-router.get("/view-categorys", (req, res) => {
+router.get("/view-categorys",verifyAdminLogin, (req, res) => {
   adminHelpers.getAllCategory().then((categorys) => {
     console.log(categorys);
 
@@ -246,7 +246,7 @@ router.get("/view-categorys", (req, res) => {
   });
 });
 
-router.get("/edit-categorys/:id", (req, res) => {
+router.get("/edit-categorys/:id",verifyAdminLogin, (req, res) => {
   let catId = req.params.id;
   adminHelpers.getCategoryDetails(catId).then((category) => {
     res.render("admin/edit-categorys", {
@@ -275,7 +275,7 @@ router.get("/delete-category/:id", (req, res) => {
 //__________________order management section_____________________ 
 
 //Order management section
-router.get("/all-orders", async (req, res) => {
+router.get("/all-orders",verifyAdminLogin, async (req, res) => {
   let ordersList = await adminHelpers.getAllOrders();
   console.log(ordersList);
   res.render("admin/all-orders", {
@@ -375,7 +375,7 @@ router.get("/delete-proOffer/:id", (req, res) => {
   });
 });
 
-router.get("/edit-proOffer/:id", (req, res) => {
+router.get("/edit-proOffer/:id",verifyAdminLogin, (req, res) => {
   console.log(req.params.id);
   adminHelpers.getProOffersDetails(req.params.id).then(async (proOffer) => {
     let products = await productHelpers.getAllProduct();
@@ -399,7 +399,7 @@ router.get("/edit-proOffer/:id", (req, res) => {
 //______________Report section started_______________________
 
 //report section start
-router.get("/report", (req, res) => {
+router.get("/report",verifyAdminLogin, (req, res) => {
   adminHelpers.monthlyReport().then((data) => {
     console.log(data);
 
@@ -411,7 +411,7 @@ router.get("/report", (req, res) => {
   });
 });
 
-router.post("/report", (req, res) => {
+router.post("/report",verifyAdminLogin, (req, res) => {
   adminHelpers.salesReport(req.body).then((data) => {
     console.log(data);
 
@@ -425,7 +425,7 @@ router.post("/report", (req, res) => {
 
 //_____________________Banner management section_______________
 
-router.get("/banners", async (req, res) => {
+router.get("/banners",verifyAdminLogin, async (req, res) => {
   let categories = await adminHelpers.getAllCategory();
   let banners = await userHelpers.getAllBanners();
   res.render("admin/banners", {
@@ -452,7 +452,7 @@ router.post("/banners", (req, res) => {
 });
 
 //edit the banner details
-router.get("/edit-banner/:id", (req, res) => {
+router.get("/edit-banner/:id",verifyAdminLogin, (req, res) => {
   console.log(req.params.id);
   let id = req.params.id;
   adminHelpers.getBannerDetails(id).then((banner) => {
@@ -486,7 +486,7 @@ router.get("/delete-banner/:id", (req, res) => {
 
 //_______________________Coupen section________________
 
-router.get("/coupons", (req, res) => {
+router.get("/coupons",verifyAdminLogin, (req, res) => {
   adminHelpers.getAllCoupons().then((coupons) => {
     res.render("admin/coupons", {
       admin: true,

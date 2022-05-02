@@ -529,7 +529,7 @@ module.exports={
                  let today=new Date()
                  let end= moment(today).format('YYYY/MM/DD')
                  let start=moment(end).subtract(30,'days').format('YYYY/MM/DD')
-                 let orderSuccess= await db.get().collection(collection.ORDER_COLLECTION).find({Date:{$gte:start,$lte:end},Status:{ $ne: 'pending' }}).toArray()
+                 let orderSuccess= await db.get().collection(collection.ORDER_COLLECTION).find({Date:{$gte:start,$lte:end},Status:{ $ne: 'Cancelled' }}).toArray()
                  let orderTotal = await db.get().collection(collection.ORDER_COLLECTION).find({Date:{$gte:start,$lte:end}}).toArray()
                  let orderSuccessLength = orderSuccess.length
                  let orderTotalLength = orderTotal.length
@@ -573,7 +573,7 @@ module.exports={
                 let start=moment(date.StartDate).format('YYYY/MM/DD')
 
                 console.log("this is tha data",end,start);
-                let orderSuccess= await db.get().collection(collection.ORDER_COLLECTION).find({Date:{$gte:start,$lte:end},Status:{ $ne: 'pending' }}).toArray()
+                let orderSuccess= await db.get().collection(collection.ORDER_COLLECTION).find({Date:{$gte:start,$lte:end},Status:{ $ne: 'Cancelled' }}).toArray()
                 let orderTotal = await db.get().collection(collection.ORDER_COLLECTION).find({Date:{$gte:start,$lte:end}}).toArray()
                 let orderSuccessLength = orderSuccess.length
                 let orderTotalLength = orderTotal.length
