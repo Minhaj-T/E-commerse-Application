@@ -574,8 +574,14 @@ router.get("/success", (req, res) => {
 
 router.get("/cancel",verifyLogin, (req, res) => {
   let user = req.session.user;
-  let msg = "Your Order is not Compleated";
-  emailHelpers.sendMail(user, msg).then(() => {
+  const output = `
+    <p>You have a new Messege From ShopGrids</p>
+    <h3>Your Order Status</h3>
+    <ul> 
+      <li>Your Order is not Compleated !</li> 
+    </ul>
+  `;
+  emailHelpers.sendMail(user, output).then(() => {
     res.render("user/order-cancelled",{adminlogin: true});
   });
 });
