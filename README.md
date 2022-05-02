@@ -1,6 +1,6 @@
 <h1> Ecommerce website<h1>
   
-  <p> is an E-commerce website which is dealing with selling of dresses .<p>
+  <p> is an E-commerce website that deals with selling clothing and accessories.<p>
   
   
 Technologies used :
@@ -21,11 +21,14 @@ Features involved:
 * Responsive Design
 * High-Resolution Photos
 * Special Offers & Coupons
+* Referral System
 * Add To Cart
-* Wishlist
 * Image Zooming
 * Related Items
 * Order History
+* Search Items
+* SMTP-gmail send
+* Wallet
 * Multiple Address Management
 * User Block/Unblock
 * Chart & Graph reports in Admin side
