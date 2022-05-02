@@ -36,7 +36,6 @@ router.get("/admin-login", (req, res) => {
 router.post("/admin-login", (req, res) => {
   adminHelpers.adminlogin(req.body).then((response) => {
     if (response.status) {
-      console.log("this is admin res", response);
       req.session.admin = response.admin;
       req.session.adminLoggedIn = true;
       let adminName = response.admin.name;
@@ -94,7 +93,6 @@ router.get("/add-product", verifyAdminLogin, async (req, res) => {
 });
 
 router.post("/add-product", verifyAdminLogin, (req, res) => {
-  console.log(req.body);
   console.log(req.files.Image);
   productHelpers
     .addProduct(req.body)
@@ -129,7 +127,6 @@ router.get("/view-products", verifyAdminLogin, (req, res) => {
 
 router.get("/delete-product/:id", verifyAdminLogin, (req, res) => {
   let proId = req.params.id;
-  console.log(proId);
   productHelpers.deleteProduct(proId).then((response) => {
     res.redirect("/admin/view-products");
 
@@ -144,8 +141,6 @@ router.get("/delete-product/:id", verifyAdminLogin, (req, res) => {
 router.get("/edit-product/:id", verifyAdminLogin, async (req, res) => {
   let product = await productHelpers.getProductDetalils(req.params.id);
   let category = await adminHelpers.getAllCategory();
-  console.log(product);
-
   res.render("admin/edit-product", {
     admin: true,
     adminName: req.session.adminName,
@@ -155,7 +150,6 @@ router.get("/edit-product/:id", verifyAdminLogin, async (req, res) => {
 });
 
 router.post("/edit-product/:id", verifyAdminLogin, (req, res) => {
-  console.log("this is my edited ", req.body);
   productHelpers.updateProdct(req.params.id, req.body).then((response) => {
     let id = req.params.id;
     if (req.files?.image1) {
@@ -193,7 +187,6 @@ router.get("/get-AllUsers", verifyAdminLogin, (req, res) => {
 
 router.get("/block-user/:id", verifyAdminLogin, (req, res) => {
   let userId = req.params.id;
-  console.log(userId);
   adminHelpers.blockUse(userId).then((response) => {
     res.redirect("/admin/get-AllUsers");
   });
@@ -201,7 +194,6 @@ router.get("/block-user/:id", verifyAdminLogin, (req, res) => {
 
 router.get("/unblock-user/:id", (req, res) => {
   var proId = req.params.id;
-  console.log(proId);
   adminHelpers.unblockUser(proId).then((response) => {
     res.redirect("/admin/get-AllUsers");
   });
@@ -229,15 +221,12 @@ router.get("/add-category",verifyAdminLogin, (req, res) => {
 router.post("/add-category", (req, res) => {
   let carData = req.body;
   adminHelpers.addCategory(carData).then((response) => {
-    console.log(response);
     res.redirect("/admin/view-categorys");
   });
 });
 
 router.get("/view-categorys",verifyAdminLogin, (req, res) => {
   adminHelpers.getAllCategory().then((categorys) => {
-    console.log(categorys);
-
     res.render("admin/view-categorys", {
       categorys,
       admin: true,
@@ -277,7 +266,6 @@ router.get("/delete-category/:id", (req, res) => {
 //Order management section
 router.get("/all-orders",verifyAdminLogin, async (req, res) => {
   let ordersList = await adminHelpers.getAllOrders();
-  console.log(ordersList);
   res.render("admin/all-orders", {
     admin: true,
     ordersList,
@@ -288,7 +276,6 @@ router.get("/all-orders",verifyAdminLogin, async (req, res) => {
 //Order Status changinge
 router.get("/placed/:id", (req, res) => {
   let status = "Placed";
-  console.log(req.params.id);
   adminHelpers.changeOrderStatus(req.params.id, status).then(() => {
     res.redirect("/admin/all-orders");
   });
@@ -296,14 +283,12 @@ router.get("/placed/:id", (req, res) => {
 
 router.get("/shipped/:id", (req, res) => {
   let status = "Shipped";
-  console.log(req.params.id);
   adminHelpers.changeOrderStatus(req.params.id, status).then(() => {
     res.redirect("/admin/all-orders");
   });
 });
 router.get("/delivered/:id", (req, res) => {
   let status = "Delivered";
-  console.log(req.params.id);
   adminHelpers.changeOrderStatus(req.params.id, status).then(() => {
     res.redirect("/admin/all-orders");
   });
@@ -376,11 +361,8 @@ router.get("/delete-proOffer/:id", (req, res) => {
 });
 
 router.get("/edit-proOffer/:id",verifyAdminLogin, (req, res) => {
-  console.log(req.params.id);
   adminHelpers.getProOffersDetails(req.params.id).then(async (proOffer) => {
     let products = await productHelpers.getAllProduct();
-    console.log(products);
-
     res.render("admin/edit-proOffers", {
       admin: true,
       proOffer,
@@ -401,8 +383,6 @@ router.get("/edit-proOffer/:id",verifyAdminLogin, (req, res) => {
 //report section start
 router.get("/report",verifyAdminLogin, (req, res) => {
   adminHelpers.monthlyReport().then((data) => {
-    console.log(data);
-
     res.render("admin/report", {
       admin: true,
       data,
@@ -413,8 +393,6 @@ router.get("/report",verifyAdminLogin, (req, res) => {
 
 router.post("/report",verifyAdminLogin, (req, res) => {
   adminHelpers.salesReport(req.body).then((data) => {
-    console.log(data);
-
     res.render("admin/report", {
       admin: true,
       data,
@@ -453,7 +431,6 @@ router.post("/banners", (req, res) => {
 
 //edit the banner details
 router.get("/edit-banner/:id",verifyAdminLogin, (req, res) => {
-  console.log(req.params.id);
   let id = req.params.id;
   adminHelpers.getBannerDetails(id).then((banner) => {
     res.render("admin/edit-banner", {
@@ -466,7 +443,6 @@ router.get("/edit-banner/:id",verifyAdminLogin, (req, res) => {
 
 router.post("/edit-banner/:id", (req, res) => {
   let id = req.params.id;
-  console.log(id, req.body);
   adminHelpers.updateBanner(id, req.body).then(() => {
     res.redirect("/admin/banners");
     if (req.files.Image3) {

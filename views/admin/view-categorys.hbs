@@ -1,34 +1,34 @@
-
-
 <section>
     <div class="container mt-4">
-<table class="table " id="adminTable">
-    <div class="row">
-        <div class="col-md-6 mb-3">
-            <a href="/admin/add-category" class="btn btn-primary  ml-auto" style="margin-top: 20px;">Add New
-                Category</a>
-        </div>
-    </div>
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">No</th>
-            <th scope="col">Category Name</th>
-            <th scope="col">Options</th>
-        </tr>
-    </thead>
-<tbody>
-      {{#each categorys}}
-    <tr>
-      <td>{{inc @index}}</td>
-      <td>{{this.category}}</td>
-      <td>
-        <a href="/admin/edit-categorys/{{this._id}}" class="btn btn-outline-primary"><i class="lni lni-pencil-alt"></i></i></a>
-        <a href="/admin/delete-category/{{this._id}}" class="btn btn-outline-danger"  name="{{this.category}}"
-                    onclick="deleteCategory(event)" ><i class="lni lni-trash-can" ></i></a>
-      </td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
+        <table class="table " id="adminTable">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <a href="/admin/add-category" class="btn btn-primary  ml-auto" style="margin-top: 20px;">Add New
+                        Category</a>
+                </div>
+            </div>
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Category Name</th>
+                    <th scope="col">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each categorys}}
+                <tr>
+                    <td>{{inc @index}}</td>
+                    <td>{{this.category}}</td>
+                    <td>
+                        <a href="/admin/edit-categorys/{{this._id}}" class="btn btn-outline-primary"><i
+                                class="lni lni-pencil-alt"></i></i></a>
+                        <a href="/admin/delete-category/{{this._id}}" class="btn btn-outline-danger"
+                            name="{{this.category}}" onclick="deleteCategory(event)"><i
+                                class="lni lni-trash-can"></i></a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
     </div>
 </section>

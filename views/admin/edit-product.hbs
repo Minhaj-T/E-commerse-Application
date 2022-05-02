@@ -9,11 +9,11 @@
           <input type="text" name="name" class="form-control" value="{{product.name}}" />
           <label for="category">Category</label>
           <select name="category" class="custom-select p-2">
-                                    <option value="{{product.category}}" selected >{{product.category}}</option>
-                                    {{#each category}}
-                                    <option value="{{this.category}}">{{this.category}}</option>
-                                    {{/each}}
-                                </select>
+            <option value="{{product.category}}" selected>{{product.category}}</option>
+            {{#each category}}
+            <option value="{{this.category}}">{{this.category}}</option>
+            {{/each}}
+          </select>
           <label for=""><b>Price</b></label><br />
           <input type="tel" name="price" class="form-control" value="{{product.price}}" />
           <br>

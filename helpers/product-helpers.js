@@ -4,22 +4,17 @@ const async = require('hbs/lib/async')
 const objectId=require('mongodb').ObjectId
 
 module.exports={
-    // addProduc:(product,cb)=>{
-    //     console.log(product)
-    //     db.get().collection('product').insertOne(product).then((data)=>{
-    //        console.log(data);
-    //         cb(data.insertedId)
-    //         console.log(data.insertedId);
-    //     })
 
-        addProduct:(product)=>{
+    // _____________Product Management Section__________________
+
+    addProduct:(product)=>{
             return new Promise((res,rej)=>{
                 db.get().collection(collection.PRODUCT_COLLECTION).insertOne(product).then((data)=>{
                 res(data.insertedId)
                 })
             })
 
-        },
+    },
     
     getAllProduct:()=>{
         return new Promise(async (res,rej)=>{
@@ -28,6 +23,7 @@ module.exports={
 
         })
     },
+    
     deleteProduct:(proId)=>{
         return new Promise((res,rej)=>{
             db.get().collection(collection.PRODUCT_COLLECTION).deleteOne({_id:objectId(proId)}).then((response)=>{
@@ -122,9 +118,9 @@ module.exports={
             ]).toArray()
 
             if (total[0]) {
-                res(total[0].total)
+                res(total[0]?.total)
             } else {
-                res(Total)
+                res(total)
             }
          })
      },
