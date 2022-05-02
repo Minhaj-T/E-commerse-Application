@@ -397,7 +397,7 @@ module.exports={
             let user= await db.get().collection(collection.USER_COLLECTION).findOne({_id:objectId(userId)})
             if(user){
             data1= await bcrypt.hash(data.password1, 10)
-            bcrypt.compare(data.current, user.pass,nword).then((status)=>{
+            bcrypt.compare(data.current, user.password).then((status)=>{
                 if(status){
                     response.status=true;
                     console.log("the password matchig success");

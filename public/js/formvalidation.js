@@ -202,8 +202,6 @@ $(document).ready(function () {
         rules: {
             Name: {
                 required: true,
-                minlength: 5,
-                maxlength: 20
             },
             House: {
                 required: true
@@ -234,8 +232,6 @@ $(document).ready(function () {
         messages: {
             Name: {
                 required: "Enter your name",
-                minlength: "Enter at least 4 characters",
-                maxlength: "Enter maximumm 20 caharacters"
             },
             House:{
                 required: "Enter your House name",
