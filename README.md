@@ -24,6 +24,7 @@ Features involved:
 * Referral System
 * Add To Cart
 * Image Zooming
+* Pagination
 * Related Items
 * Order History
 * Search Items

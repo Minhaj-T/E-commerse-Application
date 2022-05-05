@@ -1,10 +1,72 @@
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/jquery.simplePagination.js'></script><script  src="./script.js"></script>
 <style>
     .brands {
         padding: 20px 0;
         background-color: #ffffff;
     }
+        body {
+	line-height: 18px;
+	background: #f4f4f4;
+}
 
-    }
+.list-wrapper {
+	padding: 15px;
+	overflow: hidden;
+}
+
+.list-item {
+	border: 1px solid #EEE;
+	background: #FFF;
+	margin-bottom: 10px;
+	padding: 10px;
+	box-shadow: 0px 0px 10px 0px #EEE;
+}
+
+.list-item h4 {
+	color: #1e73eb;
+	font-size: 18px;
+	margin: 0 0 5px;	
+}
+
+.list-item p {
+	margin: 0;
+}
+
+.simple-pagination ul {
+	margin: 0 0 20px;
+	padding: 0;
+	list-style: none;
+	text-align: center;
+}
+
+.simple-pagination li {
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.simple-pagination li a,
+.simple-pagination li span {
+	color: #666;
+	padding: 5px 10px;
+	text-decoration: none;
+	border: 1px solid #EEE;
+	background-color: #FFF;
+	box-shadow: 0px 0px 10px 0px #EEE;
+}
+
+.simple-pagination .current {
+	color: #FFF;
+	background-color: #1e73eb;
+	border-color: #1e73eb;
+}
+
+.simple-pagination .prev.current,
+.simple-pagination .next.current {
+	background: #015cdb;
+    
+    
+}
 </style>
 <section class="hero-area">
     <div class="container">
@@ -126,6 +188,7 @@
             {{#each product}}
             <div class="col-lg-3 col-md-6 col-12">
                 <!-- Start Single Product -->
+                <div class="list-item">
                 <div class="single-product ">
                     <div class="product-image">
                         <img src="/product-images/{{this._id}}a.jpg" class="card-img-top" alt="Product image">
@@ -155,6 +218,7 @@
                         {{/if}}
                     </div>
                 </div>
+                </div>
                 <!-- End Single Product -->
             </div>
             {{/each}}
@@ -162,6 +226,8 @@
     </div>
     </div>
 </section>
+
+<div class="p-3"  id="pagination-container"></div>
 
 
 
@@ -283,4 +349,24 @@
         document.execCommand("copy");
         $temp.remove();
     }
+</script>
+
+<script>
+    var items = $(" .list-item");
+    var numItems = items.length;
+    var perPage = 8;
+
+    items.slice(perPage).hide();
+
+    $('#pagination-container').pagination({
+        items: numItems,
+        itemsOnPage: perPage,
+        prevText: "&laquo;",
+        nextText: "&raquo;",
+        onPageClick: function (pageNumber) {
+            var showFrom = perPage * (pageNumber - 1);
+            var showTo = showFrom + perPage;
+            items.hide().slice(showFrom, showTo).show();
+        }
+    });
 </script>
