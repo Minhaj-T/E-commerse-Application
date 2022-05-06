@@ -724,7 +724,7 @@ router.get("/my-profile", verifyLogin, async (req, res) => {
   req.session.user = user1;
   let refer = user.refer;
   let wallet = user.wallet;
-  let referalLink = "http://localhost:3000/signup?refer=" + refer;
+  let referalLink = "shopgrids.store/signup?refer=" + refer;
   res.render("user/my-profile", {
     user: true,
     user,
