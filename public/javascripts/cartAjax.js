@@ -81,7 +81,7 @@ function razorpayPayment(order) {
         },
         "prefill": {
             "name": "Minhaj T",
-            "email": "minhajt.mh@gmail.col",
+            "email": "minhajt.mh@gmail.com",
             "contact": "9876543210"
         },
         "notes": {
@@ -123,15 +123,47 @@ function verifyPayment(response, order) {
 
 
 function addToCart(proId){
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      Toast.fire({
+        icon: 'error',
+        title: 'Please Login..'
+      })
     $.ajax({
         url:'/add-to-cart/'+proId,
         method:'get',
+
+        
         success:(response)=>{
             if(response.status){
                 let count=$('#cart-count').html()
                 count=parseInt(count)+1
                 $("#cart-count").html(count)
 
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                      toast.addEventListener('mouseenter', Swal.stopTimer)
+                      toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                  })
+                  Toast.fire({
+                    icon: 'success',
+                    title: 'Item add to Your Cart'
+                  })
             }
         }
     })
