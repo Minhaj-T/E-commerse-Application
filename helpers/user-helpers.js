@@ -354,7 +354,7 @@ module.exports={
         //Get user order with user id for my order section
     getUserOrders: (Id) => {
         return new Promise(async (resolve, reject) => {
-            let orders = await db.get().collection(collection.ORDER_COLLECTION).find({ User: objectId(Id) }).sort({'DateISO': -1}).toArray()
+            let orders = await db.get().collection(collection.ORDER_COLLECTION).find({ User: objectId(Id) }).sort({'DateISO': -1}).limit(9).toArray()
             resolve(orders)
         })
     },
