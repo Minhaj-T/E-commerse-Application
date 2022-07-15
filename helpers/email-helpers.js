@@ -18,14 +18,14 @@ module.exports={
             tls:{
               rejectUnauthorized:false
             }
-          });
+          });   
 
         var mailOptions  = {
             from: process.env.emailme,
             to: gmail,
             subject: 'Messege form ShopGrids',
             text: 'text',
-            html: msg
+            html: msg    
           };
           
           transporter.sendMail(mailOptions, function(error, info){

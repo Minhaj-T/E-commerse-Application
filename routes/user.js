@@ -494,8 +494,8 @@ router.post("/place-order",verifyLogin, async (req, res) => {
           payment_method: "paypal",
         },
         redirect_urls: {
-          return_url: "https://shopgrids.store/success",
-          cancel_url: "https://shopgrids.store/cancel",
+          return_url: "http://localhost:3000/success",
+          cancel_url: "http://localhost:3000/cancel",
         },
         transactions: [
           {
@@ -724,7 +724,7 @@ router.get("/my-profile", verifyLogin, async (req, res) => {
   req.session.user = user1;
   let refer = user.refer;
   let wallet = user.wallet;
-  let referalLink = "shopgrids.store/signup?refer=" + refer;
+  let referalLink = "http://localhost:3000/signup?refer=" + refer;
   res.render("user/my-profile", {
     user: true,
     user,

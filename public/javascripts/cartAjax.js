@@ -47,7 +47,6 @@ $(document).ready(function () {
                     if(response.codSuccess){
                         location.href='/order-success'
 
-                        
                     }else if(response.razorpay){
 
                         razorpayPayment(response.resp)
@@ -73,9 +72,6 @@ function razorpayPayment(order) {
         "image": "https://example.com/your_logo",
         "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
         "handler": function (response){
-            // alert(response.razorpay_payment_id);
-            // alert(response.razorpay_order_id);
-            // alert(response.razorpay_signature)
 
             verifyPayment(response, order)
         },
@@ -94,7 +90,6 @@ function razorpayPayment(order) {
     var rzp1 = new Razorpay(options);
     rzp1.open();
                         
-
 }
 
 function verifyPayment(response, order) {
@@ -292,7 +287,6 @@ function cancelOrder(orderId,total,paymentMethod) {
                 'success'
             )
             location.reload()
-
         }
     })
 }

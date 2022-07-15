@@ -484,7 +484,7 @@ module.exports={
             return new Promise(async(res,rej)=>{
                 let data= await db.get().collection(collection.COUPON_COLLECTION).find({startDateIso:{$lte:couponStartDate}}).toArray()
                 console.log("this is the result ",data);
-                if(data.length >0){
+                if(data.length > 0){
                     await data.map((onedata)=>{
                         db.get().collection(collection.COUPON_COLLECTION).updateOne({_id:objectId(onedata._id)},{
                           $set:{

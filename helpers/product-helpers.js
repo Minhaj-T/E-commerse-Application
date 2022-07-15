@@ -95,7 +95,7 @@ module.exports={
     // get the all new users
     getNewUsers:()=>{
         return new Promise(async(res,rej)=>{
-            let newUsers=await db.get().collection(collection.USER_COLLECTION).find().sort({$natural:-1}).limit(6).toArray()
+            let newUsers=await db.get().collection(collection.USER_COLLECTION).find().sort({$natural:-1}).limit(5).toArray()
             res(newUsers)
         })
     },

@@ -6,6 +6,7 @@ var productHelpers = require("../helpers/product-helpers");
 var adminHelpers = require("../helpers/admin-helpers");
 var userHelpers = require("../helpers/user-helpers");
 const { response } = require("express");
+const fs = require('fs');
 
 const verifyAdminLogin = (req, res, next) => {
   if (req.session.adminLoggedIn) {
@@ -34,6 +35,7 @@ router.get("/admin-login", (req, res) => {
 });
 
 router.post("/admin-login", (req, res) => {
+  console.log(req.body);
   adminHelpers.adminlogin(req.body).then((response) => {
     if (response.status) {
       req.session.admin = response.admin;
@@ -130,12 +132,12 @@ router.get("/delete-product/:id", verifyAdminLogin, (req, res) => {
   productHelpers.deleteProduct(proId).then((response) => {
     res.redirect("/admin/view-products");
 
-    if ("public/product-images/" + id + "b.jpg") {
-      fs.unlinkSync("public/product-images/" + id + "b.jpg");
-      fs.unlinkSync("public/product-images/" + id + "c.jpg");
-      fs.unlinkSync("public/product-images/" + id + "d.jpg");
+    if ("public/product-images/" + proId + "a.jpg") {
+      fs.unlinkSync("public/product-images/" + proId + "b.jpg");
+      fs.unlinkSync("public/product-images/" + proId + "c.jpg");
+      fs.unlinkSync("public/product-images/" + proId + "d.jpg");
     }
-  });
+  });    
 });
 
 router.get("/edit-product/:id", verifyAdminLogin, async (req, res) => {
@@ -144,7 +146,7 @@ router.get("/edit-product/:id", verifyAdminLogin, async (req, res) => {
   res.render("admin/edit-product", {
     admin: true,
     adminName: req.session.adminName,
-    product,
+    product, 
     category,
   });
 });
